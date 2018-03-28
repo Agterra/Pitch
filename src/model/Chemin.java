@@ -17,7 +17,13 @@ public class Chemin {
   
   private ArrayList<Case> cases;
   
-  public void ajouter(Case c) {
+  public Chemin() {
+      
+      this.cases = new ArrayList<>();
+      
+  }
+  
+  public void ajouter( Case c ) {
 
     if( cases.size() >= 2 ) {
 
