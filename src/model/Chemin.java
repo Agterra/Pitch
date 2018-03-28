@@ -1,7 +1,7 @@
 package model;
 
 
-import java.util.List;
+import java.util.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,63 +15,65 @@ import java.util.List;
  */
 public class Chemin {
   
-  private List<Case> lst;
+  private ArrayList<Case> cases;
   
   public void ajouter(Case c) {
 
-	if( lst.size() >= 2 ) {
+    if( cases.size() >= 2 ) {
 
-	  Case caseP1 = lst.get(lst.size()-1);
-	  Case caseP2 = lst.get(lst.size()-2);
+      Case caseP1 = cases.get(cases.size()-1);
 
-	  caseP1.setLien(calculer(caseP2, c));
+      Case caseP2 = cases.get(cases.size()-2);
 
-	}
+      caseP1.setLien(calculer(caseP2, c));
 
-	lst.add(c);
+    }
+
+    cases.add(c);
 
   }
   
   public void supprimer() {
 	
-	for( Case c : lst ) {
+    for( Case c : cases ) {
 
-	  if(c.getSymbole() != null) {
+      if(c.getSymbole() != null) {
 
-		c.setLien(Lien.VIDE);
+            c.setLien(Lien.VIDE);
 
-	  }
+      }
 
-	}
+    }
 	
   }
   
   public boolean contient( int x, int y ) {
 
-	for( Case c : lst ) {
+    for( Case c : cases ) {
 
-	  if( c.getX() == x && c.getY() == y ) {
+      if( c.getX() == x && c.getY() == y ) {
 
-		return true;
+            return true;
 
-	  } 
+      } 
 
-	}
-	
-	return false;
+    }
+
+    return false;
 
   }
   
   private static Lien calculer( Case c1, Case c2 ) {
 
-	int dx = c1.getX() - c2.getX();
-	int dy = c1.getY() - c2.getY();
+    int dx = c1.getX() - c2.getX();
+    
+    int dy = c1.getY() - c2.getY();
 
-	if(dy == 2 || dy == -2) return Lien.VERTICAL;
+    if(dy == 2 || dy == -2) return Lien.VERTICAL;
 
-	if(dx == 2 || dx == -2) return Lien.HORIZONTAL;
-	
-	return Lien.VIDE;
+    if(dx == 2 || dx == -2) return Lien.HORIZONTAL;
+
+    return Lien.VIDE;
 	
   }
 	

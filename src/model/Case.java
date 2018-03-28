@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author agterra
@@ -28,6 +30,18 @@ public class Case {
         this.symbole = Symbole.VIDE;
         
         this.lien = Lien.VIDE;
+        
+    }
+    
+    public Case (Symbole symbole, Lien lien, int x, int y) {
+        
+        this.symbole = symbole;
+        
+        this.lien = lien;
+        
+        this.x = x;
+        
+        this.y = y;
         
     }
 
@@ -63,4 +77,23 @@ public class Case {
         this.y = y;
     }
     
+    @Override
+    public boolean equals( Object o ){
+        
+        if( o instanceof Case ) {
+        
+            Case c = (Case)o;
+            
+            if( this.symbole == c.symbole ) {
+                
+                return true;
+                
+            }
+        
+        }
+        
+        return false;
+        
+    }
+
 }

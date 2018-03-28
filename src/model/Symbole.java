@@ -19,6 +19,8 @@ public enum Symbole {
     
     CARRE,
     
-    LOSANGE
+    LOSANGE,
+    
+    VIDE
     
 }
