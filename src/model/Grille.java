@@ -93,4 +93,48 @@ public class Grille extends Observable{
         
     }
     
+    public void startDragAndDrop ( int x , int y ) {
+        
+        Case c = this.plateau[y][x];
+        
+        if ( caseEstLibre(c) ){
+            
+            Chemin chemin = new Chemin( c );
+            
+            this.cheminActuel = chemin;
+            
+        } 
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
+    }
+    
+    public void stopDragAndDrop ( int x , int y ) {
+        
+        Case c = this.plateau[y][x];
+        
+        if (caseEstLibre(c) && c.equals(this.cheminActuel.getCases().get(0))) {
+            
+            this.cheminActuel.ajouter(c);
+            
+            this.chemins.add(this.cheminActuel);
+            
+        }
+        
+        this.cheminActuel = new Chemin();
+            
+        this.setChanged();
+        
+        this.notifyAllObservers();
+        
+    }
+    
+    public boolean caseEstLibre ( Case c ) {
+        
+        return c.getLien() == Lien.VIDE && c.getSymbole() == Symbole.VIDE;
+        
+    }
+    
 }

@@ -23,6 +23,14 @@ public class Chemin {
       
   }
   
+  public Chemin( Case c ) {
+      
+      this.cases = new ArrayList<>();
+      
+      this.cases.add( c );
+      
+  }
+  
   public void ajouter( Case c ) {
 
     if( cases.size() >= 2 ) {
@@ -82,5 +90,13 @@ public class Chemin {
     return Lien.VIDE;
 	
   }
-	
+
+    public ArrayList<Case> getCases() {
+        return cases;
+    }
+
+    public void setCases(ArrayList<Case> cases) {
+        this.cases = cases;
+    }
+  
 }
