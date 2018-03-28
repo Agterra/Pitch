@@ -11,15 +11,15 @@ package model;
  */
 public enum Symbole {
     
-    ETOILE,
+    //ETOILE,
     
-    TRIANGLE,
+    //TRIANGLE,
     
     ROND,
     
-    CARRE,
+    //CARRE,
     
-    LOSANGE,
+    //LOSANGE,
     
     VIDE
     
