@@ -8,16 +8,13 @@ package vue;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.*;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.*;
-import javax.swing.event.DocumentEvent;
 
 import model.*;
 
@@ -25,7 +22,7 @@ import model.*;
  *
  * @author agterra
  */
-public class MainApplication extends Application implements EventHandler<Event> {
+public class MainApplication extends Application {
 
     // Propriétés de fenêtre
     private int hauteurFenetre;
@@ -51,9 +48,11 @@ public class MainApplication extends Application implements EventHandler<Event> 
     @Override
     public void start(Stage primaryStage) throws Exception {
         
+        initialisationGraphique();
+        
         initialisationDuModele();
         
-        initialisationGraphique();
+        
         
         Scene scene = new Scene(this.mainBorder, this.hauteurFenetre, this.largeurFenetre, Color.WHITESMOKE);
 
@@ -90,43 +89,7 @@ public class MainApplication extends Application implements EventHandler<Event> 
                 
                 Circle cercle = new Circle( (this.largeurFenetre / this.grille.getLargeur())/2 );
                  
-                cercle.setOnDragDetected(this);
-                
-                cercle.setOnDragEntered(this);
-                
-                cercle.setOnDragDone(this);
-                
-                
-                this.gameGridPane.add(cercle, j, i);
-                
-            }
-            
-        }
-        
-    }
-      
-    // Initialisation du modèle    
-    public void initialisationDuModele () {
-        
-        this.grille = new Grille();
-        
-        this.grille.addObserver( new Observer() {
-            
-            @Override
-            public void update(Observable o, Object arg) {
-                
-                
-                
-            }
-            
-        });
-        
-    }
-
-    @Override
-    public void handle(Event event) {
-        
-        /*cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
+                cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
                     
                     @Override
                     public void handle(MouseEvent event) {
@@ -171,7 +134,31 @@ public class MainApplication extends Application implements EventHandler<Event> 
                     }
                     
                 });
-                */
+                
+                this.gameGridPane.add(cercle, j, i);
+                
+            }
+            
+        }
+        
+    }
+    
+      
+    // Initialisation du modèle    
+    public void initialisationDuModele () {
+        
+        this.grille = new Grille();
+        
+        this.grille.addObserver( new Observer() {
+            
+            @Override
+            public void update(Observable o, Object arg) {
+                
+                
+                
+            }
+            
+        });
         
     }
     
