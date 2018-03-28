@@ -85,9 +85,9 @@ public class MainApplication extends Application {
                 
                 final int x = j;
                 
-                Circle cercle = new Circle( (this.largeurFenetre / this.grille.getLargeur())/2 );
-                 
-                cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
+                if(this.grille.getPlateau()[i][j].getSymbole() != Symbole.VIDE) {
+                    
+                    Circle cercle = new Circle( (this.largeurFenetre / this.grille.getLargeur())/2, Color.RED );
                     
                     @Override
                     public void handle(MouseEvent event) {
