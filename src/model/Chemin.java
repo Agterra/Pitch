@@ -24,7 +24,7 @@ public class Chemin {
 	  Case caseP1 = lst.get(lst.size()-1);
 	  Case caseP2 = lst.get(lst.size()-2);
 
-	  caseP1.lien = calculer(caseP2, c);
+	  caseP1.setLien(calculer(caseP2, c));
 
 	}
 
@@ -36,9 +36,9 @@ public class Chemin {
 	
 	for( Case c : lst ) {
 
-	  if(c.symbole != null) {
+	  if(c.getSymbole() != null) {
 
-		c.lien = caseVide;
+		c.setLien(Lien.VIDE);
 
 	  }
 
@@ -46,32 +46,33 @@ public class Chemin {
 	
   }
   
-  public boolean contient( int i, int j ) {
+  public boolean contient( int x, int y ) {
 
 	for( Case c : lst ) {
 
-	  if( c.i == i && c.j == j) {
+	  if( c.getX() == x && c.getY() == y ) {
 
 		return true;
 
 	  } 
 
-	  return false;
-
 	}
+	
+	return false;
 
   }
   
   private static Lien calculer( Case c1, Case c2 ) {
 
-	int dx = c1.x - c2.x;
-	int dy = c1.y - c2.y;
+	int dx = c1.getX() - c2.getX();
+	int dy = c1.getY() - c2.getY();
 
-	if(dy == 2 || dy == -2) return Symbole.vertical;
+	if(dy == 2 || dy == -2) return Lien.VERTICAL;
 
-	if(dx == 2 || dx == -2) return Symbole.horizontal;
-
-	}
-
+	if(dx == 2 || dx == -2) return Lien.HORIZONTAL;
+	
+	return Lien.VIDE;
+	
+  }
 	
 }
