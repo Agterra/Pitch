@@ -32,6 +32,16 @@ public class Grille extends Observable{
         this.longueur = 3;
         
         this.plateau = new Case[3][3];
+        
+        for (int i = 0; i < this.largeur; i++){
+            
+            for (int j = 0; j < this.longueur; j++){
+                
+                this.plateau[i][j] = new Case(j, i);
+                
+            }
+            
+        }
                 
     }
 
@@ -44,6 +54,16 @@ public class Grille extends Observable{
         this.longueur = longueur;
         
         this.plateau = new Case[longueur][largeur];
+        
+        for (int i = 0; i < this.largeur; i++){
+            
+            for (int j = 0; j < this.longueur; j++){
+                
+                this.plateau[i][j] = new Case(j, i);
+                
+            }
+            
+        }
     
     }
 
@@ -135,6 +155,11 @@ public class Grille extends Observable{
         
         return c.getLien() == Lien.VIDE && c.getSymbole() == Symbole.VIDE;
         
+    }
+
+    @Override
+    public String toString() {
+        return "Grille{" + "chemins=" + chemins + ", cheminActuel=" + cheminActuel + ", largeur=" + largeur + ", longueur=" + longueur + ", plateau=" + plateau + '}';
     }
     
 }

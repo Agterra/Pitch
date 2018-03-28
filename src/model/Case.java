@@ -44,6 +44,18 @@ public class Case {
         this.y = y;
         
     }
+    
+    public Case (int x, int y) {
+        
+        this.symbole = Symbole.VIDE;
+        
+        this.lien = Lien.VIDE;
+        
+        this.x = x;
+        
+        this.y = y;
+        
+    }
 
     public Symbole getSymbole() {
         return symbole;
