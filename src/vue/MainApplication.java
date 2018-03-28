@@ -13,7 +13,7 @@ import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.*;
 import javafx.stage.*;
 
 import model.*;
@@ -142,6 +142,12 @@ public class MainApplication extends Application {
                     });
                 
                     this.gameGridPane.add(cercle, j, i);
+                    
+                } else {
+                    
+                    Rectangle rectangle = new Rectangle(10, 10, Color.RED);
+                    
+                    this.gameGridPane.add(rectangle, j, i);
                     
                 }
                 
