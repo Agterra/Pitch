@@ -17,7 +17,7 @@ public class Chemin {
   
   private List<Case> lst;
   
-  public void add(Case c) {
+  public void ajouter(Case c) {
 
 	if( lst.size() >= 2 ) {
 
