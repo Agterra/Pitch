@@ -103,7 +103,9 @@ public class MainApplication extends Application {
                         event.consume();
                         
                         grille.startDragAndDrop( x, y);
-                    
+                        
+                        System.out.println("test mousse listnère");
+                        
                     }
                 
                 });
@@ -116,7 +118,9 @@ public class MainApplication extends Application {
                         
                         
                         event.consume();
-                    
+                                        
+                        System.out.println("drague evente enteuraide");
+
                     }
                     
                 });
@@ -128,7 +132,9 @@ public class MainApplication extends Application {
                         // attention, le setOnDragDone est déclenché par la source du Drag&Drop
                         
                         grille.startDragAndDrop( x, y);
-                        
+                                                                
+                        System.out.println("drague evente donne");
+
                     }
                     
                 });
@@ -152,7 +158,8 @@ public class MainApplication extends Application {
             @Override
             public void update(Observable o, Object arg) {
                 
-                
+                                                        System.out.println("update");
+
                 
             }
             
