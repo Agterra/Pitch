@@ -89,57 +89,61 @@ public class MainApplication extends Application {
                     
                     Circle cercle = new Circle( (this.largeurFenetre / this.grille.getLargeur())/2, Color.RED );
                     
-                    @Override
-                    public void handle(MouseEvent event) {
+                    cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
+                    
+                        @Override
+                        public void handle(MouseEvent event) {
 
-                        Dragboard db = cercle.startDragAndDrop(TransferMode.ANY);
-                        
-                        ClipboardContent content = new ClipboardContent();       
-                        
-                        content.putString(""); // non utilisé actuellement
-                        
-                        db.setContent(content);
-                        
-                        event.consume();
-                        
-                        grille.startDragAndDrop( x, y);
-                        
-                        System.out.println("test mousse listnère");
-                        
-                    }
+                            Dragboard db = cercle.startDragAndDrop(TransferMode.ANY);
+
+                            ClipboardContent content = new ClipboardContent();       
+
+                            content.putString(""); // non utilisé actuellement
+
+                            db.setContent(content);
+
+                            event.consume();
+
+                            grille.startDragAndDrop( x, y);
+
+                            System.out.println("test mousse listnère");
+
+                        }
+
+                    });
+
+                    cercle.setOnDragEntered(new EventHandler<DragEvent>() {
+
+                        public void handle(DragEvent event) {
+
+                           // grille.( y, x);
+
+
+                            event.consume();
+
+                            System.out.println("drague evente enteuraide");
+
+                        }
+
+                    });
+
+                    cercle.setOnDragDone(new EventHandler<DragEvent>() {
+
+                        public void handle(DragEvent event) {
+
+                            // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+
+                            grille.startDragAndDrop( x, y);
+
+                            System.out.println("drague evente donne");
+
+                        }
+
+                    });
                 
-                });
-
-                cercle.setOnDragEntered(new EventHandler<DragEvent>() {
+                    this.gameGridPane.add(cercle, j, i);
                     
-                    public void handle(DragEvent event) {
-                        
-                       // grille.( y, x);
-                        
-                        
-                        event.consume();
-                                        
-                        System.out.println("drague evente enteuraide");
-
-                    }
-                    
-                });
-                
-                cercle.setOnDragDone(new EventHandler<DragEvent>() {
-                    
-                    public void handle(DragEvent event) {
-                        
-                        // attention, le setOnDragDone est déclenché par la source du Drag&Drop
-                        
-                        grille.startDragAndDrop( x, y);
-                                                                
-                        System.out.println("drague evente donne");
-
-                    }
-                    
-                });
-                
-                this.gameGridPane.add(cercle, j, i);
+                }
                 
             }
             
