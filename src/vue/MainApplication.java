@@ -29,6 +29,8 @@ public class MainApplication extends Application {
     
     private int largeurFenetre;
     
+    private int ratio;
+    
     // Elements du modèle
     private Grille grille;
 
@@ -77,6 +79,8 @@ public class MainApplication extends Application {
         
         this.hauteurFenetre = 500;
         
+        this.ratio = this.largeurFenetre / this.grille.getLargeur();
+        
         for (int i = 0; i < this.grille.getLongueur(); i++) {
             
             for (int j = 0; j < this.grille.getLargeur(); j++) {
@@ -85,9 +89,13 @@ public class MainApplication extends Application {
                 
                 final int x = j;
                 
+                Pane pane = new Pane();
+                
+                pane.setPrefSize(this.ratio, this.ratio);
+                
                 if(this.grille.getPlateau()[i][j].getSymbole() != Symbole.VIDE) {
                     
-                    Circle cercle = new Circle( (this.largeurFenetre / this.grille.getLargeur())/2, Color.RED );
+                    Circle cercle = new Circle( this.ratio/2-1 , Color.RED );
                     
                     cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
                     
@@ -141,15 +149,35 @@ public class MainApplication extends Application {
 
                     });
                 
-                    this.gameGridPane.add(cercle, j, i);
+                    pane.getChildren().add(cercle);
                     
                 } else {
                     
-                    Rectangle rectangle = new Rectangle(10, 10, Color.RED);
+                    Rectangle rectangle = new Rectangle(this.ratio -1, this.ratio -1, Color.WHITESMOKE);
                     
-                    this.gameGridPane.add(rectangle, j, i);
+                    //evenement quand la souris entre dans le rectangle
+                    rectangle.setOnDragEntered(new EventHandler<DragEvent>() {
+
+                        public void handle(DragEvent event) {
+                            
+                            rectangle.setFill(Color.rgb(255,0,0));
+
+                           // grille.( y, x);
+
+
+                            event.consume();
+
+                            System.out.println("drague evente enteuraide");
+
+                        }
+
+                    });
+                    
+                    pane.getChildren().add(rectangle);
                     
                 }
+                
+                this.gameGridPane.add(pane, j, i);
                 
             }
             
@@ -168,7 +196,7 @@ public class MainApplication extends Application {
             @Override
             public void update(Observable o, Object arg) {
                 
-                                                        System.out.println("update");
+                System.out.println("update");
 
                 
             }
