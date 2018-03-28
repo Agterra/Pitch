@@ -127,7 +127,7 @@ public class Grille extends Observable{
             
         this.setChanged();
         
-        this.notifyAllObservers();
+        this.notifyObservers();
         
     }
     
