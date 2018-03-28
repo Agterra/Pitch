@@ -42,6 +42,10 @@ public class Grille extends Observable{
             }
             
         }
+        
+        this.plateau[0][0].setSymbole(Symbole.ROND);
+                
+        this.plateau[2][2].setSymbole(Symbole.ROND);
                 
     }
 
