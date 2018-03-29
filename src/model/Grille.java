@@ -25,13 +25,15 @@ public class Grille extends Observable{
     
     public Grille() {
         
+        int taille = 4;
+        
         this.chemins = new ArrayList<>();
         
-        this.largeur = 3;
+        this.largeur = taille;
         
-        this.longueur = 3;
+        this.longueur = taille;
         
-        this.plateau = new Case[3][3];
+        this.plateau = new Case[taille][taille];
         
         for (int i = 0; i < this.largeur; i++){
             
@@ -45,7 +47,7 @@ public class Grille extends Observable{
         
         this.plateau[0][0].setSymbole(Symbole.ROND);
                 
-        this.plateau[2][2].setSymbole(Symbole.ROND);
+        this.plateau[taille-1][taille-1].setSymbole(Symbole.ROND);
                 
     }
 
@@ -109,7 +111,7 @@ public class Grille extends Observable{
             
             if( c.contient(x, y) ) {
                 
-                c.supprimer();
+                this.supprimerChemin(c);
                 
             }
             
@@ -135,32 +137,88 @@ public class Grille extends Observable{
         
     }
     
-    public void stopDragAndDrop ( int x , int y ) {
+    public void updateDragAndDrop( int x, int y ) {
         
         Case c = this.plateau[y][x];
         
-        if (caseEstLibre(c) && c.equals(this.cheminActuel.getCases().get(0))) {
+        if( caseEstLibre(c) ) {
             
-            this.cheminActuel.ajouter(c);
-            
-            this.chemins.add(this.cheminActuel);
+            this.cheminActuel.ajouter( c );
             
         }
         
-        this.cheminActuel = new Chemin();
-            
         this.setChanged();
         
         this.notifyObservers();
         
     }
     
-    public boolean caseEstLibre ( Case c ) {
+    public void stopDragAndDrop ( int x , int y ) {
+        
+        Case c = this.plateau[y][x];
+        
+        if ( caseEstLibre(c) || c.equals(this.cheminActuel.getCases().get(0))) {
+            
+            this.cheminActuel.ajouter(c);
+            
+        }
+        
+        if ( this.cheminEstValide( this.cheminActuel ) ) {
+            
+            this.chemins.add( this.cheminActuel );
+            
+        } else {
+            
+            this.cheminActuel = new Chemin();
+            
+        }
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
+    }
+    
+    private boolean caseEstLibre ( Case c ) {
         
         return c.getLien() == Lien.VIDE && c.getSymbole() == Symbole.VIDE;
         
     }
 
+    private boolean plateauEstPlein () {
+        
+        boolean plein = true;
+        
+        for ( Case[] ligne : this.plateau ) {
+            
+            for ( Case c : ligne ) {
+                
+                if ( caseEstLibre ( c ) ) {
+                    
+                    return false;
+                    
+                }
+                
+            }
+            
+        }
+        
+        return plein;
+        
+    }
+    
+    private boolean cheminEstValide( Chemin chemin ) {
+        
+        return true; //TODO
+        
+    }
+    
+    private void supprimerChemin ( Chemin chemin ) {
+        
+        chemin.supprimer();
+        
+    }
+    
     @Override
     public String toString() {
         return "Grille{" + "chemins=" + chemins + ", cheminActuel=" + cheminActuel + ", largeur=" + largeur + ", longueur=" + longueur + ", plateau=" + plateau + '}';
