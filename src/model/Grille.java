@@ -219,6 +219,45 @@ public class Grille extends Observable{
         
     }
     
+    private boolean sontVoisine( Case c ) {
+        
+        Case casePrecedente = this.cheminActuel.getCases().get( this.cheminActuel.getCases().size()-1 );
+        
+        boolean estVoisine = false;
+        
+        ArrayList<Case> voisins = new ArrayList<>();
+        
+        //Case [] plateauActuel = new Case [this.largeur * this.longueur];
+        
+        // plateauActuel[this.largeur * i + j];
+        
+        int casePrecedenteY = casePrecedente.getY();
+        
+        int casePrecedenteX = casePrecedente.getX();
+        
+        if ( casePrecedenteY == 0 && casePrecedenteX == 0 ) {
+            
+            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
+            
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
+            
+        } else if ( casePrecedenteY == 0 && casePrecedenteX == this.largeur - 1 ) {
+            
+            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
+            
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
+            
+        //} else if ( casePrecedenteY == this.longueur -1 && casePrecedenteX ) {
+            
+            
+            
+        }
+        
+        
+        return estVoisine;
+        
+    }
+    
     @Override
     public String toString() {
         return "Grille{" + "chemins=" + chemins + ", cheminActuel=" + cheminActuel + ", largeur=" + largeur + ", longueur=" + longueur + ", plateau=" + plateau + '}';
