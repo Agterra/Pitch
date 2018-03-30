@@ -141,7 +141,7 @@ public class Grille extends Observable{
         
         Case c = this.plateau[y][x];
         
-        if( caseEstLibre(c) ) {
+        if( caseEstLibre( c ) && sontVoisines( c )) {
             
             this.cheminActuel.ajouter( c );
             
@@ -157,7 +157,7 @@ public class Grille extends Observable{
         
         Case c = this.plateau[y][x];
         
-        if ( caseEstLibre(c) || c.equals(this.cheminActuel.getCases().get(0))) {
+        if ( caseEstLibre(c) || c.getSymbole() == this.cheminActuel.getCases().get(0).getSymbole()) {
             
             this.cheminActuel.ajouter(c);
             
@@ -219,7 +219,9 @@ public class Grille extends Observable{
         
     }
     
-    private boolean sontVoisine( Case c ) {
+    private boolean sontVoisines( Case c ) {
+        
+        System.out.println( this.cheminActuel.toString() );
         
         Case casePrecedente = this.cheminActuel.getCases().get( this.cheminActuel.getCases().size()-1 );
         
@@ -245,14 +247,73 @@ public class Grille extends Observable{
             
             voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
             
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
+            
+        } else if ( casePrecedenteY == this.longueur -1 && casePrecedenteX == 0 ) {
+            
+            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
+            
             voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
             
-        //} else if ( casePrecedenteY == this.longueur -1 && casePrecedenteX ) {
+        } else if ( casePrecedenteY == this.longueur -1 && casePrecedenteX == this.largeur -1 ) {
             
+            voisins.add( this.plateau[ casePrecedenteY - 1][casePrecedenteX] );
             
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1]);            
             
+        } else if (casePrecedenteY == 0) {
+            
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
+            
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
+            
+            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
+
+        } else if (casePrecedenteY == this.longueur - 1) {
+            
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
+                     
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
+                     
+            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
+                     
+        } else if (casePrecedenteX == 0) {
+                       
+            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
+                                                        
+            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
+                                                        
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
+                                 
+        } else if ( casePrecedenteX == this.largeur - 1){
+                                   
+            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
+                                                        
+            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
+                                                                    
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
+                                 
+        } else {
+                                   
+            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
+                                                        
+            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
+                                                        
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
+                                                        
+            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
+                                 
         }
         
+        for (int i = 0 ; i < voisins.size(); i++){
+            
+            if ( c.equals( voisins.get(i) ) ) {
+                
+                return true;
+                
+            }
+            
+        }
         
         return estVoisine;
         

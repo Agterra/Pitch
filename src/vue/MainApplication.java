@@ -162,9 +162,8 @@ public class MainApplication extends Application {
                             
                             rectangle.setFill(Color.rgb(255,0,0));
 
-                           // grille.( y, x);
-
-
+                            grille.updateDragAndDrop( x, y);
+    
                             event.consume();
 
                             System.out.println("drague evente enteuraide");

@@ -96,7 +96,7 @@ public class Case {
         
             Case c = (Case)o;
             
-            if( this.symbole == c.symbole ) {
+            if( this.x == c.x && this.y == c.y ) {
                 
                 return true;
                 

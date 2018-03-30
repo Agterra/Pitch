@@ -98,5 +98,12 @@ public class Chemin {
     public void setCases(ArrayList<Case> cases) {
         this.cases = cases;
     }
+
+    @Override
+    public String toString() {
+        return "Chemin{" + "cases=" + cases + '}';
+    }
+    
+    
   
 }
