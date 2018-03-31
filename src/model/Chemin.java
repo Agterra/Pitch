@@ -87,6 +87,14 @@ public class Chemin {
 
     if(dx == 2 || dx == -2) return Lien.HORIZONTAL;
 
+    if(dx == -1 && dy == -1) return Lien.COUDE_BAS_DROIT;
+    
+    if(dx == 1 && dy == -1) return Lien.COUDE_BAS_GAUCHE;
+    
+    if(dx == -1 && dy == 1) return Lien.COUDE_HAUT_DROIT;
+    
+    if(dx == 1 && dy == 1) return Lien.COUDE_HAUT_GAUCHE;
+    
     return Lien.VIDE;
 	
   }
@@ -104,6 +112,10 @@ public class Chemin {
         return "Chemin{" + "cases=" + cases + '}';
     }
     
-    
+    public Case getLastElement() {
+        
+        return this.cases.get(this.cases.size() - 1);
+        
+    }
   
 }

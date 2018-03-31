@@ -71,7 +71,7 @@ public class MainApplication extends Application {
         
         this.gameGridPane = new GridPane();
         
-        this.gameGridPane.setGridLinesVisible(true);
+        this.gameGridPane.setGridLinesVisible(false);
         
         this.mainBorder.setCenter( this.gameGridPane );
         
@@ -95,7 +95,15 @@ public class MainApplication extends Application {
                 
                 if(this.grille.getPlateau()[i][j].getSymbole() != Symbole.VIDE) {
                     
-                    Circle cercle = new Circle( this.ratio/2-1 , Color.RED );
+                    Circle cercle = new Circle( this.ratio/2-1 , Color.rgb(200,20,20) );
+                    
+                    cercle.setCenterX(ratio / 2);
+                    
+                    cercle.setCenterY(ratio / 2);
+                    
+                    Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+                    
+                    pane.setBorder(border);
                     
                     cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
                     
@@ -112,9 +120,9 @@ public class MainApplication extends Application {
 
                             event.consume();
 
-                            grille.startDragAndDrop( x, y);
+                            grille.startDragAndDrop( x, y );
 
-                            System.out.println("test mousse listnère");
+                            //System.out.println("test mousse listnère");
 
                         }
 
@@ -129,7 +137,7 @@ public class MainApplication extends Application {
 
                             event.consume();
 
-                            System.out.println("drague evente enteuraide");
+                            //System.out.println("drague evente enteuraide cirqueul");
 
                         }
 
@@ -141,9 +149,9 @@ public class MainApplication extends Application {
 
                             // attention, le setOnDragDone est déclenché par la source du Drag&Drop
 
-                            grille.startDragAndDrop( x, y);
+                            grille.startDragAndDrop( x, y );
 
-                            System.out.println("drague evente donne");
+                            //System.out.println("drague evente donne");
 
                         }
 
@@ -155,22 +163,26 @@ public class MainApplication extends Application {
                     
                     Rectangle rectangle = new Rectangle(this.ratio -1, this.ratio -1, Color.WHITESMOKE);
                     
+                    rectangle.setStroke(Color.BLACK);
+                    
+                    rectangle.setStrokeWidth(1);
+                    
                     //evenement quand la souris entre dans le rectangle
                     rectangle.setOnDragEntered(new EventHandler<DragEvent>() {
 
                         public void handle(DragEvent event) {
                             
-                            rectangle.setFill(Color.rgb(255,0,0));
-
-                            grille.updateDragAndDrop( x, y);
+                            grille.updateDragAndDrop( x, y );
     
                             event.consume();
 
-                            System.out.println("drague evente enteuraide");
+                            //System.out.println("drague evente enteuraide rectangle");
 
                         }
 
                     });
+                    
+                    pane.getChildren().clear();
                     
                     pane.getChildren().add(rectangle);
                     
@@ -184,7 +196,6 @@ public class MainApplication extends Application {
         
     }
     
-      
     // Initialisation du modèle    
     public void initialisationDuModele () {
         
@@ -195,8 +206,54 @@ public class MainApplication extends Application {
             @Override
             public void update(Observable o, Object arg) {
                 
-                System.out.println("update");
+                //System.out.println("update: " + arg );
+                
+                if (o instanceof Grille){
+                                        
+                    Grille grille = (Grille) o;
+                    
+                    for (int i = 0; i < grille.getLongueur() ; i++) {
+                        
+                        for (int j = 0 ; j < grille.getLargeur() ; j++) {
+                            
+                            Object gridCase = gameGridPane.getChildren().get( i * grille.getLargeur() + j);
+                            
+                            Case c = grille.getCase(i,j);
+                            
+                            if ( c.getSymbole() != Symbole.VIDE ) {
+                                
+                                // Modify Circles
+                                
+                            } else if ( c.getLien() != Lien.VIDE ) {
+                                
+                                // Modify rectangles with Correct lien
 
+                                //System.out.println(updatedCell.getLien().toString());
+                                
+                                if ( gridCase instanceof Pane ) {
+                                
+                                    Pane pane = (Pane)gridCase;
+
+                                    Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
+
+                                    rectangle.setFill(Color.rgb(200,20,20));
+
+                                    rectangle.setStroke(Color.BLACK);
+
+                                    rectangle.setStrokeWidth(1);
+
+                                }
+                                
+                            }
+                            
+                
+                        }
+                        
+                        System.out.println();
+                        
+                    }
+                    
+                }
                 
             }
             

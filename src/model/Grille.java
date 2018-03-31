@@ -104,6 +104,14 @@ public class Grille extends Observable{
     public void setPlateau(Case[][] plateau) {
         this.plateau = plateau;
     }
+
+    public Chemin getCheminActuel() {
+        return cheminActuel;
+    }
+
+    public void setCheminActuel(Chemin cheminActuel) {
+        this.cheminActuel = cheminActuel;
+    }
     
     public void clic ( int x, int y ) {
         
@@ -123,7 +131,7 @@ public class Grille extends Observable{
         
         Case c = this.plateau[y][x];
         
-        if ( caseEstLibre(c) ){
+        if ( c.getSymbole() != Symbole.VIDE ){
             
             Chemin chemin = new Chemin( c );
             
@@ -141,12 +149,16 @@ public class Grille extends Observable{
         
         Case c = this.plateau[y][x];
         
-        if( caseEstLibre( c ) && sontVoisines( c )) {
+        if( caseEstLibre( c ) && sontVoisines( c ) ) {
             
             this.cheminActuel.ajouter( c );
             
+            //System.out.println("Type : " + c.toString());
+            
         }
         
+        System.out.println("y: "+ c.getY() +" x: " + c.getX());
+                            
         this.setChanged();
         
         this.notifyObservers();
@@ -209,7 +221,13 @@ public class Grille extends Observable{
     
     private boolean cheminEstValide( Chemin chemin ) {
         
-        return true; //TODO
+        if ( chemin.getLastElement().getSymbole() != chemin.getLastElement().getSymbole() ) {
+            
+            return false;
+            
+        }
+        
+        return true;
         
     }
     
@@ -223,7 +241,7 @@ public class Grille extends Observable{
         
         System.out.println( this.cheminActuel.toString() );
         
-        Case casePrecedente = this.cheminActuel.getCases().get( this.cheminActuel.getCases().size()-1 );
+        Case casePrecedente = this.getDerniereCaseCheminActuel();
         
         boolean estVoisine = false;
         
@@ -316,6 +334,18 @@ public class Grille extends Observable{
         }
         
         return estVoisine;
+        
+    }
+    
+    public Case getDerniereCaseCheminActuel() {
+        
+        return this.cheminActuel.getLastElement();
+        
+    }
+    
+    public Case getCase( int y, int x ) {
+        
+        return this.plateau[y][x];
         
     }
     
