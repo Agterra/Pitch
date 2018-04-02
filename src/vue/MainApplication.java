@@ -149,7 +149,7 @@ public class MainApplication extends Application {
 
                             // attention, le setOnDragDone est déclenché par la source du Drag&Drop
 
-                            grille.startDragAndDrop( x, y );
+                            grille.stopDragAndDrop( x, y );
 
                             //System.out.println("drague evente donne");
 
@@ -177,6 +177,20 @@ public class MainApplication extends Application {
                             event.consume();
 
                             //System.out.println("drague evente enteuraide rectangle");
+
+                        }
+
+                    });
+                    
+                    rectangle.setOnDragDone(new EventHandler<DragEvent>() {
+
+                        public void handle(DragEvent event) {
+
+                            // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+
+                            grille.stopDragAndDrop( x, y );
+
+                            //System.out.println("drague evente donne");
 
                         }
 
@@ -244,9 +258,28 @@ public class MainApplication extends Application {
 
                                 }
                                 
+                            } else if ( c.getSymbole() == Symbole.VIDE ) {
+                                
+                                
+                                
+                            } else if ( c.getLien() == Lien.VIDE ) {
+                                
+                                if ( gridCase instanceof Pane ) {
+                                
+                                    Pane pane = (Pane)gridCase;
+
+                                    Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
+
+                                    rectangle.setFill(Color.WHITE);
+
+                                    rectangle.setStroke(Color.BLACK);
+
+                                    rectangle.setStrokeWidth(1);
+
+                                }
+                                
                             }
                             
-                
                         }
                         
                         System.out.println();

@@ -39,8 +39,10 @@ public class Chemin {
 
       Case caseP2 = cases.get(cases.size()-2);
 
-      caseP1.setLien(calculer(caseP2, c));
+      caseP1.setLien(calculer( c, caseP1 ,caseP2));
 
+      System.out.println(caseP1.getLien());
+      
     }
 
     cases.add(c);
@@ -49,13 +51,9 @@ public class Chemin {
   
   public void supprimer() {
 	
-    for( Case c : cases ) {
+    for( int i = 0; i < cases.size(); i ++ ) {
 
-      if(c.getSymbole() != null) {
-
-            c.setLien(Lien.VIDE);
-
-      }
+        cases.get(i).setLien(Lien.VIDE);
 
     }
 	
@@ -77,23 +75,71 @@ public class Chemin {
 
   }
   
-  private static Lien calculer( Case c1, Case c2 ) {
+  private static Lien calculer( Case c1, Case c2, Case c3 ) {
 
-    int dx = c1.getX() - c2.getX();
+    int diffx = c1.getX() - c3.getX();
     
-    int dy = c1.getY() - c2.getY();
+    int diffy = c1.getY() - c3.getY();
 
-    if(dy == 2 || dy == -2) return Lien.VERTICAL;
+    if(diffy == 2 || diffy == -2) return Lien.VERTICAL;
 
-    if(dx == 2 || dx == -2) return Lien.HORIZONTAL;
+    if(diffx == 2 || diffx == -2) return Lien.HORIZONTAL;
+    
+    if(diffx == -1 && diffy == -1){
+        
+        if (c2.getY() == c1.getY()){
+            
+            return Lien.COUDE_BAS_GAUCHE;
+            
+        } else if (c2.getY() == c3.getY()) {
+            
+            return Lien.COUDE_HAUT_DROIT;
 
-    if(dx == -1 && dy == -1) return Lien.COUDE_BAS_DROIT;
+        } 
+
+    }
     
-    if(dx == 1 && dy == -1) return Lien.COUDE_BAS_GAUCHE;
+    if(diffx == 1 && diffy == -1){
+       
+        if (c2.getY() == c1.getY()){
+            
+            return Lien.COUDE_BAS_DROIT;
+            
+        } else if (c2.getY() == c3.getY()) {
+            
+            return Lien.COUDE_HAUT_GAUCHE;
+
+        }
+        
+    }
     
-    if(dx == -1 && dy == 1) return Lien.COUDE_HAUT_DROIT;
+    if(diffx == -1 && diffy == 1) {
+        
+        if (c2.getY() == c1.getY()){
+            
+            return Lien.COUDE_HAUT_GAUCHE;
+            
+        } else if (c2.getY() == c3.getY()) {
+            
+            return Lien.COUDE_BAS_DROIT;
+
+        }
+        
+    }
     
-    if(dx == 1 && dy == 1) return Lien.COUDE_HAUT_GAUCHE;
+    if(diffx == 1 && diffy == 1) {
+        
+        if (c2.getY() == c1.getY()){
+            
+            return Lien.COUDE_HAUT_DROIT;
+            
+        } else if (c2.getY() == c3.getY()) {
+            
+            return Lien.COUDE_BAS_GAUCHE;
+
+        }
+        
+    }
     
     return Lien.VIDE;
 	

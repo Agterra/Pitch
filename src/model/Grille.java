@@ -129,7 +129,7 @@ public class Grille extends Observable{
     
     public void startDragAndDrop ( int x , int y ) {
         
-        Case c = this.plateau[y][x];
+        Case c = this.getCase(y, x);
         
         if ( c.getSymbole() != Symbole.VIDE ){
             
@@ -147,7 +147,7 @@ public class Grille extends Observable{
     
     public void updateDragAndDrop( int x, int y ) {
         
-        Case c = this.plateau[y][x];
+        Case c = this.getCase(y, x);
         
         if( caseEstLibre( c ) && sontVoisines( c ) ) {
             
@@ -167,24 +167,24 @@ public class Grille extends Observable{
     
     public void stopDragAndDrop ( int x , int y ) {
         
-        Case c = this.plateau[y][x];
+        Case c = this.getCase(y, x);
         
-        if ( caseEstLibre(c) || c.getSymbole() == this.cheminActuel.getCases().get(0).getSymbole()) {
+        if ( c.getSymbole() != Symbole.VIDE && this.cheminEstValide( this.cheminActuel ) ) {
             
             this.cheminActuel.ajouter(c);
             
-        }
-        
-        if ( this.cheminEstValide( this.cheminActuel ) ) {
-            
             this.chemins.add( this.cheminActuel );
+            
+            System.out.println("Chemin valide");
             
         } else {
             
-            this.cheminActuel = new Chemin();
+            this.supprimerChemin(cheminActuel);
             
+            System.out.println("Chemin invalide");
+
         }
-        
+          
         this.setChanged();
         
         this.notifyObservers();
@@ -221,7 +221,7 @@ public class Grille extends Observable{
     
     private boolean cheminEstValide( Chemin chemin ) {
         
-        if ( chemin.getLastElement().getSymbole() != chemin.getLastElement().getSymbole() ) {
+        if ( chemin.getCases().get(0).getSymbole() != chemin.getLastElement().getSymbole() ) {
             
             return false;
             
@@ -235,6 +235,8 @@ public class Grille extends Observable{
         
         chemin.supprimer();
         
+        this.cheminActuel = new Chemin();
+            
     }
     
     private boolean sontVoisines( Case c ) {

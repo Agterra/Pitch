@@ -108,4 +108,30 @@ public class Case {
         
     }
 
+    @Override
+    public String toString() {
+        
+        return ( this.lien != Lien.VIDE ) ? this.lien.toString() : this.symbole.toString();
+        
+    }
+
+    @Override
+    protected Object clone(){
+        
+        Case c = new Case();
+        
+        c.setX(this.x);
+        
+        c.setY(this.y);
+        
+        c.setLien(this.lien);
+        
+        c.setSymbole(this.symbole);
+        
+        return c;
+        
+    }
+    
+    
+    
 }
