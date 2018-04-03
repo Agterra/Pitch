@@ -235,7 +235,7 @@ public class Grille extends Observable{
         
         chemin.supprimer();
         
-        this.cheminActuel = new Chemin();
+        //this.cheminActuel = new Chemin();
             
     }
     
@@ -347,7 +347,7 @@ public class Grille extends Observable{
     
     public Case getCase( int y, int x ) {
         
-        return this.plateau[y][x];
+        return (Case)this.plateau[y][x].clone();
         
     }
     

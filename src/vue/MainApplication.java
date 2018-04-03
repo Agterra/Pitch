@@ -5,6 +5,7 @@
  */
 package vue;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.*;
@@ -13,6 +14,7 @@ import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.stage.*;
 
@@ -226,6 +228,10 @@ public class MainApplication extends Application {
                                         
                     Grille grille = (Grille) o;
                     
+                    ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
+                    
+                    System.out.println(cheminActuel.toString());
+                    
                     for (int i = 0; i < grille.getLongueur() ; i++) {
                         
                         for (int j = 0 ; j < grille.getLargeur() ; j++) {
@@ -234,50 +240,18 @@ public class MainApplication extends Application {
                             
                             Case c = grille.getCase(i,j);
                             
-                            if ( c.getSymbole() != Symbole.VIDE ) {
+                            int found = cheminActuel.indexOf( c );
+                            
+                            // Coloriage spécifique du chemin
+                            if( found != -1 ) { 
                                 
-                                // Modify Circles
+                                colorCell(gridCase, cheminActuel.get( found ), Color.rgb(200,20,20));
                                 
-                            } else if ( c.getLien() != Lien.VIDE ) {
+                            } else {
                                 
-                                // Modify rectangles with Correct lien
-
-                                //System.out.println(updatedCell.getLien().toString());
-                                
-                                if ( gridCase instanceof Pane ) {
-                                
-                                    Pane pane = (Pane)gridCase;
-
-                                    Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
-
-                                    rectangle.setFill(Color.rgb(200,20,20));
-
-                                    rectangle.setStroke(Color.BLACK);
-
-                                    rectangle.setStrokeWidth(1);
-
-                                }
-                                
-                            } else if ( c.getSymbole() == Symbole.VIDE ) {
-                                
-                                
-                                
-                            } else if ( c.getLien() == Lien.VIDE ) {
-                                
-                                if ( gridCase instanceof Pane ) {
-                                
-                                    Pane pane = (Pane)gridCase;
-
-                                    Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
-
-                                    rectangle.setFill(Color.WHITE);
-
-                                    rectangle.setStroke(Color.BLACK);
-
-                                    rectangle.setStrokeWidth(1);
-
-                                }
-                                
+                                // Coloriage basique du plateau
+                                colorCell(gridCase, c, Color.rgb(20,20,200));
+                            
                             }
                             
                         }
@@ -291,6 +265,52 @@ public class MainApplication extends Application {
             }
             
         });
+        
+    }
+    
+    public void colorCell(Object gridCase, Case c, Paint color) {
+        
+        if ( c.getSymbole() != Symbole.VIDE ) {
+                                
+            // Modify Circles
+
+        } else if ( c.getLien() != Lien.VIDE ) {
+
+            // Modify rectangles with Correct lien
+
+            //System.out.println(updatedCell.getLien().toString());
+
+            if ( gridCase instanceof Pane ) {
+
+                Pane pane = (Pane)gridCase;
+
+                Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
+
+                rectangle.setFill(color);
+
+                rectangle.setStroke(Color.BLACK);
+
+                rectangle.setStrokeWidth(1);
+
+            }
+
+        } else {  // Coloriage par défaut
+
+            if ( gridCase instanceof Pane ) {
+
+                Pane pane = (Pane)gridCase;
+
+                Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
+
+                rectangle.setFill(Color.WHITE);
+
+                rectangle.setStroke(Color.BLACK);
+
+                rectangle.setStrokeWidth(1);
+
+            }
+
+        }
         
     }
     
