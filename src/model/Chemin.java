@@ -41,7 +41,7 @@ public class Chemin {
 
       caseP1.setLien(calculer( c, caseP1 ,caseP2));
 
-      System.out.println(caseP1.getLien());
+      //System.out.println(caseP1.getLien());
       
     }
 

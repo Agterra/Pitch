@@ -26,6 +26,8 @@ import model.*;
  */
 public class MainApplication extends Application {
 
+    public static boolean DISPLAY_DEBUG = true;
+    
     // Propriétés de fenêtre
     private int hauteurFenetre;
     
@@ -45,12 +47,16 @@ public class MainApplication extends Application {
     
     public static void main(String[] args) {
         
+        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.main");
+        
         launch(args);
         
     }
     
     @Override
     public void start(Stage primaryStage) throws Exception {
+        
+        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.start");
         
         initialisationDuModele();
         
@@ -68,6 +74,8 @@ public class MainApplication extends Application {
     
     // Initialisation des composantes graphiques
     public void initialisationGraphique () {
+        
+        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialisationGraphique");
         
         this.mainBorder = new BorderPane();
         
@@ -111,6 +119,8 @@ public class MainApplication extends Application {
                     
                         @Override
                         public void handle(MouseEvent event) {
+        
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.cercle.onDragDetected");
 
                             Dragboard db = cercle.startDragAndDrop(TransferMode.ANY);
 
@@ -124,8 +134,6 @@ public class MainApplication extends Application {
 
                             grille.startDragAndDrop( x, y );
 
-                            //System.out.println("test mousse listnère");
-
                         }
 
                     });
@@ -133,13 +141,12 @@ public class MainApplication extends Application {
                     cercle.setOnDragEntered(new EventHandler<DragEvent>() {
 
                         public void handle(DragEvent event) {
+                            
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.cercle.onDragEntered");
 
-                           // grille.( y, x);
-
+                            grille.updateDragAndDropSymbol( x, y );
 
                             event.consume();
-
-                            //System.out.println("drague evente enteuraide cirqueul");
 
                         }
 
@@ -150,10 +157,9 @@ public class MainApplication extends Application {
                         public void handle(DragEvent event) {
 
                             // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.cercle.onDragDone");
 
-                            grille.stopDragAndDrop( x, y );
-
-                            //System.out.println("drague evente donne");
+                           // grille.stopDragAndDrop( x, y );
 
                         }
 
@@ -173,7 +179,9 @@ public class MainApplication extends Application {
                     rectangle.setOnDragEntered(new EventHandler<DragEvent>() {
 
                         public void handle(DragEvent event) {
-                            
+                                                        
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.rectangle.onDragEntered");
+
                             grille.updateDragAndDrop( x, y );
     
                             event.consume();
@@ -187,6 +195,8 @@ public class MainApplication extends Application {
                     rectangle.setOnDragDone(new EventHandler<DragEvent>() {
 
                         public void handle(DragEvent event) {
+                            
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.rectangle.onDragDone");
 
                             // attention, le setOnDragDone est déclenché par la source du Drag&Drop
 
@@ -214,7 +224,9 @@ public class MainApplication extends Application {
     
     // Initialisation du modèle    
     public void initialisationDuModele () {
-        
+                
+        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialisationDuModele");
+
         this.grille = new Grille();
         
         this.grille.addObserver( new Observer() {
@@ -230,7 +242,7 @@ public class MainApplication extends Application {
                     
                     ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
                     
-                    System.out.println(cheminActuel.toString());
+                    //System.out.println(cheminActuel.toString());
                     
                     for (int i = 0; i < grille.getLongueur() ; i++) {
                         
@@ -249,14 +261,14 @@ public class MainApplication extends Application {
                                 
                             } else {
                                 
-                                // Coloriage basique du plateau
+                                // Coloriage spécifique du plateau
                                 colorCell(gridCase, c, Color.rgb(20,20,200));
                             
                             }
                             
                         }
                         
-                        System.out.println();
+                        //System.out.println();
                         
                     }
                     
@@ -269,7 +281,9 @@ public class MainApplication extends Application {
     }
     
     public void colorCell(Object gridCase, Case c, Paint color) {
-        
+                
+        //if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.colorCell");
+
         if ( c.getSymbole() != Symbole.VIDE ) {
                                 
             // Modify Circles

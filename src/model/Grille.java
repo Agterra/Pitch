@@ -21,6 +21,10 @@ public class Grille extends Observable{
     
     private int longueur;
     
+    private int symbolPairs;
+    
+    private int completePairs = 0;
+    
     private Case[][] plateau;
     
     public Grille() {
@@ -45,13 +49,15 @@ public class Grille extends Observable{
             
         }
         
-        this.plateau[0][0].setSymbole(Symbole.ROND);
+        this.plateau[0][taille-1].setSymbole(Symbole.ROND);
                 
         this.plateau[taille-1][taille-1].setSymbole(Symbole.ROND);
+        
+        this.symbolPairs = 1;
                 
     }
 
-    public Grille(int largeur, int longueur) {
+    public Grille(int largeur, int longueur, int symbolPairs ) {
         
         this.chemins = new ArrayList<>();
         
@@ -70,6 +76,10 @@ public class Grille extends Observable{
             }
             
         }
+        
+        this.symbolPairs = symbolPairs;
+        
+        // Algo pour déterminer possibilité de placement de deux symboles TO DO
     
     }
 
@@ -129,6 +139,8 @@ public class Grille extends Observable{
     
     public void startDragAndDrop ( int x , int y ) {
         
+        System.out.println("x: " + x + " y: " + y);
+        
         Case c = this.getCase(y, x);
         
         if ( c.getSymbole() != Symbole.VIDE ){
@@ -147,17 +159,25 @@ public class Grille extends Observable{
     
     public void updateDragAndDrop( int x, int y ) {
         
+        System.out.println("x: " + x + " y: " + y);
+        
         Case c = this.getCase(y, x);
         
-        if( caseEstLibre( c ) && sontVoisines( c ) ) {
+        System.out.println(this.cheminActuel.getCases().toString());
+        
+        Case casePrecedente = this.getDerniereCaseCheminActuel();
+        
+        int found = this.cheminActuel.getCases().indexOf(c);
+        
+        if( found == -1 && caseEstLibre( c ) && sontVoisines( casePrecedente, c ) ) {
             
             this.cheminActuel.ajouter( c );
             
-            //System.out.println("Type : " + c.toString());
+            //System.out.println("Ajout");
             
         }
         
-        System.out.println("y: "+ c.getY() +" x: " + c.getX());
+        //System.out.println("y: "+ c.getY() +" x: " + c.getX());
                             
         this.setChanged();
         
@@ -165,26 +185,91 @@ public class Grille extends Observable{
         
     }
     
+    public void updateDragAndDropSymbol( int x, int y ) {
+        
+        System.out.println("x: " + x + " y: " + y);
+        
+        System.out.println("update symbol " + this.cheminActuel.getCases().toString());
+        
+        // Test afin de vérifier que ce n'est pas la première fois que l'on rentre dans un cercle
+        if( this.cheminActuel.getCases().size() > 1 ) {
+            
+            Case c = this.getCase(y, x);
+        
+            System.out.println(c.toString() + " x : " + x + " y : " + y);
+            
+            int found = this.cheminActuel.getCases().indexOf(c);
+
+            if ( found == -1 && c.getSymbole() != Symbole.VIDE ) {
+
+                this.cheminActuel.ajouter(c);
+
+                if (this.cheminEstValide( this.cheminActuel )){
+                    
+                    this.chemins.add( this.cheminActuel );
+                    
+                    this.updateGrilleAvecChemin( this.cheminActuel );
+                    
+                    this.completePairs ++;
+                    
+                    if ( this.jeuTermine() ) {
+                        
+                        System.out.println("Jeu Termine");
+                        
+                    } else {
+                        
+                        System.out.println("Jeu Perdu");
+                        
+                    }
+                    
+                    System.out.println("Chemin valide");
+
+                } 
+                
+            }
+              
+            this.supprimerChemin(cheminActuel);
+
+            this.setChanged();
+
+            this.notifyObservers();
+                    
+        }
+        
+    }
+    
     public void stopDragAndDrop ( int x , int y ) {
+        
+        System.out.println("x: " + x + " y: " + y);
         
         Case c = this.getCase(y, x);
         
-        if ( c.getSymbole() != Symbole.VIDE && this.cheminEstValide( this.cheminActuel ) ) {
-            
-            this.cheminActuel.ajouter(c);
-            
-            this.chemins.add( this.cheminActuel );
-            
-            System.out.println("Chemin valide");
-            
-        } else {
-            
-            this.supprimerChemin(cheminActuel);
-            
-            System.out.println("Chemin invalide");
+        if( this.cheminActuel.getCases().size() > 1 ) {
+
+            int found = this.cheminActuel.getCases().indexOf(c);
+
+            if ( found == -1 && c.getSymbole() != Symbole.VIDE && this.cheminEstValide( this.cheminActuel ) ) {
+
+                this.cheminActuel.ajouter(c);
+
+                this.chemins.add( this.cheminActuel );
+                
+                this.completePairs ++;
+                
+                this.supprimerChemin(cheminActuel);
+
+                //System.out.println("Chemin valide");
+
+            } else {
+
+                this.supprimerChemin(cheminActuel);
+
+                //System.out.println("Chemin invalide");
+
+            }
 
         }
-          
+        
         this.setChanged();
         
         this.notifyObservers();
@@ -219,11 +304,63 @@ public class Grille extends Observable{
         
     }
     
+    private boolean jeuTermine () {
+        
+        boolean termine = true;
+        
+        for ( Chemin chemin : this.chemins ) {
+            
+            if ( !cheminEstValide(chemin) ) {
+                
+                System.out.println("Partie non terminée : un des chemins est invalide.");
+                
+                return false;
+                
+            }
+            
+        }
+        
+        if ( !plateauEstPlein() ) {
+            
+            System.out.println("Partie non terminée : le plateau n'est pas plein.");
+            
+            return false;
+            
+        }
+        
+        if ( this.completePairs != this.symbolPairs ) {
+            
+            System.out.println("Partie non terminée : toutes les pairs ne sont pas reliées.");
+            
+            return false;
+            
+        }
+        
+        return termine;
+        
+    }
+    
     private boolean cheminEstValide( Chemin chemin ) {
         
         if ( chemin.getCases().get(0).getSymbole() != chemin.getLastElement().getSymbole() ) {
             
             return false;
+            
+        } else {
+            
+            for ( Case ca : chemin.getCases() ) {
+                
+                for ( Chemin ch : this.getChemins() ) {
+
+                    if( ch != chemin && ch.getCases().indexOf( ca ) != -1 ){
+                        
+                        return false;
+                        
+                    }
+
+                }
+            
+            }
             
         }
         
@@ -235,103 +372,31 @@ public class Grille extends Observable{
         
         chemin.supprimer();
         
-        //this.cheminActuel = new Chemin();
+        this.cheminActuel = new Chemin();
             
     }
     
-    private boolean sontVoisines( Case c ) {
+    private void updateGrilleAvecChemin ( Chemin chemin ) {
         
-        System.out.println( this.cheminActuel.toString() );
+        for (Case c : chemin.getCases()) {
+             
+            if ( c.getSymbole() == Symbole.VIDE ) this.plateau[c.getY()][c.getX()] = (Case)c.clone();
+                
+        }
         
-        Case casePrecedente = this.getDerniereCaseCheminActuel();
+    }
+    
+    private boolean sontVoisines( Case c1, Case c2 ) {
+        
+        //System.out.println( this.cheminActuel.toString() );
         
         boolean estVoisine = false;
         
-        ArrayList<Case> voisins = new ArrayList<>();
-        
-        //Case [] plateauActuel = new Case [this.largeur * this.longueur];
-        
-        // plateauActuel[this.largeur * i + j];
-        
-        int casePrecedenteY = casePrecedente.getY();
-        
-        int casePrecedenteX = casePrecedente.getX();
-        
-        if ( casePrecedenteY == 0 && casePrecedenteX == 0 ) {
+        if( (Math.abs(c1.getX() - c2.getX()) == 1 && Math.abs(c1.getY() - c2.getY()) == 0) 
+                || 
+            (Math.abs(c1.getX() - c2.getX()) == 0 && Math.abs(c1.getY() - c2.getY()) == 1) ) {
             
-            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
-            
-        } else if ( casePrecedenteY == 0 && casePrecedenteX == this.largeur - 1 ) {
-            
-            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
-            
-        } else if ( casePrecedenteY == this.longueur -1 && casePrecedenteX == 0 ) {
-            
-            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
-            
-        } else if ( casePrecedenteY == this.longueur -1 && casePrecedenteX == this.largeur -1 ) {
-            
-            voisins.add( this.plateau[ casePrecedenteY - 1][casePrecedenteX] );
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1]);            
-            
-        } else if (casePrecedenteY == 0) {
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
-            
-            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
-
-        } else if (casePrecedenteY == this.longueur - 1) {
-            
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
-                     
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
-                     
-            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
-                     
-        } else if (casePrecedenteX == 0) {
-                       
-            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
-                                                        
-            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
-                                                        
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
-                                 
-        } else if ( casePrecedenteX == this.largeur - 1){
-                                   
-            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
-                                                        
-            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
-                                                                    
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
-                                 
-        } else {
-                                   
-            voisins.add( this.plateau[casePrecedenteY - 1][casePrecedenteX] );
-                                                        
-            voisins.add( this.plateau[casePrecedenteY + 1][casePrecedenteX] );
-                                                        
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX - 1] );
-                                                        
-            voisins.add( this.plateau[casePrecedenteY][casePrecedenteX + 1] );
-                                 
-        }
-        
-        for (int i = 0 ; i < voisins.size(); i++){
-            
-            if ( c.equals( voisins.get(i) ) ) {
-                
-                return true;
-                
-            }
+            estVoisine = true;
             
         }
         
