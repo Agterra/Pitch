@@ -29,8 +29,6 @@ public enum Symbole {
     
     private Symbole(String imagePath) {
         
-        System.out.println(imagePath);
-        
         this.image = new Image(imagePath);
         
     }

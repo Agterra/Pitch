@@ -12,6 +12,7 @@ import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -110,7 +111,7 @@ public class MainApplication extends Application {
         
         this.ratio = this.largeurFenetre / this.grille.getLargeur();
         
-        initialiserMenu(primaryStage);
+        /*initialiserMenu(primaryStage);
         
         
         //ajouter le menu
@@ -128,7 +129,7 @@ public class MainApplication extends Application {
 
         Scene scene = new Scene(vBox, 100, 100);
         
-        this.mainBorder.setTop(menuBar);
+        this.mainBorder.setTop(menuBar);*/
  
         
         for (int i = 0; i < this.grille.getLongueur(); i++) {

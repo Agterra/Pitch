@@ -163,5 +163,15 @@ public class Chemin {
         return this.cases.get(this.cases.size() - 1);
         
     }
+    
+    public void validerLesCase() {
+        
+        for ( int i = 0; i < this.cases.size() ; i++ ) {
+            
+            this.cases.get(i).setLien(Lien.getOpposite(this.cases.get(i).getLien()));
+            
+        }
+        
+    }
   
 }
