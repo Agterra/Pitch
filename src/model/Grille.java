@@ -178,6 +178,10 @@ public class Grille extends Observable{
             
         }
         
+        this.setChanged();
+        
+        this.notifyObservers();
+        
     }
     
     public void startDragAndDrop ( int x , int y ) {
@@ -226,6 +230,8 @@ public class Grille extends Observable{
                     
                     this.cheminActuel.ajouter( c );
 
+                    this.stopDragAndDrop();
+                    
                     System.out.println("Ajout");
         
                 }
@@ -242,7 +248,7 @@ public class Grille extends Observable{
         
     }
     
-    public void stopDragAndDrop( int x, int y ) {
+    public void stopDragAndDrop() {
         
         if (this.cheminEstValide( this.cheminActuel )){
 
