@@ -11,6 +11,7 @@ import java.util.Observer;
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,9 @@ import javafx.scene.shape.*;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.*;
 
 import model.*;
@@ -49,17 +52,21 @@ public class MainApplication extends Application {
     // Elements du modele
     private Grille grille;
 
+    // Element principal
+    private BorderPane racine1;
+
     // Elements graphiques du menu
-    private BorderPane secondBorderPane;
-    
-    private Scene secondScene;
-    
+    private Scene primaryScene;
+        
     // Elements graphiques du jeu 
-    private BorderPane mainBorder;
+    
+    private Stage secondStage;
+    
+    private BorderPane racine2;
     
     private GridPane gameGridPane;
     
-    private Scene mainScene;
+    private Scene secondScene;
     
     ///////////////////////////////////////////
     // FONCTIONS MEMBRES
@@ -78,59 +85,49 @@ public class MainApplication extends Application {
         
         if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.start");
         
+        initialiserVariablesMembres();
+        
         initialisationDuModele();
         
-        initialisationGraphique(primaryStage);
-        
-        Scene scene = new Scene(this.mainBorder, this.hauteurFenetre, this.largeurFenetre, Color.WHITESMOKE);
-
-        primaryStage.setScene( scene );
-        
-        primaryStage.setTitle("Jeu triple A");
-        
-        primaryStage.show();
+        initialisationGraphique(primaryStage, this.secondStage);
         
     }
     
+    // Initialisation des variables membres
+    public void initialiserVariablesMembres() {
+        
+        this.hauteurFenetre = 500;
+
+        this.largeurFenetre = 500;
+        
+        this.grille = new Grille();
+
+        this.ratio = this.largeurFenetre / this.grille.getLargeur();
+        
+        this.racine1 = new BorderPane();
+
+        this.primaryScene = new Scene(this.racine1, this.hauteurFenetre, this.largeurFenetre);
+        
+        this.secondStage = new Stage();
+
+        this.racine2 = new BorderPane();
+
+        this.gameGridPane = new GridPane();
+        
+        this.gameGridPane.setGridLinesVisible(true);
+        
+        this.secondScene = new Scene(this.racine2, this.hauteurFenetre, this.largeurFenetre);;
+        
+    }
+
     // Initialisation des composantes graphiques
-    public void initialisationGraphique (Stage primaryStage) {
+    public void initialisationGraphique (Stage primaryStage, Stage secondStage) {
         
         if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialisationGraphique");
         
-        this.mainBorder = new BorderPane();
+        initialiserMenu(primaryStage, secondStage);
         
-        this.gameGridPane = new GridPane();
-        
-        this.gameGridPane.setGridLinesVisible(false);
-        
-        this.mainBorder.setCenter( this.gameGridPane );
-        
-        this.largeurFenetre = 500;
-        
-        this.hauteurFenetre = 500;
-        
-        this.ratio = this.largeurFenetre / this.grille.getLargeur();
-        
-        /*initialiserMenu(primaryStage);
-        
-        
-        //ajouter le menu
-        Menu menu1 = new Menu("Rejouer");
-        
-        Menu menu2 = new Menu("Règles");
-
-        MenuBar menuBar = new MenuBar();
-
-        menuBar.getMenus().add(menu1);
-        
-        menuBar.getMenus().add(menu2);
-        
-        VBox vBox = new VBox(menuBar);
-
-        Scene scene = new Scene(vBox, 100, 100);
-        
-        this.mainBorder.setTop(menuBar);*/
- 
+        dessinerCasesGrille(primaryStage, secondStage);
         
         for (int i = 0; i < this.grille.getLongueur(); i++) {
             
@@ -226,29 +223,133 @@ public class MainApplication extends Application {
         
     }
     
-    public void initialiserMenu(Stage primaryStage) {
+    public void initialiserMenu(Stage primaryStage, Stage secondStage) {
+                
+        primaryStage.setTitle("Jeu du triple A");
         
-        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialiserMenu");
-        
-        Stage secondStage = new Stage();
-        
-        secondStage.setTitle("Second Stage");
-
-        // Set position of second window, related to primary window.
-        secondStage.setX(primaryStage.getX());
-        secondStage.setY(primaryStage.getY());
-        secondStage.setWidth(this.largeurFenetre);
-        secondStage.setHeight(this.hauteurFenetre);
+        // on positionne la fenetre
+        primaryStage.setX(200);
+        primaryStage.setY(200);
+        primaryStage.setWidth(this.largeurFenetre);
+        primaryStage.setHeight(this.hauteurFenetre);
 
         Button boutonNouvellePartie = new Button();
         boutonNouvellePartie.setText("Nouvelle partie");
+        
+        boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
+        
+            @Override
+            public void handle(ActionEvent event) {
+                
+                System.out.println("Hello");
+                
+                primaryStage.close(); // on ferme la fenetre de menu
+                
+                secondStage.show(); // on affiche la nouvelle partie
+                
+            }
+        
+        });
 
         Button boutonRegles = new Button();
+        
         boutonRegles.setText("Règles");
+        
+        boutonRegles.setOnAction(new EventHandler<ActionEvent>() {
+            
+            int nombreClics = 0;
+            
+            @Override
+            public void handle(ActionEvent event) {
+                
+                nombreClics = nombreClics + 1;
+                
+                TextArea regles = new TextArea("Glissez votre souris pour connecter deux symboles identiques (créant ainsi un tuyau). Le but est de connecter toutes les paires et d'utiliser toutes les cases du tableau. Mais attention, les tuyaux se briseront s'ils se croisent ou se chevauchent!");
+                
+                regles.setFont(Font.font("Verdana", 16));
 
-        VBox buttons = new VBox(boutonNouvellePartie, boutonRegles);
+                regles.setWrapText(true);
 
-        secondStage.show();
+                racine1.setBottom(regles); // /!\ ne pas mettre this.racine1 sinon on fait reference a la fonction anonyme
+                    
+                if(nombreClics%2 == 0) { // on a re-clique sur le bouton donc on enleve les regles
+                    
+                    racine1.getChildren().remove(regles);
+                    
+                }
+                
+            }
+        
+        });
+        
+        
+        VBox boutons = new VBox(boutonNouvellePartie, boutonRegles); // on cree un menu vertical contenant les boutons
+        
+        boutons.setSpacing(50);
+        
+        boutons.setAlignment(Pos.CENTER); // on centre les boutons
+        
+        this.racine1.setCenter(boutons); // on les ajoute au centre du BorderPane
+        
+        primaryStage.setScene(this.primaryScene); // la scene contient la racine qui est un BorderPane
+        
+        //this.primaryBorderPane.setStyle("-fx-background-image: url(\"http://hdwarena.com/wp-content/uploads/2017/04/Beautiful-Wallpaper.jpg\");-fx-background-size: 500, 500;-fx-background-repeat: no-repeat;");
+
+        primaryStage.show();
+        
+    }
+    
+    public void dessinerCasesGrille(Stage primaryStage, Stage secondStage) {
+        
+        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.dessinerCasesGrille");
+        
+        secondStage.setTitle("Partie");
+        
+        // on positionne la fenetre
+        secondStage.setX(200);
+        secondStage.setY(200);
+        secondStage.setWidth(this.largeurFenetre);
+        secondStage.setHeight(this.hauteurFenetre);
+        
+        this.gameGridPane = new GridPane();
+        
+        this.gameGridPane.setGridLinesVisible(true);
+        
+        // on parcourt toute la grille
+        for (int i = 0; i < this.grille.getLongueur(); i++) {
+            
+            for (int j = 0; j < this.grille.getLargeur(); j++) {
+                
+                final int y = i;
+                
+                final int x = j;
+                
+                
+                Pane pane = new Pane();
+                
+                pane.setPrefSize(this.ratio, this.ratio);
+                
+                Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+
+                pane.setBorder(border);
+                
+                ImageView image = new ImageView();
+                
+                image.setFitHeight(ratio - 1);
+                
+                image.setFitWidth(ratio - 1);
+                
+                pane.getChildren().add(image);
+               
+                this.gameGridPane.add(pane, j, i);
+                
+            }
+            
+        }
+        
+        this.racine2.setCenter(this.gameGridPane); // on les ajoute au centre du BorderPane
+        
+        secondStage.setScene(this.secondScene); // la scene contient la racine qui est un BorderPane
 
     }
     
