@@ -5,22 +5,40 @@
  */
 package model;
 
+import javafx.scene.image.Image;
+
 /**
  *
  * @author agterra
  */
 public enum Symbole {
     
-    //ETOILE,
+    ROND("file:src/assets/circle.png"),
     
-    //TRIANGLE,
+    TRIANGLE("file:src/assets/triangle.png"),
     
-    ROND,
+    ETOILE("file:src/assets/star.png"),
     
-    //CARRE,
+    CARRE("file:src/assets/square.png"),
     
-    //LOSANGE,
+    LOSANGE("file:src/assets/losange.png"),
     
-    VIDE
+    VIDE("file:src/assets/vide.png");
+    
+    private final Image image;
+    
+    private Symbole(String imagePath) {
+        
+        System.out.println(imagePath);
+        
+        this.image = new Image(imagePath);
+        
+    }
+    
+    public Image getImage() {
+        
+        return this.image;
+        
+    }
     
 }

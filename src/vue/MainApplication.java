@@ -11,6 +11,7 @@ import java.util.Observer;
 import javafx.application.*;
 import javafx.event.EventHandler;
 import javafx.scene.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -99,121 +100,84 @@ public class MainApplication extends Application {
                 
                 final int x = j;
                 
+                
                 Pane pane = new Pane();
                 
                 pane.setPrefSize(this.ratio, this.ratio);
                 
-                if(this.grille.getPlateau()[i][j].getSymbole() != Symbole.VIDE) {
+                Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+
+                pane.setBorder(border);
                     
-                    Circle cercle = new Circle( this.ratio/2-1 , Color.rgb(200,20,20) );
-                    
-                    cercle.setCenterX(ratio / 2);
-                    
-                    cercle.setCenterY(ratio / 2);
-                    
-                    Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-                    
-                    pane.setBorder(border);
-                    
-                    cercle.setOnDragDetected( new EventHandler<MouseEvent>() {
-                    
-                        @Override
-                        public void handle(MouseEvent event) {
-        
-                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.cercle.onDragDetected");
-
-                            Dragboard db = cercle.startDragAndDrop(TransferMode.ANY);
-
-                            ClipboardContent content = new ClipboardContent();       
-
-                            content.putString(""); // non utilisé actuellement
-
-                            db.setContent(content);
-
-                            event.consume();
-
-                            grille.startDragAndDrop( x, y );
-
-                        }
-
-                    });
-
-                    cercle.setOnDragEntered(new EventHandler<DragEvent>() {
-
-                        public void handle(DragEvent event) {
-                            
-                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.cercle.onDragEntered");
-
-                            grille.updateDragAndDropSymbol( x, y );
-
-                            event.consume();
-
-                        }
-
-                    });
-
-                    cercle.setOnDragDone(new EventHandler<DragEvent>() {
-
-                        public void handle(DragEvent event) {
-
-                            // attention, le setOnDragDone est déclenché par la source du Drag&Drop
-                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.cercle.onDragDone");
-
-                           // grille.stopDragAndDrop( x, y );
-
-                        }
-
-                    });
                 
-                    pane.getChildren().add(cercle);
+                ImageView image = new ImageView();
+                
+                image.setFitHeight(ratio - 1);
+                
+                image.setFitWidth(ratio - 1);
+                
+                if(this.grille.getCase(y, x).getSymbole() != Symbole.VIDE) {
+                    
+                    image.setImage(this.grille.getCase(y, x).getSymbole().getImage());
                     
                 } else {
                     
-                    Rectangle rectangle = new Rectangle(this.ratio -1, this.ratio -1, Color.WHITESMOKE);
-                    
-                    rectangle.setStroke(Color.BLACK);
-                    
-                    rectangle.setStrokeWidth(1);
-                    
-                    //evenement quand la souris entre dans le rectangle
-                    rectangle.setOnDragEntered(new EventHandler<DragEvent>() {
-
-                        public void handle(DragEvent event) {
-                                                        
-                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.rectangle.onDragEntered");
-
-                            grille.updateDragAndDrop( x, y );
-    
-                            event.consume();
-
-                            //System.out.println("drague evente enteuraide rectangle");
-
-                        }
-
-                    });
-                    
-                    rectangle.setOnDragDone(new EventHandler<DragEvent>() {
-
-                        public void handle(DragEvent event) {
-                            
-                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.rectangle.onDragDone");
-
-                            // attention, le setOnDragDone est déclenché par la source du Drag&Drop
-
-                            grille.stopDragAndDrop( x, y );
-
-                            //System.out.println("drague evente donne");
-
-                        }
-
-                    });
-                    
-                    pane.getChildren().clear();
-                    
-                    pane.getChildren().add(rectangle);
+                    image.setImage(this.grille.getCase(y, x).getLien().getImage());
                     
                 }
-                
+
+                image.setOnDragDetected( new EventHandler<MouseEvent>() {
+                    
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDetected");
+
+                        Dragboard db = image.startDragAndDrop(TransferMode.ANY);
+
+                        ClipboardContent content = new ClipboardContent();       
+
+                        content.putString(""); // non utilisé actuellement
+
+                        db.setContent(content);
+
+                        event.consume();
+
+                        grille.startDragAndDrop( x, y );
+
+                    }
+
+                });
+
+                image.setOnDragEntered(new EventHandler<DragEvent>() {
+
+                    public void handle(DragEvent event) {
+
+                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragEntered");
+
+                        event.consume();
+
+                        grille.updateDragAndDrop( x, y );
+
+                    }
+
+                });
+
+                image.setOnDragDone(new EventHandler<DragEvent>() {
+
+                    public void handle(DragEvent event) {
+
+                        // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDone");
+
+                        grille.stopDragAndDrop( x, y );
+
+                    }
+
+                });
+                    
+                pane.getChildren().add(image);
+               
                 this.gameGridPane.add(pane, j, i);
                 
             }
@@ -257,12 +221,12 @@ public class MainApplication extends Application {
                             // Coloriage spécifique du chemin
                             if( found != -1 ) { 
                                 
-                                colorCell(gridCase, cheminActuel.get( found ), Color.rgb(200,20,20));
+                                colorCell(gridCase, cheminActuel.get( found ));
                                 
                             } else {
                                 
                                 // Coloriage spécifique du plateau
-                                colorCell(gridCase, c, Color.rgb(20,20,200));
+                                colorCell(gridCase, c);
                             
                             }
                             
@@ -280,15 +244,23 @@ public class MainApplication extends Application {
         
     }
     
-    public void colorCell(Object gridCase, Case c, Paint color) {
+    public void colorCell(Object gridCase, Case c) {
                 
         //if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.colorCell");
 
         if ( c.getSymbole() != Symbole.VIDE ) {
                                 
-            // Modify Circles
+            if ( gridCase instanceof Pane ) {
 
-        } else if ( c.getLien() != Lien.VIDE ) {
+                Pane pane = (Pane)gridCase;
+
+                ImageView image = (ImageView) pane.getChildren().get(0);
+
+                image.setImage( c.getSymbole().getImage() );
+                
+            }
+            
+        } else {
 
             // Modify rectangles with Correct lien
 
@@ -298,30 +270,10 @@ public class MainApplication extends Application {
 
                 Pane pane = (Pane)gridCase;
 
-                Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
+                ImageView image = (ImageView) pane.getChildren().get(0);
 
-                rectangle.setFill(color);
-
-                rectangle.setStroke(Color.BLACK);
-
-                rectangle.setStrokeWidth(1);
-
-            }
-
-        } else {  // Coloriage par défaut
-
-            if ( gridCase instanceof Pane ) {
-
-                Pane pane = (Pane)gridCase;
-
-                Rectangle rectangle = (Rectangle) pane.getChildren().get(0);
-
-                rectangle.setFill(Color.WHITE);
-
-                rectangle.setStroke(Color.BLACK);
-
-                rectangle.setStrokeWidth(1);
-
+                image.setImage( c.getLien().getImage() );
+                
             }
 
         }

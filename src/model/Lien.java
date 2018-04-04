@@ -5,24 +5,40 @@
  */
 package model;
 
+import javafx.scene.image.Image;
+
 /**
  *
  * @author agterra
  */
 public enum Lien {
     
-    VERTICAL,
+    VERTICAL("file:src/assets/vertical.png"),
     
-    HORIZONTAL,
+    HORIZONTAL("file:src/assets/horizontal.png"),
     
-    COUDE_HAUT_DROIT,
+    COUDE_HAUT_DROIT("file:src/assets/coude_haut_droit.png"),
     
-    COUDE_HAUT_GAUCHE,
+    COUDE_HAUT_GAUCHE("file:src/assets/coude_haut_gauche.png"),
     
-    COUDE_BAS_DROIT,
+    COUDE_BAS_DROIT("file:src/assets/coude_bas_droit.png"),
     
-    COUDE_BAS_GAUCHE,
+    COUDE_BAS_GAUCHE("file:src/assets/coude_bas_gauche.png"),
     
-    VIDE
+    VIDE("file:src/assets/vide.png");
+    
+    private final Image image;
+    
+    private Lien( String pathName) {
+        
+        this.image = new Image(pathName);
+        
+    }
+    
+    public Image getImage() {
+        
+        return this.image;
+        
+    }
     
 }

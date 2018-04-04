@@ -169,11 +169,27 @@ public class Grille extends Observable{
         
         int found = this.cheminActuel.getCases().indexOf(c);
         
-        if( found == -1 && caseEstLibre( c ) && sontVoisines( casePrecedente, c ) ) {
+        if( found != -1 ) {
             
-            this.cheminActuel.ajouter( c );
+            Case foundCase = this.cheminActuel.getCases().get(found);
+
+            if( !foundCase.equals(c) && caseEstLibre( c ) && sontVoisines( casePrecedente, c ) ) {
+
+                this.cheminActuel.ajouter( c );
+
+                //System.out.println("Ajout");
+
+            }
+        
+        } else {
             
-            //System.out.println("Ajout");
+            if( caseEstLibre( c ) && sontVoisines( casePrecedente, c ) ) {
+
+                this.cheminActuel.ajouter( c );
+
+                //System.out.println("Ajout");
+
+            }
             
         }
         
@@ -185,11 +201,39 @@ public class Grille extends Observable{
         
     }
     
-    public void updateDragAndDropSymbol( int x, int y ) {
+    public void stopDragAndDrop( int x, int y ) {
+        
+        if (this.cheminEstValide( this.cheminActuel )){
+
+            this.chemins.add( this.cheminActuel );
+
+            this.updateGrilleAvecChemin( this.cheminActuel );
+
+            this.completePairs ++;
+
+            System.out.println("Chemin valide");
+
+            if ( this.jeuTermine() ) {
+
+                System.out.println("Jeu Termine");
+
+            } else {
+
+                System.out.println("Jeu Perdu");
+
+            }
+
+        } else {
+
+            System.out.println("Chemin invalide");
+
+        }
+        
+    }
+    
+    /*public void stopDragAndDrop( int x, int y ) {
         
         System.out.println("x: " + x + " y: " + y);
-        
-        System.out.println("update symbol " + this.cheminActuel.getCases().toString());
         
         // Test afin de vérifier que ce n'est pas la première fois que l'on rentre dans un cercle
         if( this.cheminActuel.getCases().size() > 1 ) {
@@ -200,33 +244,86 @@ public class Grille extends Observable{
             
             int found = this.cheminActuel.getCases().indexOf(c);
 
-            if ( found == -1 && c.getSymbole() != Symbole.VIDE ) {
+            if ( found != -1 ) {
+                
+                Case foundCase = this.cheminActuel.getCases().get(found);
 
-                this.cheminActuel.ajouter(c);
+                if ( !foundCase.equals(c) && c.getSymbole() != Symbole.VIDE ) {
 
-                if (this.cheminEstValide( this.cheminActuel )){
-                    
-                    this.chemins.add( this.cheminActuel );
-                    
-                    this.updateGrilleAvecChemin( this.cheminActuel );
-                    
-                    this.completePairs ++;
-                    
-                    if ( this.jeuTermine() ) {
-                        
-                        System.out.println("Jeu Termine");
-                        
+                    this.cheminActuel.ajouter(c);
+
+                    if (this.cheminEstValide( this.cheminActuel )){
+
+                        this.chemins.add( this.cheminActuel );
+
+                        this.updateGrilleAvecChemin( this.cheminActuel );
+
+                        this.completePairs ++;
+
+                        System.out.println("Chemin valide");
+
+                        if ( this.jeuTermine() ) {
+
+                            System.out.println("Jeu Termine");
+
+                        } else {
+
+                            System.out.println("Jeu Perdu");
+
+                        }
+
                     } else {
-                        
-                        System.out.println("Jeu Perdu");
-                        
-                    }
-                    
-                    System.out.println("Chemin valide");
 
-                } 
+                        System.out.println("Chemin invalide");
+
+                    }
+
+                } else {
+
+                    System.out.println("Chemin impossible : index found = " + found + " actual symbole = " + c.getSymbole() + " equals = " + c.equals(foundCase));
+
+                }
+            
+            } else {
+                
+                if ( c.getSymbole() != Symbole.VIDE ) {
+
+                    this.cheminActuel.ajouter(c);
+
+                    if (this.cheminEstValide( this.cheminActuel )){
+
+                        this.chemins.add( this.cheminActuel );
+
+                        this.updateGrilleAvecChemin( this.cheminActuel );
+
+                        this.completePairs ++;
+
+                        System.out.println("Chemin valide");
+
+                        if ( this.jeuTermine() ) {
+
+                            System.out.println("Jeu Termine");
+
+                        } else {
+
+                            System.out.println("Jeu Perdu");
+
+                        }
+
+                    } else {
+
+                        System.out.println("Chemin invalide");
+
+                    }
+
+                } else {
+
+                    System.out.println("Chemin impossible : " + found + c.getSymbole());
+
+                }
                 
             }
+                       
               
             this.supprimerChemin(cheminActuel);
 
@@ -236,9 +333,9 @@ public class Grille extends Observable{
                     
         }
         
-    }
+    }*/
     
-    public void stopDragAndDrop ( int x , int y ) {
+   /* public void stopDragAndDrop ( int x , int y ) {
         
         System.out.println("x: " + x + " y: " + y);
         
@@ -274,7 +371,7 @@ public class Grille extends Observable{
         
         this.notifyObservers();
         
-    }
+    }*/
     
     private boolean caseEstLibre ( Case c ) {
         
