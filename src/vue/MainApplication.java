@@ -47,7 +47,7 @@ public class MainApplication extends Application {
     
     private int largeurFenetre;
     
-    private int ratio;
+    private double ratio;
     
     // Elements du modele
     private Grille grille;
@@ -102,7 +102,7 @@ public class MainApplication extends Application {
         
         this.grille = new Grille();
 
-        this.ratio = this.largeurFenetre / this.grille.getLargeur();
+        this.ratio = Math.floor(this.largeurFenetre / this.grille.getLargeur());
         
         this.racine1 = new BorderPane();
 
@@ -114,9 +114,9 @@ public class MainApplication extends Application {
 
         this.gameGridPane = new GridPane();
         
-        this.gameGridPane.setGridLinesVisible(true);
+        this.gameGridPane.setGridLinesVisible(false);
         
-        this.secondScene = new Scene(this.racine2, this.hauteurFenetre, this.largeurFenetre);;
+        this.secondScene = new Scene(this.racine2, this.hauteurFenetre, this.largeurFenetre);
         
     }
 
@@ -127,99 +127,7 @@ public class MainApplication extends Application {
         
         initialiserMenu(primaryStage, secondStage);
         
-        dessinerCasesGrille(primaryStage, secondStage);
-        
-        for (int i = 0; i < this.grille.getLongueur(); i++) {
-            
-            for (int j = 0; j < this.grille.getLargeur(); j++) {
-                
-                final int y = i;
-                
-                final int x = j;
-                
-                
-                Pane pane = new Pane();
-                
-                pane.setPrefSize(this.ratio, this.ratio);
-                
-                Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-
-                pane.setBorder(border);
-                    
-                
-                ImageView image = new ImageView();
-                
-                image.setFitHeight(ratio - 1);
-                
-                image.setFitWidth(ratio - 1);
-                
-                if(this.grille.getCase(y, x).getSymbole() != Symbole.VIDE) {
-                    
-                    image.setImage(this.grille.getCase(y, x).getSymbole().getImage());
-                    
-                } else {
-                    
-                    image.setImage(this.grille.getCase(y, x).getLien().getImage());
-                    
-                }
-
-                image.setOnDragDetected( new EventHandler<MouseEvent>() {
-                    
-                    @Override
-                    public void handle(MouseEvent event) {
-
-                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDetected");
-
-                        Dragboard db = image.startDragAndDrop(TransferMode.ANY);
-
-                        ClipboardContent content = new ClipboardContent();       
-
-                        content.putString(""); // non utilisé actuellement
-
-                        db.setContent(content);
-
-                        event.consume();
-
-                        grille.startDragAndDrop( x, y );
-
-                    }
-
-                });
-
-                image.setOnDragEntered(new EventHandler<DragEvent>() {
-
-                    public void handle(DragEvent event) {
-
-                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragEntered");
-
-                        event.consume();
-
-                        grille.updateDragAndDrop( x, y );
-
-                    }
-
-                });
-
-                image.setOnDragDone(new EventHandler<DragEvent>() {
-
-                    public void handle(DragEvent event) {
-
-                        // attention, le setOnDragDone est déclenché par la source du Drag&Drop
-                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDone");
-
-                        grille.stopDragAndDrop( x, y );
-
-                    }
-
-                });
-                    
-                pane.getChildren().add(image);
-               
-                this.gameGridPane.add(pane, j, i);
-                
-            }
-            
-        }
+        initialiserJeu(primaryStage, secondStage);
         
     }
     
@@ -299,7 +207,7 @@ public class MainApplication extends Application {
         
     }
     
-    public void dessinerCasesGrille(Stage primaryStage, Stage secondStage) {
+    public void initialiserJeu(Stage primaryStage, Stage secondStage) {
         
         if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.dessinerCasesGrille");
         
@@ -307,15 +215,17 @@ public class MainApplication extends Application {
         
         // on positionne la fenetre
         secondStage.setX(200);
+        
         secondStage.setY(200);
-        secondStage.setWidth(this.largeurFenetre);
-        secondStage.setHeight(this.hauteurFenetre);
+        
+       /* secondStage.setWidth(this.largeurFenetre);
+        
+        secondStage.setHeight(this.hauteurFenetre);*/
         
         this.gameGridPane = new GridPane();
         
-        this.gameGridPane.setGridLinesVisible(true);
+        this.gameGridPane.setGridLinesVisible(false);
         
-        // on parcourt toute la grille
         for (int i = 0; i < this.grille.getLongueur(); i++) {
             
             for (int j = 0; j < this.grille.getLargeur(); j++) {
@@ -332,6 +242,7 @@ public class MainApplication extends Application {
                 Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
                 pane.setBorder(border);
+                    
                 
                 ImageView image = new ImageView();
                 
@@ -339,6 +250,79 @@ public class MainApplication extends Application {
                 
                 image.setFitWidth(ratio - 1);
                 
+                if(this.grille.getCase(y, x).getSymbole() != Symbole.VIDE) {
+                    
+                    image.setImage(this.grille.getCase(y, x).getSymbole().getImage());
+                    
+                    image.setOnDragDetected( new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDetected");
+
+                            Dragboard db = image.startDragAndDrop(TransferMode.ANY);
+
+                            ClipboardContent content = new ClipboardContent();       
+
+                            content.putString(""); // non utilisé actuellement
+
+                            db.setContent(content);
+
+                            event.consume();
+
+                            grille.startDragAndDrop( x, y );
+
+                        }
+
+                    });
+
+                } else {
+                    
+                    image.setImage(this.grille.getCase(y, x).getLien().getImage());
+                    
+                    image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    
+                        public void handle(MouseEvent event) {
+
+                            // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+                            if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDone");
+
+                            grille.clic(x, y);
+
+                        }
+                    
+                    });
+                    
+                }
+                
+                image.setOnDragEntered(new EventHandler<DragEvent>() {
+
+                    public void handle(DragEvent event) {
+
+                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragEntered");
+
+                        event.consume();
+
+                        grille.updateDragAndDrop( x, y );
+
+                    }
+
+                });
+
+                image.setOnDragDone(new EventHandler<DragEvent>() {
+
+                    public void handle(DragEvent event) {
+
+                        // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+                        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.image.onDragDone");
+
+                        grille.stopDragAndDrop();
+
+                    }
+
+                });
+
                 pane.getChildren().add(image);
                
                 this.gameGridPane.add(pane, j, i);
