@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.*;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 import javafx.stage.*;
 
 import model.*;
@@ -27,6 +32,10 @@ import model.*;
  */
 public class MainApplication extends Application {
 
+    ///////////////////////////////////////////
+    // VARIABLES MEMBRES
+    ///////////////////////////////////////////
+    
     public static boolean DISPLAY_DEBUG = true;
     
     // Propriétés de fenêtre
@@ -36,15 +45,24 @@ public class MainApplication extends Application {
     
     private int ratio;
     
-    // Elements du modèle
+    // Elements du modele
     private Grille grille;
 
-    // Elements graphiques    
+    // Elements graphiques du menu
+    private BorderPane secondBorderPane;
+    
+    private Scene secondScene;
+    
+    // Elements graphiques du jeu 
     private BorderPane mainBorder;
     
     private GridPane gameGridPane;
     
     private Scene mainScene;
+    
+    ///////////////////////////////////////////
+    // FONCTIONS MEMBRES
+    ///////////////////////////////////////////
     
     public static void main(String[] args) {
         
@@ -61,7 +79,7 @@ public class MainApplication extends Application {
         
         initialisationDuModele();
         
-        initialisationGraphique();
+        initialisationGraphique(primaryStage);
         
         Scene scene = new Scene(this.mainBorder, this.hauteurFenetre, this.largeurFenetre, Color.WHITESMOKE);
 
@@ -74,7 +92,7 @@ public class MainApplication extends Application {
     }
     
     // Initialisation des composantes graphiques
-    public void initialisationGraphique () {
+    public void initialisationGraphique (Stage primaryStage) {
         
         if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialisationGraphique");
         
@@ -91,6 +109,27 @@ public class MainApplication extends Application {
         this.hauteurFenetre = 500;
         
         this.ratio = this.largeurFenetre / this.grille.getLargeur();
+        
+        initialiserMenu(primaryStage);
+        
+        
+        //ajouter le menu
+        Menu menu1 = new Menu("Rejouer");
+        
+        Menu menu2 = new Menu("Règles");
+
+        MenuBar menuBar = new MenuBar();
+
+        menuBar.getMenus().add(menu1);
+        
+        menuBar.getMenus().add(menu2);
+        
+        VBox vBox = new VBox(menuBar);
+
+        Scene scene = new Scene(vBox, 100, 100);
+        
+        this.mainBorder.setTop(menuBar);
+ 
         
         for (int i = 0; i < this.grille.getLongueur(); i++) {
             
@@ -184,6 +223,32 @@ public class MainApplication extends Application {
             
         }
         
+    }
+    
+    public void initialiserMenu(Stage primaryStage) {
+        
+        if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialiserMenu");
+        
+        Stage secondStage = new Stage();
+        
+        secondStage.setTitle("Second Stage");
+
+        // Set position of second window, related to primary window.
+        secondStage.setX(primaryStage.getX());
+        secondStage.setY(primaryStage.getY());
+        secondStage.setWidth(this.largeurFenetre);
+        secondStage.setHeight(this.hauteurFenetre);
+
+        Button boutonNouvellePartie = new Button();
+        boutonNouvellePartie.setText("Nouvelle partie");
+
+        Button boutonRegles = new Button();
+        boutonRegles.setText("Règles");
+
+        VBox buttons = new VBox(boutonNouvellePartie, boutonRegles);
+
+        secondStage.show();
+
     }
     
     // Initialisation du modèle    
