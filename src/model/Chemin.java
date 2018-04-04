@@ -168,7 +168,17 @@ public class Chemin {
         
         for ( int i = 0; i < this.cases.size() ; i++ ) {
             
-            this.cases.get(i).setLien(Lien.getOpposite(this.cases.get(i).getLien()));
+            Case c = this.cases.get(i);
+            
+            if ( c.getSymbole() != Symbole.VIDE ) {
+                
+                c.setSymbole(Symbole.getOpposite(c.getSymbole()));
+            
+            } else if ( c.getLien() != Lien.VIDE ) {
+                
+                c.setLien(Lien.getOpposite(c.getLien()));
+            
+            }
             
         }
         
