@@ -1,137 +1,200 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.Objects;
 
-/**
- *
- * @author agterra
- */
 public class Case {
-    
+
     private Symbole symbole;
-    
+
     private Lien lien;
-    
+
     private int x;
-    
+
     private int y;
-    
-    public Case () {
-        
+
+    /**
+     * Initialisation des paramètres à leurs valeurs par défaut
+     */
+    public Case() {
+
         this.x = -1;
-        
+
         this.y = -1;
-        
+
         this.symbole = Symbole.VIDE;
-        
+
         this.lien = Lien.VIDE;
-        
-    }
-    
-    public Case (Symbole symbole, Lien lien, int x, int y) {
-        
-        this.symbole = symbole;
-        
-        this.lien = lien;
-        
-        this.x = x;
-        
-        this.y = y;
-        
-    }
-    
-    public Case (int x, int y) {
-        
-        this.symbole = Symbole.VIDE;
-        
-        this.lien = Lien.VIDE;
-        
-        this.x = x;
-        
-        this.y = y;
-        
+
     }
 
+    /**
+     * Initialisation des paramètres avec des valeurs
+     *
+     * @param symbole Un symbole
+     * @param lien Un lien
+     * @param x Abscisse de la case
+     * @param y Ordonnée de la case
+     */
+    public Case(Symbole symbole, Lien lien, int x, int y) {
+
+        this.symbole = symbole;
+
+        this.lien = lien;
+
+        this.x = x;
+
+        this.y = y;
+
+    }
+
+    /**
+     * Initialisation des paramètres avec des valeurs
+     *
+     * @param x Abscisse de la case
+     * @param y Ordonnée de la case
+     */
+    public Case(int x, int y) {
+
+        this.symbole = Symbole.VIDE;
+
+        this.lien = Lien.VIDE;
+
+        this.x = x;
+
+        this.y = y;
+
+    }
+
+    /**
+     * Getter de symbole
+     *
+     * @return le symbole de la case
+     */
     public Symbole getSymbole() {
         return symbole;
     }
 
+    /**
+     * Setter de symbole
+     *
+     * @param symbole un symbole
+     */
     public void setSymbole(Symbole symbole) {
         this.symbole = symbole;
     }
 
+    /**
+     * Getter de lien
+     *
+     * @return le lien de la case
+     */
     public Lien getLien() {
         return lien;
     }
 
+    /**
+     * Setter de lien
+     *
+     * @param lien un lien
+     */
     public void setLien(Lien lien) {
         this.lien = lien;
     }
 
+    /**
+     * Getter de x
+     *
+     * @return l'abscisse de la case
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Setter de x
+     *
+     * @param x une abscisse
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Getter de y
+     *
+     * @return l'ordonnée de la case
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Setter de y
+     *
+     * @param y une ordonnée
+     */
     public void setY(int y) {
         this.y = y;
     }
-    
+
+    /**
+     * Retourne vrai si les deux cases sont identiques, faux sinon
+     *
+     * @param o un objet (une Case)
+     * @return vrai ou faux
+     */
     @Override
-    public boolean equals( Object o ){
-        
-        if( o instanceof Case ) {
-        
-            Case c = (Case)o;
-            
-            if( this.x == c.x && this.y == c.y ) {
-                
+    public boolean equals(Object o) {
+
+        if (o instanceof Case) {
+
+            Case c = (Case) o;
+
+            if (this.x == c.x && this.y == c.y) {
+
                 return true;
-                
+
             }
-        
+
         }
-        
+
         return false;
-        
+
     }
 
+    /**
+     * Construit une chaîne de caractère regroupant les propriétés d'un objet
+     * Case
+     *
+     * @return les propriétés de Case
+     */
     @Override
     public String toString() {
-        
-        return ( this.lien != Lien.VIDE ) ? this.lien.toString() : this.symbole.toString();
-        
+
+        return (this.lien != Lien.VIDE) ? this.lien.toString() : this.symbole.toString();
+
     }
 
+    /**
+     * Clone une case avec ses propriétés
+     *
+     * @return la nouvelle case
+     */
     @Override
-    protected Object clone(){
-        
+    protected Object clone() {
+
         Case c = new Case();
-        
+
         c.setX(this.x);
-        
+
         c.setY(this.y);
-        
+
         c.setLien(this.lien);
-        
+
         c.setSymbole(this.symbole);
-        
+
         return c;
-        
+
     }
-    
-    
-    
+
 }
