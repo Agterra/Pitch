@@ -97,7 +97,7 @@ public class MainApplication extends Application {
     // Initialisation des variables membres
     public void initialiserVariablesMembres() {
         
-        this.hauteurFenetre = 500;
+        this.hauteurFenetre = 525;
 
         this.largeurFenetre = 500;
         
@@ -107,7 +107,7 @@ public class MainApplication extends Application {
         
         this.racine1 = new BorderPane();
 
-        this.primaryScene = new Scene(this.racine1, this.hauteurFenetre, this.largeurFenetre);
+        this.primaryScene = new Scene(this.racine1, this.largeurFenetre, this.hauteurFenetre);
         
         this.secondStage = new Stage();
 
@@ -117,7 +117,7 @@ public class MainApplication extends Application {
         
         this.gameGridPane.setGridLinesVisible(false);
         
-        this.secondScene = new Scene(this.racine2, this.hauteurFenetre, this.largeurFenetre);
+        this.secondScene = new Scene(this.racine2, this.largeurFenetre, this.hauteurFenetre);
         
     }
 
@@ -213,7 +213,7 @@ public class MainApplication extends Application {
         
         primaryStage.setScene(this.primaryScene); // la scene contient la racine qui est un BorderPane
         
-        this.racine1.setStyle("-fx-background-color: #FF1493; -fx-background-size: 500, 500;");
+        this.racine1.setStyle("-fx-background: #55ff66; -fx-background-size: 500, 500;");
 
         primaryStage.show();
         
@@ -230,9 +230,58 @@ public class MainApplication extends Application {
         
         secondStage.setY(200);
         
-       /* secondStage.setWidth(this.largeurFenetre);
+        // Creation du menu interne du jeu
+        MenuBar menuBar = new MenuBar();
         
-        secondStage.setHeight(this.hauteurFenetre);*/
+        Menu menu = new Menu("Partie");
+        
+        MenuItem itemPartieAnnulerCoup = new MenuItem("Annuler le dernier coup");
+        
+        itemPartieAnnulerCoup.setOnAction(new EventHandler<ActionEvent>() {
+        
+            @Override
+            public void handle(ActionEvent event) {
+                
+                //todo
+                System.out.println("annuler dernier coup");
+                
+            }
+        
+        });
+        
+        MenuItem itemPartieRecommencer = new MenuItem("Recommencer");
+        
+        itemPartieRecommencer.setOnAction(new EventHandler<ActionEvent>() {
+        
+            @Override
+            public void handle(ActionEvent event) {
+                
+                //todo
+                System.out.println("recommencer");
+                
+            }
+        
+        });
+        
+        MenuItem itemPartieQuitter = new MenuItem("Quitter la partie");
+        
+        itemPartieQuitter.setOnAction(new EventHandler<ActionEvent>() {
+        
+            @Override
+            public void handle(ActionEvent event) {
+                
+                //todo
+                System.out.println("quitter");
+                
+            }
+        
+        });
+        
+        menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
+        
+        menuBar.getMenus().addAll(menu);
+        
+        this.racine2.setTop(menuBar); // on les ajoute au centre du BorderPane
         
         this.gameGridPane = new GridPane();
         
@@ -386,12 +435,12 @@ public class MainApplication extends Application {
                             // Coloriage spécifique du chemin
                             if( found != -1 ) { 
                                 
-                                colorCell(gridCase, cheminActuel.get( found ));
+                                colorierCase(gridCase, cheminActuel.get( found ));
                                 
                             } else {
                                 
                                 // Coloriage spécifique du plateau
-                                colorCell(gridCase, c);
+                                colorierCase(gridCase, c);
                             
                             }
                             
@@ -409,7 +458,7 @@ public class MainApplication extends Application {
         
     }
     
-    public void colorCell(Object gridCase, Case c) {
+    public void colorierCase(Object gridCase, Case c) {
                 
         //if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.colorCell");
 
