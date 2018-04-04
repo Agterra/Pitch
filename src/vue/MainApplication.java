@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -225,23 +226,30 @@ public class MainApplication extends Application {
     
     public void initialiserMenu(Stage primaryStage, Stage secondStage) {
                 
-        primaryStage.setTitle("Jeu du triple A");
+        primaryStage.setTitle("Jeu triple A");
         
         // on positionne la fenetre
         primaryStage.setX(200);
         primaryStage.setY(200);
         primaryStage.setWidth(this.largeurFenetre);
         primaryStage.setHeight(this.hauteurFenetre);
+        
+        Label titre = new Label("Javaline");
+
+        titre.setFont(Font.font("Verdana", 42));
 
         Button boutonNouvellePartie = new Button();
+        
         boutonNouvellePartie.setText("Nouvelle partie");
+        
+        boutonNouvellePartie.setMaxWidth(200);
+        
+        boutonNouvellePartie.setFont(Font.font("Verdana", 16));
         
         boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
         
             @Override
             public void handle(ActionEvent event) {
-                
-                System.out.println("Hello");
                 
                 primaryStage.close(); // on ferme la fenetre de menu
                 
@@ -254,6 +262,10 @@ public class MainApplication extends Application {
         Button boutonRegles = new Button();
         
         boutonRegles.setText("Règles");
+        
+        boutonRegles.setMaxWidth(200);
+        
+        boutonRegles.setFont(Font.font("Verdana", 16));
         
         boutonRegles.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -283,17 +295,17 @@ public class MainApplication extends Application {
         });
         
         
-        VBox boutons = new VBox(boutonNouvellePartie, boutonRegles); // on cree un menu vertical contenant les boutons
+        VBox menu = new VBox(titre, boutonNouvellePartie, boutonRegles); // on cree un menu vertical contenant les boutons
         
-        boutons.setSpacing(50);
+        menu.setSpacing(20);
         
-        boutons.setAlignment(Pos.CENTER); // on centre les boutons
+        menu.setAlignment(Pos.CENTER); // on centre les boutons
         
-        this.racine1.setCenter(boutons); // on les ajoute au centre du BorderPane
+        this.racine1.setCenter(menu); // on les ajoute au centre du BorderPane
         
         primaryStage.setScene(this.primaryScene); // la scene contient la racine qui est un BorderPane
         
-        //this.primaryBorderPane.setStyle("-fx-background-image: url(\"http://hdwarena.com/wp-content/uploads/2017/04/Beautiful-Wallpaper.jpg\");-fx-background-size: 500, 500;-fx-background-repeat: no-repeat;");
+        this.racine1.setStyle("-fx-background-color: #FF1493; -fx-background-size: 500, 500;");
 
         primaryStage.show();
         
