@@ -57,6 +57,49 @@ public class Grille extends Observable{
                 
     }
 
+    public Grille( ArrayList<int[]> points){
+        
+        int taille = 4;
+        
+        this.chemins = new ArrayList<>();
+        
+        this.largeur = taille;
+        
+        this.longueur = taille;
+        
+        this.plateau = new Case[taille][taille];
+        
+        int[] tuple = new int[2];
+        
+        for (int i = 0; i < this.largeur; i++){
+            
+            for (int j = 0; j < this.longueur; j++){
+                
+                this.plateau[i][j] = new Case(j, i);
+                
+                tuple[0] = i;
+                tuple[1] = j;
+                
+                for( int k = 0; k < points.size(); k ++){
+                    
+                    if (points.get(k)[0] == tuple[0] && points.get(k)[1] == tuple[1]){
+                    
+                        this.plateau[i][j].setSymbole(Symbole.ROND);
+
+                        System.out.println("trouV at :" + i + " " + j);
+
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        this.symbolPairs = points.size() / 2;
+        
+    }
+    
     public Grille(int largeur, int longueur, int symbolPairs ) {
         
         this.chemins = new ArrayList<>();
@@ -292,7 +335,7 @@ public class Grille extends Observable{
         
         if ( this.completePairs != this.symbolPairs ) {
             
-            System.out.println("Partie non terminée : toutes les pairs ne sont pas reliées.");
+            System.out.println("Partie non terminée : toutes les paires ne sont pas reliées.");
             
             return false;
             

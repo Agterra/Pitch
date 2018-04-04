@@ -358,7 +358,9 @@ public class MainApplication extends Application {
                 
         if( MainApplication.DISPLAY_DEBUG ) System.out.println("MainApplication.initialisationDuModele");
 
-        this.grille = new Grille();
+        PairsGenerator p = new PairsGenerator(4, 4, 3);
+        
+        this.grille = new Grille( p.generatePairs() );
         
         this.grille.addObserver( new Observer() {
             
