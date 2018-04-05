@@ -439,7 +439,8 @@ public class MainApplication extends Application {
             @Override
             public void handle(ActionEvent evenement) {
 
-                //todo
+                grille.annulerDernierCoup();
+                
                 System.out.println("annuler dernier coup");
 
             }

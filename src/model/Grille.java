@@ -103,34 +103,6 @@ public class Grille extends Observable {
 
         this.plateauOrigin = this.clonePlateau(this.plateau);
         
-        for (int i = 0 ; i < this.longueur ; i ++){
-            
-            for(int j = 0; j<this.largeur; j++){
-                
-                System.out.print("["+this.plateauOrigin[i][j]+"]");
-                
-            }
-            
-            System.out.println();
-            
-        }
-        
-                    System.out.println();
-            System.out.println();
-
-        
-        for (int i = 0 ; i < this.longueur ; i ++){
-            
-            for(int j = 0; j<this.largeur; j++){
-                
-                System.out.print("["+this.plateau[i][j]+"]");
-                
-            }
-            
-            System.out.println();
-            
-        }
-        
     }
 
     /**
@@ -356,6 +328,8 @@ public class Grille extends Observable {
 
                     this.cheminActuel.ajouter(c);
 
+                    System.out.println(this.cheminActuel.getCases().toString());
+                    
                     this.finirDragAndDrop();
 
                     System.out.println("Ajout");
@@ -378,34 +352,38 @@ public class Grille extends Observable {
      */
     public void finirDragAndDrop() {
 
-        if (this.cheminEstValide(this.cheminActuel)) {
+        if( this.cheminActuel.getCases().size() > 0 ){
+        
+            if (this.cheminEstValide(this.cheminActuel)) {
 
-            this.cheminActuel.validerLesCases();
+                this.cheminActuel.validerLesCases();
 
-            this.chemins.add(this.cheminActuel);
+                this.chemins.add(this.cheminActuel);
 
-            this.majGrilleAvecChemin(this.cheminActuel);
+                this.majGrilleAvecChemin(this.cheminActuel);
 
-            this.pairesCompletes++;
+                this.pairesCompletes++;
 
-            System.out.println("Chemin valide");
+                System.out.println("Chemin valide");
 
-            if (this.jeuTermine()) {
+                if (this.jeuTermine()) {
 
-                System.out.println("Jeu terminé");
+                    System.out.println("Jeu terminé");
+
+                } else {
+
+                    System.out.println("Jeu perdu");
+
+                }
 
             } else {
 
-                System.out.println("Jeu perdu");
+                supprimerChemin(this.cheminActuel);
+
+                System.out.println("Chemin invalide");
 
             }
-
-        } else {
-
-            supprimerChemin(this.cheminActuel);
-
-            System.out.println("Chemin invalide");
-
+        
         }
 
         this.setChanged();
@@ -420,17 +398,41 @@ public class Grille extends Observable {
     
     public void reinitialiser(){
         
-        this.plateau = this.clonePlateau(this.plateauOrigin);
-        
-        for (int i = 0; i < this.chemins.size(); i++){
-            
-            this.supprimerChemin(this.chemins.get(i));
-        
-        }
+        this.chemins = new ArrayList<>();
         
         this.supprimerChemin(cheminActuel);
         
         this.pairesCompletes = 0;
+        
+        this.plateau = this.clonePlateau(this.plateauOrigin);
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
+    }
+    
+    /**
+     * Annuler le dernier coup
+     */
+    
+    public void annulerDernierCoup() {
+        
+        this.afficherPlateau();
+        
+        if (this.chemins.size() > 0){
+            
+            Chemin chemin = this.chemins.get(this.chemins.size() - 1);
+            
+            this.supprimerChemin(chemin);
+            
+            this.majGrilleAvecChemin(chemin);
+            
+            this.chemins.remove(this.chemins.size() - 1);
+            
+        }
+        
+        this.afficherPlateau();
         
         this.setChanged();
         
@@ -585,7 +587,9 @@ public class Grille extends Observable {
         for (Case c : chemin.getCases()) {
 
             if (c.getSymbole() == Symbole.VIDE) {
+                
                 this.plateau[c.getY()][c.getX()] = (Case) c.clone();
+                
             }
 
         }
@@ -644,6 +648,30 @@ public class Grille extends Observable {
         }
         
         return copieCases;
+        
+    }
+    
+    /**
+     * Afficher le plateau actuel
+     */
+    
+    public void afficherPlateau() {
+        
+        System.out.println();
+        
+        for(int i = 0; i < this.longueur; i ++){
+            
+            for(int j = 0; j < this.largeur; j++){
+                
+                System.out.print("["+this.plateau[i][j]+"]");
+                
+            }
+            
+            System.out.println();
+            
+        }
+        
+        System.out.println();
         
     }
     
