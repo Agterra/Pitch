@@ -12,10 +12,12 @@ public class Grille extends Observable {
 
     private int longueur;
 
-    private int pairesSymboles;
+    private final int pairesSymboles;
 
     private int pairesCompletes = 0;
 
+    private final Case[][] plateauOrigin;
+    
     private Case[][] plateau;
 
     /**
@@ -47,6 +49,8 @@ public class Grille extends Observable {
 
         this.plateau[taille - 1][taille - 1].setSymbole(Symbole.ROND);
 
+        this.plateauOrigin = this.clonePlateau(this.plateau);
+        
         this.pairesSymboles = 1;
 
     }
@@ -97,6 +101,36 @@ public class Grille extends Observable {
 
         this.pairesSymboles = points.size() / 2;
 
+        this.plateauOrigin = this.clonePlateau(this.plateau);
+        
+        for (int i = 0 ; i < this.longueur ; i ++){
+            
+            for(int j = 0; j<this.largeur; j++){
+                
+                System.out.print("["+this.plateauOrigin[i][j]+"]");
+                
+            }
+            
+            System.out.println();
+            
+        }
+        
+                    System.out.println();
+            System.out.println();
+
+        
+        for (int i = 0 ; i < this.longueur ; i ++){
+            
+            for(int j = 0; j<this.largeur; j++){
+                
+                System.out.print("["+this.plateau[i][j]+"]");
+                
+            }
+            
+            System.out.println();
+            
+        }
+        
     }
 
     /**
@@ -128,6 +162,8 @@ public class Grille extends Observable {
 
         this.pairesSymboles = pairesSymboles;
 
+        this.plateauOrigin = this.clonePlateau(this.plateau);
+        
         // Algo pour déterminer possibilité de placement de deux symboles TO DO
     }
 
@@ -377,6 +413,30 @@ public class Grille extends Observable {
         this.notifyObservers();
 
     }
+    
+    /**
+     * Reinitialiser la grille à son état de départ
+     */
+    
+    public void reinitialiser(){
+        
+        this.plateau = this.clonePlateau(this.plateauOrigin);
+        
+        for (int i = 0; i < this.chemins.size(); i++){
+            
+            this.supprimerChemin(this.chemins.get(i));
+        
+        }
+        
+        this.supprimerChemin(cheminActuel);
+        
+        this.pairesCompletes = 0;
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
+    }
 
     /**
      * Renvoie vrai si la case est libre (sans symbole ni lien), faux sinon
@@ -569,6 +629,24 @@ public class Grille extends Observable {
 
     }
 
+    public Case[][] clonePlateau( Case[][] cases ){
+        
+        Case[][] copieCases = new Case[this.longueur][this.largeur];
+        
+        for(int i = 0; i < this.longueur; i++){
+            
+            for(int j = 0; j < this.largeur; j++){
+                
+                copieCases[i][j] = (Case)cases[i][j].clone();
+                
+            }
+            
+        }
+        
+        return copieCases;
+        
+    }
+    
     /**
      * Construit une chaîne de caractère regroupant les propriétés d'un objet
      * Grille
