@@ -61,7 +61,7 @@ public class Chemin {
         }
 
     }
-
+    
     /**
      * Renvoie vrai si la case (x,y) est contenue dans un chemin, faux sinon
      *

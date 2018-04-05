@@ -143,7 +143,7 @@ public class MainApplication extends Application {
      */
     public void initialiserMenu(Stage premierStage, Stage deuxiemeStage) {
 
-        premierStage.setTitle("Jeu triple A");
+        premierStage.setTitle("Javaline");
 
         // On positionne la fenetre
         premierStage.setX(200);
@@ -239,7 +239,9 @@ public class MainApplication extends Application {
     public void initialiserJeu(Stage premierStage, Stage deuxiemeStage) {
 
         if (MainApplication.DEBUGAGE) {
+            
             System.out.println("MainApplication.initialiserJeu");
+            
         }
 
         deuxiemeStage.setTitle("Partie");
@@ -263,7 +265,11 @@ public class MainApplication extends Application {
             public void handle(ActionEvent evenement) {
 
                 //todo
-                System.out.println("annuler dernier coup");
+                if (MainApplication.DEBUGAGE) {
+
+                    System.out.println("annuler dernier coup");
+
+                }
 
             }
 
@@ -292,6 +298,12 @@ public class MainApplication extends Application {
 
                 //todo
                 System.out.println("quitter");
+                
+                grille.supprimerTousLesChemins();
+                
+                premierStage.show();
+                
+                deuxiemeStage.close();
 
             }
 

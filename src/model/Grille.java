@@ -244,6 +244,24 @@ public class Grille extends Observable {
         this.notifyObservers();
 
     }
+    
+    /**
+     * Supprime tous les chemins d'une grille
+     */
+    public void supprimerTousLesChemins() {
+        
+        for(Chemin c : this.chemins) {
+            
+            c.supprimer();
+            
+        }
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+    }
+
+    
 
     /**
      * Commencer le drag and drop sur un symbole
