@@ -294,7 +294,7 @@ public class MainApplication extends Application {
 
         MenuItem itemPartieQuitter = new MenuItem("Quitter la partie");
 
-        initialiserActionsMenu(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
+        initialiserActionsMenu(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter, premierStage);
         
         // Ajout des items dans le menu
         menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
@@ -431,7 +431,7 @@ public class MainApplication extends Application {
      * @param recommencerItem
      * @param quitterItem
      */
-    public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem quitterItem ) {
+    public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem quitterItem, Stage premierStage ) {
         
         
         // Ajout des interactions sur le menu
@@ -441,8 +441,6 @@ public class MainApplication extends Application {
             public void handle(ActionEvent evenement) {
 
                 grille.annulerDernierCoup();
-                
-                System.out.println("annuler dernier coup");
 
             }
 
@@ -454,8 +452,6 @@ public class MainApplication extends Application {
             public void handle(ActionEvent evenement) {
 
                 grille.reinitialiser();
-                
-                System.out.println("recommencer");
 
             }
 
@@ -465,9 +461,10 @@ public class MainApplication extends Application {
 
             @Override
             public void handle(ActionEvent evenement) {
-
-                //todo
-                System.out.println("quitter");
+                
+                deuxiemeStage.close();
+                
+                premierStage.close();
 
             }
 
