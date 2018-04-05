@@ -14,8 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.*;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -93,13 +91,13 @@ public class MainApplication extends Application {
      */
     public void initialiserVariablesMembres() {
 
-        this.hauteurFenetre = 525;
+        this.hauteurFenetre = 600;
 
-        this.largeurFenetre = 500;
+        this.largeurFenetre = 580;
 
         this.grille = new Grille();
 
-        this.ratio = Math.floor(this.largeurFenetre / this.grille.getLargeur());
+        this.ratio = Math.floor(this.largeurFenetre / this.grille.getLargeur()) - 10;
 
         this.racine1 = new BorderPane();
 
@@ -146,8 +144,8 @@ public class MainApplication extends Application {
         premierStage.setTitle("Jeu triple A");
 
         // On positionne la fenetre
-        premierStage.setX(200);
-        premierStage.setY(200);
+        premierStage.setX(Screen.getPrimary().getBounds().getMaxX()/2 - this.largeurFenetre/2);
+        premierStage.setY(Screen.getPrimary().getBounds().getMaxY()/2 - this.hauteurFenetre/2);
         premierStage.setWidth(this.largeurFenetre);
         premierStage.setHeight(this.hauteurFenetre);
 
@@ -245,10 +243,10 @@ public class MainApplication extends Application {
         deuxiemeStage.setTitle("Partie");
 
         // On positionne la fenetre
-        deuxiemeStage.setX(200);
-
-        deuxiemeStage.setY(200);
-
+        deuxiemeStage.setX(Screen.getPrimary().getBounds().getMaxX()/2 - this.largeurFenetre/2);
+        
+        deuxiemeStage.setY(Screen.getPrimary().getBounds().getMaxY()/2 - this.hauteurFenetre/2);
+        
         // Creation du menu interne du jeu
         MenuBar menuBar = new MenuBar();
 
@@ -256,47 +254,12 @@ public class MainApplication extends Application {
 
         MenuItem itemPartieAnnulerCoup = new MenuItem("Annuler le dernier coup");
 
-        // Ajout des interactions sur le menu
-        itemPartieAnnulerCoup.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-
-                //todo
-                System.out.println("annuler dernier coup");
-
-            }
-
-        });
-
         MenuItem itemPartieRecommencer = new MenuItem("Recommencer");
 
-        itemPartieRecommencer.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-
-                //todo
-                System.out.println("recommencer");
-
-            }
-
-        });
-
         MenuItem itemPartieQuitter = new MenuItem("Quitter la partie");
-
-        itemPartieQuitter.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-
-                //todo
-                System.out.println("quitter");
-
-            }
-
-        });
-
+        
+        initialiserActionsMenu(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
+        
         // Ajout des items dans le menu
         menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
 
@@ -306,7 +269,11 @@ public class MainApplication extends Application {
 
         this.gridPaneJeu = new GridPane();
 
-        this.gridPaneJeu.setGridLinesVisible(false);
+        this.racine2.setCenter(this.gridPaneJeu);
+        
+        this.gridPaneJeu.setAlignment(Pos.CENTER);
+        
+        deuxiemeStage.setScene(this.deuxiemeScene); // la scene contient la racine qui est un BorderPane
 
         for (int i = 0; i < this.grille.getLongueur(); i++) {
 
@@ -419,12 +386,58 @@ public class MainApplication extends Application {
 
         }
 
-        this.racine2.setCenter(this.gridPaneJeu); // on les ajoute au centre du BorderPane
-
-        deuxiemeStage.setScene(this.deuxiemeScene); // la scene contient la racine qui est un BorderPane
-
     }
 
+    /**
+     * Initialisation des actions du menu
+     * @param annulerCoupItem
+     * @param recommencerItem
+     * @param quitterItem
+     */
+    public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem quitterItem ) {
+        
+        
+        // Ajout des interactions sur le menu
+        annulerCoupItem.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent evenement) {
+
+                //todo
+                System.out.println("annuler dernier coup");
+
+            }
+
+        });
+
+        recommencerItem.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent evenement) {
+
+                grille.reinitialiser();
+                
+                System.out.println("recommencer");
+
+            }
+
+        });
+
+        quitterItem.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent evenement) {
+
+                //todo
+                System.out.println("quitter");
+
+            }
+
+        });
+        
+    }
+    
+    
     /**
      * Initialisation du modèle avec la generation des paires
      */
