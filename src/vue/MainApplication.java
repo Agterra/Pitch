@@ -154,7 +154,7 @@ public class MainApplication extends Application {
 
         titre.setFont(Font.font("Verdana", 42));
 
-        // ... et deux boutons
+        // ... et trois boutons
         Button boutonNouvellePartie = new Button();
 
         boutonNouvellePartie.setText("Nouvelle partie");
@@ -163,20 +163,7 @@ public class MainApplication extends Application {
 
         boutonNouvellePartie.setFont(Font.font("Verdana", 16));
 
-        //on ajoute un évènement sur le bouton de nouvelle partie
-        boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-
-                premierStage.close(); // on ferme la fenêtre de menu
-
-                deuxiemeStage.show(); // on affiche la nouvelle partie
-
-            }
-
-        });
-
+        
         Button boutonRegles = new Button();
 
         boutonRegles.setText("Règles");
@@ -184,14 +171,64 @@ public class MainApplication extends Application {
         boutonRegles.setMaxWidth(200);
 
         boutonRegles.setFont(Font.font("Verdana", 16));
+        
+        
+        Button boutonQuitter = new Button();
 
+        boutonQuitter.setText("Quitter");
+
+        boutonQuitter.setMaxWidth(200);
+
+        boutonQuitter.setFont(Font.font("Verdana", 16));
+        
+        initialiserActionsAccueil(boutonNouvellePartie, boutonRegles, boutonQuitter, premierStage);
+
+        VBox menu = new VBox(titre, boutonNouvellePartie, boutonRegles, boutonQuitter); // On crée un menu vertical contenant les boutons
+
+        menu.setSpacing(20);
+
+        menu.setAlignment(Pos.CENTER); // on centre les boutons
+
+        this.racine1.setCenter(menu); // on les ajoute au centre du BorderPane
+
+        premierStage.setScene(this.premiereScene); // la scene contient la racine qui est un BorderPane
+
+        this.racine1.setStyle("-fx-background: #55ff66;");
+
+        premierStage.show();
+
+    }
+    
+    /**
+     * Ajout des évènements sur les boutons du menu d'accueil
+     *
+     * @param boutonNouvellePartie Bouton pour lancer une nouvelle partie
+     * @param boutonRegles Bouton pour afficher les règles du jeu
+     * @param boutonQuitter Bouton pour quitter le jeu
+     * @param premierStage Fenêtre du menu
+     */
+    public void initialiserActionsAccueil(Button boutonNouvellePartie, Button boutonRegles, Button boutonQuitter, Stage premierStage) {
+        
+        boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent evenement) {
+                
+                premierStage.close(); // on ferme la fenêtre de menu
+
+                deuxiemeStage.show(); // on affiche la nouvelle partie
+
+            }
+
+        });
+        
         boutonRegles.setOnAction(new EventHandler<ActionEvent>() {
-
+            
             int nombreClics = 0;
 
             @Override
             public void handle(ActionEvent evenement) {
-
+                
                 nombreClics = nombreClics + 1;
 
                 TextArea regles = new TextArea("Glissez votre souris pour connecter deux symboles identiques (créant ainsi un tuyau). Le but est de connecter toutes les paires et d'utiliser toutes les cases du tableau. Mais attention, les tuyaux se briseront s'ils se croisent ou se chevauchent!");
@@ -211,21 +248,18 @@ public class MainApplication extends Application {
             }
 
         });
+        
+        boutonQuitter.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent evenement) {
+                
+                premierStage.close(); // on ferme la fenêtre de menu
 
-        VBox menu = new VBox(titre, boutonNouvellePartie, boutonRegles); // On crée un menu vertical contenant les boutons
+            }
 
-        menu.setSpacing(20);
-
-        menu.setAlignment(Pos.CENTER); // on centre les boutons
-
-        this.racine1.setCenter(menu); // on les ajoute au centre du BorderPane
-
-        premierStage.setScene(this.premiereScene); // la scene contient la racine qui est un BorderPane
-
-        this.racine1.setStyle("-fx-background: #55ff66;");
-
-        premierStage.show();
-
+        });
+        
     }
 
     /**
