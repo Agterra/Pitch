@@ -430,6 +430,10 @@ public class Grille extends Observable {
             
             this.chemins.remove(this.chemins.size() - 1);
             
+        } else {
+            
+            this.supprimerChemin(this.cheminActuel);
+            
         }
         
         this.afficherPlateau();
@@ -574,8 +578,8 @@ public class Grille extends Observable {
 
         chemin.supprimer();
 
-        this.cheminActuel = new Chemin();
-
+        majGrilleAvecChemin(chemin);
+        
     }
 
     /**
@@ -627,12 +631,25 @@ public class Grille extends Observable {
 
     }
 
+    /**
+     * 
+     * @param y
+     * @param x
+     * @return un clone d'une case du tableau en y,x
+     */
+    
     public Case getCase(int y, int x) {
 
         return (Case) this.plateau[y][x].clone();
 
     }
 
+    /**
+     * Clone le plateau
+     * @param cases
+     * @return un clone du plateau
+     */
+    
     public Case[][] clonePlateau( Case[][] cases ){
         
         Case[][] copieCases = new Case[this.longueur][this.largeur];
