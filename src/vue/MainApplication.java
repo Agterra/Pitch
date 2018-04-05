@@ -394,7 +394,7 @@ public class MainApplication extends Application {
                         evenement.consume();
 
                         grille.majDragAndDrop(x, y);
-
+                        
                     }
 
                 });
@@ -404,11 +404,12 @@ public class MainApplication extends Application {
                     public void handle(DragEvent evenement) {
 
                         // attention, le setOnDragDone est déclenché par la source du Drag&Drop
+                        
                         if (MainApplication.DEBUGAGE) {
                             System.out.println("MainApplication.image.onDragDone");
                         }
 
-                        grille.finirDragAndDrop();
+                        grille.finirDragAndDrop( x, y );
 
                     }
 
@@ -484,7 +485,7 @@ public class MainApplication extends Application {
             System.out.println("MainApplication.initialiserModele");
         }
 
-        GenerateurPaires p = new GenerateurPaires(4, 4, 3);
+        GenerateurPaires p = new GenerateurPaires(4, 4, 2);
 
         this.grille = new Grille(p.genererPaires());
 
@@ -500,7 +501,17 @@ public class MainApplication extends Application {
 
                     ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
 
-                    //System.out.println(cheminActuel.toString());
+                    System.out.println(cheminActuel.toString());
+                    
+                    //Dessiner chemin actuel
+                    for ( Case c : cheminActuel ) {
+                        
+                        Object grilleCases = gridPaneJeu.getChildren().get(c.getY() * grille.getLargeur() + c.getX());
+
+                        colorierCase(grilleCases, c);
+
+                    }
+                    
                     for (int i = 0; i < grille.getLongueur(); i++) {
 
                         for (int j = 0; j < grille.getLargeur(); j++) {
@@ -508,28 +519,16 @@ public class MainApplication extends Application {
                             Object grilleCases = gridPaneJeu.getChildren().get(i * grille.getLargeur() + j);
 
                             Case c = grille.getCase(i, j);
-
-                            int chercher = cheminActuel.indexOf(c);
-
-                            // Coloriage spécifique du chemin
-                            if (chercher != -1) {
-
-                                colorierCase(grilleCases, cheminActuel.get(chercher));
-
-                            } else {
-
-                                // Coloriage spécifique du plateau
-                                colorierCase(grilleCases, c);
-
-                            }
+                            
+                            colorierCase(grilleCases, c);
 
                         }
 
-                        //System.out.println();
+                    //System.out.println();
                     }
 
                 }
-
+                       
             }
 
         });
@@ -543,7 +542,6 @@ public class MainApplication extends Application {
      */
     public void colorierCase(Object grilleCases, Case c) {
 
-        //if(MainApplication.DISPLAY_DEBUG) System.out.println("MainApplication.colorCell");
         if (c.getSymbole() != Symbole.VIDE) {
 
             if (grilleCases instanceof Pane) {
@@ -558,8 +556,8 @@ public class MainApplication extends Application {
 
         } else {
 
-            // Modify rectangles with Correct lien
-            //System.out.println(updatedCell.getLien().toString());
+            //Modify rectangles with Correct lien
+            
             if (grilleCases instanceof Pane) {
 
                 Pane pane = (Pane) grilleCases;

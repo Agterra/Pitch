@@ -205,6 +205,16 @@ public class Chemin {
         return this.cases.get(this.cases.size() - 1);
 
     }
+    
+    /**
+     * Renvoie la première case d'un chemin
+     * @return 
+     */
+    public Case getPremierElement() {
+        
+        return this.cases.get(0);
+        
+    }
 
     /**
      *
@@ -227,6 +237,26 @@ public class Chemin {
 
         }
 
+    }
+    
+    public void invaliderLesCases() {
+        
+        for (int i = 0; i < this.cases.size(); i++) {
+
+            Case c = this.cases.get(i);
+
+            if (c.getSymbole() != Symbole.VIDE) {
+
+                c.setSymbole(Symbole.getOpposite(c.getSymbole()));
+
+            } else if (c.getLien() != Lien.VIDE) {
+
+                c.setLien(Lien.getOppose(c.getLien()));
+
+            }
+
+        }
+        
     }
 
 }

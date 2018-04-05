@@ -15,6 +15,8 @@ public class Grille extends Observable {
     private final int pairesSymboles;
 
     private int pairesCompletes = 0;
+    
+    private int[] derniereCaseConnue = new int[2];
 
     private final Case[][] plateauOrigin;
     
@@ -288,7 +290,7 @@ public class Grille extends Observable {
             Chemin chemin = new Chemin(c);
 
             this.cheminActuel = chemin;
-
+            
         }
 
         this.setChanged();
@@ -305,6 +307,10 @@ public class Grille extends Observable {
      */
     public void majDragAndDrop(int x, int y) {
 
+        this.derniereCaseConnue[0] = x;
+        
+        this.derniereCaseConnue[1] = y;
+        
         System.out.println("x: " + x + " y: " + y);
 
         Case c = this.getCase(y, x);
@@ -312,31 +318,11 @@ public class Grille extends Observable {
         //System.out.println(this.cheminActuel.getCases().toString());
         Case casePrecedente = this.getDerniereCaseCheminActuel();
 
-        int trouver = this.cheminActuel.getCases().indexOf(c);
+        if ( caseEstLibre(c) && sontVoisines(casePrecedente, c) ) {
 
-        if (trouver == -1 && sontVoisines(casePrecedente, c)) {
-
-            if (caseEstLibre(c)) {
-
-                this.cheminActuel.ajouter(c);
-
-                System.out.println("Ajout");
-
-            } else if (c.getLien() == Lien.VIDE && c.getSymbole() != Symbole.VIDE) {
-
-                if (c.getSymbole() == this.cheminActuel.getCases().get(0).getSymbole()) {
-
-                    this.cheminActuel.ajouter(c);
-
-                    System.out.println(this.cheminActuel.getCases().toString());
-                    
-                    this.finirDragAndDrop();
-
-                    System.out.println("Ajout");
-
-                }
-
-            }
+            this.cheminActuel.ajouter(c);
+            
+            System.out.println("Ajout");
 
         }
 
@@ -349,43 +335,51 @@ public class Grille extends Observable {
 
     /**
      * Arrêter le drag and drop quad on arrive sur le deuxieme symbole
+     * @param x
+     * @param y 
      */
-    public void finirDragAndDrop() {
+    public void finirDragAndDrop( int x, int y ) {
 
-        if( this.cheminActuel.getCases().size() > 0 ){
+        Case c = this.getCase(this.derniereCaseConnue[1], this.derniereCaseConnue[0]);
         
-            if (this.cheminEstValide(this.cheminActuel)) {
-
+        if ( c.getSymbole() == this.cheminActuel.getCases().get(0).getSymbole() ){
+            
+            this.cheminActuel.ajouter(c);
+            
+            if (this.cheminEstValide(this.cheminActuel)){
+                
+                System.out.println("Chemin Valide");
+                
                 this.cheminActuel.validerLesCases();
-
+                
                 this.chemins.add(this.cheminActuel);
-
-                this.majGrilleAvecChemin(this.cheminActuel);
-
-                this.pairesCompletes++;
-
-                System.out.println("Chemin valide");
-
-                if (this.jeuTermine()) {
-
-                    System.out.println("Jeu terminé");
-
-                } else {
-
-                    System.out.println("Jeu perdu");
-
+                
+                this.cheminActuel = new Chemin();
+                
+                this.mettreAJourPlateau();
+                
+                if ( this.jeuTermine() ){
+                    
+                    System.out.println("Partie finie");
+                    
                 }
-
+                
             } else {
-
-                supprimerChemin(this.cheminActuel);
-
-                System.out.println("Chemin invalide");
-
+                
+                this.supprimerChemin(this.cheminActuel);
+            
+                this.cheminActuel = new Chemin();
+                
             }
-        
+            
+        } else {
+            
+            this.supprimerChemin(this.cheminActuel);
+            
+            this.cheminActuel = new Chemin();
+                
         }
-
+        
         this.setChanged();
 
         this.notifyObservers();
@@ -424,9 +418,11 @@ public class Grille extends Observable {
             
             Chemin chemin = this.chemins.get(this.chemins.size() - 1);
             
+            chemin.invaliderLesCases();
+            
             this.supprimerChemin(chemin);
             
-            this.majGrilleAvecChemin(chemin);
+            //this.majGrilleAvecChemin();
             
             this.chemins.remove(this.chemins.size() - 1);
             
@@ -578,24 +574,28 @@ public class Grille extends Observable {
 
         chemin.supprimer();
 
-        majGrilleAvecChemin(chemin);
-        
     }
 
     /**
      *
      * @param chemin
      */
-    private void majGrilleAvecChemin(Chemin chemin) {
+    private void mettreAJourPlateau() {
 
-        for (Case c : chemin.getCases()) {
-
-            if (c.getSymbole() == Symbole.VIDE) {
+        for ( Chemin chemin : this.chemins ) {
+            
+            for ( Case c : chemin.getCases() ) {
                 
-                this.plateau[c.getY()][c.getX()] = (Case) c.clone();
+                Case casePlateau = this.plateau[c.getY()][c.getX()];
+                
+                if ( casePlateau.getSymbole() == Symbole.VIDE ) {
+                    
+                    casePlateau.setLien( c.getLien() );
+                
+                }
                 
             }
-
+            
         }
 
     }
@@ -623,12 +623,22 @@ public class Grille extends Observable {
 
     /**
      *
-     * @return la dernière cas du chemin actuel
+     * @return la dernière case du chemin actuel
      */
     public Case getDerniereCaseCheminActuel() {
 
         return this.cheminActuel.getDernierElement();
 
+    }
+    
+    /**
+     * 
+     * @return la premiere case du chemin actuel
+     */
+    public Case getPremiereCaseCheminActuel() {
+        
+        return this.cheminActuel.getPremierElement();
+        
     }
 
     /**
@@ -640,7 +650,7 @@ public class Grille extends Observable {
     
     public Case getCase(int y, int x) {
 
-        return (Case) this.plateau[y][x].clone();
+        return this.plateau[y][x];
 
     }
 
