@@ -434,9 +434,9 @@ public class MainApplication extends Application {
             System.out.println("MainApplication.initialiserModele");
         }
 
-        generateurPaires p = new generateurPaires(4, 4, 3);
+        GenerateurPaires p = new GenerateurPaires(4, 4, 3);
 
-        this.grille = new Grille(p.generatePairs());
+        this.grille = new Grille(p.genererPaires());
 
         this.grille.addObserver(new Observer() {
 

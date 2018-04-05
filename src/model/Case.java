@@ -68,7 +68,7 @@ public class Case {
     /**
      * Getter de symbole
      *
-     * @return le symbole de la case
+     * @return Le symbole de la case
      */
     public Symbole getSymbole() {
         return symbole;
@@ -86,7 +86,7 @@ public class Case {
     /**
      * Getter de lien
      *
-     * @return le lien de la case
+     * @return Le lien de la case
      */
     public Lien getLien() {
         return lien;
@@ -95,7 +95,7 @@ public class Case {
     /**
      * Setter de lien
      *
-     * @param lien un lien
+     * @param lien Un lien
      */
     public void setLien(Lien lien) {
         this.lien = lien;
@@ -104,7 +104,7 @@ public class Case {
     /**
      * Getter de x
      *
-     * @return l'abscisse de la case
+     * @return L'abscisse de la case
      */
     public int getX() {
         return x;
@@ -113,7 +113,7 @@ public class Case {
     /**
      * Setter de x
      *
-     * @param x une abscisse
+     * @param x L'abscisse de la case
      */
     public void setX(int x) {
         this.x = x;
@@ -122,7 +122,7 @@ public class Case {
     /**
      * Getter de y
      *
-     * @return l'ordonnée de la case
+     * @return L'ordonnée de la case
      */
     public int getY() {
         return y;
@@ -131,7 +131,7 @@ public class Case {
     /**
      * Setter de y
      *
-     * @param y une ordonnée
+     * @param y L'ordonnée de la case
      */
     public void setY(int y) {
         this.y = y;
@@ -163,10 +163,9 @@ public class Case {
     }
 
     /**
-     * Construit une chaîne de caractère regroupant les propriétés d'un objet
-     * Case
+     * Construit une chaîne de caractère regroupant les propriétés d'un objet Case
      *
-     * @return les propriétés de Case
+     * @return Les propriétés de Case
      */
     @Override
     public String toString() {
@@ -178,7 +177,7 @@ public class Case {
     /**
      * Clone une case avec ses propriétés
      *
-     * @return la nouvelle case
+     * @return La nouvelle case
      */
     @Override
     protected Object clone() {

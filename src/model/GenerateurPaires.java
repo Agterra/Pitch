@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class generateurPaires {
+public class GenerateurPaires {
 
     private ArrayList< int[]> paires;
 
@@ -16,9 +16,9 @@ public class generateurPaires {
     private int nombrePaires;
 
     /**
-     *
+     * Initialisation des paramètres à leurs valeurs par défaut
      */
-    public generateurPaires() {
+    public GenerateurPaires() {
 
         this.longueur = 0;
 
@@ -33,12 +33,12 @@ public class generateurPaires {
     }
 
     /**
-     *
-     * @param longueur .
-     * @param largeur .
-     * @param nombrePaires .
+     * Initialisation des paramètres avec des valeurs
+     * @param longueur Le nombre de lignes
+     * @param largeur Le nombre de colonnes
+     * @param nombrePaires Le nombre de paires à générer
      */
-    public generateurPaires(int longueur, int largeur, int nombrePaires) {
+    public GenerateurPaires(int longueur, int largeur, int nombrePaires) {
 
         this.longueur = longueur;
 
@@ -66,7 +66,7 @@ public class generateurPaires {
      *
      * @return une liste de paires
      */
-    public ArrayList< int[]> generatePairs() {
+    public ArrayList< int[]> genererPaires() {
 
         placerPointsAleatoirement();
 
@@ -125,6 +125,9 @@ public class generateurPaires {
 
     }
 
+    /**
+     *
+     */
     private void placerPointsAleatoirement() {
 
         Random aleatoire = new Random();
@@ -191,6 +194,10 @@ public class generateurPaires {
          */
     }
 
+    /**
+     * Renvoie vrai si le tableau est plein, faux sinon
+     * @return vrai ou faux
+     */
     private boolean estPlein(int[][] tableau) {
 
         for (int i = 0; i < tableau.length; i++) {
