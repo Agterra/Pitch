@@ -256,54 +256,12 @@ public class MainApplication extends Application {
 
         MenuItem itemPartieAnnulerCoup = new MenuItem("Annuler le dernier coup");
 
-<<<<<<< HEAD
-        // Ajout des interactions sur le menu
-        itemPartieAnnulerCoup.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-
-                //todo
-                if (MainApplication.DEBUGAGE) {
-
-                    System.out.println("annuler dernier coup");
-
-                }
-
-            }
-
-        });
-
-=======
->>>>>>> master
         MenuItem itemPartieRecommencer = new MenuItem("Recommencer");
 
         MenuItem itemPartieQuitter = new MenuItem("Quitter la partie");
-<<<<<<< HEAD
 
-        itemPartieQuitter.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-
-                //todo
-                System.out.println("quitter");
-                
-                grille.supprimerTousLesChemins();
-                
-                premierStage.show();
-                
-                deuxiemeStage.close();
-
-            }
-
-        });
-
-=======
-        
         initialiserActionsMenu(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
         
->>>>>>> master
         // Ajout des items dans le menu
         menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
 
