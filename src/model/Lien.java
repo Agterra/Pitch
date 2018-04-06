@@ -28,8 +28,8 @@ public enum Lien {
     }
 
     /**
-     *
-     * @return une image
+     * Lit la variable image
+     * @return La variable membre image
      */
     public Image getImage() {
 
@@ -40,8 +40,8 @@ public enum Lien {
     /**
      * Renvoie l'opposé du lien (lien en fond vert)
      *
-     * @param lien .
-     * @return l'opposé du lien
+     * @param lien Un Lien
+     * @return L'opposé du lien
      */
     public static Lien getOppose(Lien lien) {
 

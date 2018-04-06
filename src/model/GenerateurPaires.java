@@ -16,7 +16,7 @@ public class GenerateurPaires {
     private int nombrePaires;
 
     /**
-     * Initialisation des paramètres à leurs valeurs par défaut
+     * Initialise les paramètres à leurs valeurs par défaut
      */
     public GenerateurPaires() {
 
@@ -33,7 +33,7 @@ public class GenerateurPaires {
     }
 
     /**
-     * Initialisation des paramètres avec des valeurs
+     * Initialise les paramètres avec des valeurs
      * @param longueur Le nombre de lignes
      * @param largeur Le nombre de colonnes
      * @param nombrePaires Le nombre de paires à générer
@@ -64,7 +64,7 @@ public class GenerateurPaires {
 
     /**
      *
-     * @return une liste de paires
+     * @return Une liste de paires
      */
     public ArrayList< int[]> genererPaires() {
 
@@ -196,7 +196,7 @@ public class GenerateurPaires {
 
     /**
      * Renvoie vrai si le tableau est plein, faux sinon
-     * @return vrai ou faux
+     * @return Vrai ou faux
      */
     private boolean estPlein(int[][] tableau) {
 

@@ -26,8 +26,8 @@ public enum Symbole {
     }
 
     /**
-     *
-     * @return .
+     * Lit la variable image
+     * @return La variable membre image
      */
     public Image getImage() {
 
@@ -36,9 +36,9 @@ public enum Symbole {
     }
 
     /**
-     *
-     * @param symbole .
-     * @return .
+     * Renvoie l'opposé du lien (symbole en fond vert)
+     * @param symbole Un Symbole
+     * @return L'opposé du symbole
      */
     public static Symbole getOpposite(Symbole symbole) {
 

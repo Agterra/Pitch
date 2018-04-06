@@ -7,7 +7,7 @@ public class Chemin {
     private ArrayList<Case> cases;
 
     /**
-     * Construit un nouveau chemin de cases
+     * Initialise les paramètres à leurs valeurs par défaut
      */
     public Chemin() {
 
@@ -16,7 +16,7 @@ public class Chemin {
     }
 
     /**
-     * Construit un nouveau chemin avec une case
+     * Initialise les paramètres avec des valeurs
      *
      * @param c La case à ajouter dans le nouveau chemin
      */
@@ -28,8 +28,51 @@ public class Chemin {
 
     }
 
-    /**
+     /**
+     * Lit la variable cases
      *
+     * @return L'attribut membre cases
+     */
+    public ArrayList<Case> getCases() {
+        
+        return cases;
+        
+    }
+
+    /**
+     * Ecrit la variable cases
+     *
+     * @param cases .
+     */
+    public void setCases(ArrayList<Case> cases) {
+        
+        this.cases = cases;
+        
+    }
+    
+    /**
+     * Renvoie la première case d'un chemin
+     * @return 
+     */
+    public Case getPremierElement() {
+        
+        return this.cases.get(0);
+        
+    }
+    
+    /**
+     * Renvoie la dernière case d'un chemin
+     *
+     * @return la dernière case
+     */
+    public Case getDernierElement() {
+
+        return this.cases.get(this.cases.size() - 1);
+
+    }
+
+    /**
+     * 
      * @param c .
      */
     public void ajouter(Case c) {
@@ -50,7 +93,7 @@ public class Chemin {
     }
 
     /**
-     * Supprime le chemin
+     * Supprime le Chemin
      */
     public void supprimer() {
 
@@ -63,11 +106,11 @@ public class Chemin {
     }
     
     /**
-     * Renvoie vrai si la case (x,y) est contenue dans un chemin, faux sinon
+     * Renvoie vrai si la case (x,y) est contenue dans un Chemin, faux sinon
      *
-     * @param x l'abscisse de la case
-     * @param y l'ordonnée de la case
-     * @return vrai ou faux
+     * @param x L'abscisse de la case
+     * @param y L'ordonnée de la case
+     * @return Vrai ou faux
      */
     public boolean contient(int x, int y) {
 
@@ -86,11 +129,11 @@ public class Chemin {
     }
 
     /**
-     *
-     * @param c1 une case
-     * @param c2 une case voisine
-     * @param c3 une autre case voisine
-     * @return le lien correspondant aux cases
+     * Calcule le lien correspondant aux Cases utilisées
+     * @param c1 Une Case
+     * @param c2 Une Case voisine
+     * @param c3 Une autre Case voisine
+     * @return Le lien correspondant aux cases
      */
     private static Lien calculer(Case c1, Case c2, Case c3) {
 
@@ -167,57 +210,7 @@ public class Chemin {
     }
 
     /**
-     * Getter de cases
-     *
-     * @return l'attribut membre cases
-     */
-    public ArrayList<Case> getCases() {
-        return cases;
-    }
-
-    /**
-     * Setter de cases
-     *
-     * @param cases .
-     */
-    public void setCases(ArrayList<Case> cases) {
-        this.cases = cases;
-    }
-
-    /**
-     * Construit une chaîne de caractère regroupant les propriétés d'un objet
-     * Chemin
-     *
-     * @return les propriétés de Chemin
-     */
-    @Override
-    public String toString() {
-        return "Chemin{" + "cases=" + cases + '}';
-    }
-
-    /**
-     * Renvoie la dernière case d'un chemin
-     *
-     * @return la dernière case
-     */
-    public Case getDernierElement() {
-
-        return this.cases.get(this.cases.size() - 1);
-
-    }
-    
-    /**
-     * Renvoie la première case d'un chemin
-     * @return 
-     */
-    public Case getPremierElement() {
-        
-        return this.cases.get(0);
-        
-    }
-
-    /**
-     *
+     * Valide le Chemin proposé par l'utilisateur
      */
     public void validerLesCases() {
 
@@ -239,6 +232,9 @@ public class Chemin {
 
     }
     
+    /**
+     * Invalide le Chemin proposé par l'utilisateur
+     */
     public void invaliderLesCases() {
         
         for (int i = 0; i < this.cases.size(); i++) {
@@ -258,5 +254,15 @@ public class Chemin {
         }
         
     }
-
+    
+    /**
+     * Construit une chaîne de caractère regroupant les propriétés d'un objet Chemin
+     *
+     * @return Les propriétés de Chemin
+     */
+    @Override
+    public String toString() {
+        return "Chemin{" + "cases=" + cases + '}';
+    }
+    
 }

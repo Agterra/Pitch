@@ -3,12 +3,16 @@ package vue;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -80,7 +84,7 @@ public class MainApplication extends Application {
 
         initialiserVariablesMembres();
 
-        initialiserModele();
+        initialiserModele(premierStage);
 
         initialisationGraphique(premierStage, this.deuxiemeStage);
 
@@ -462,9 +466,11 @@ public class MainApplication extends Application {
             @Override
             public void handle(ActionEvent evenement) {
                 
+                grille.formaterGrille();
+                
                 deuxiemeStage.close();
                 
-                premierStage.close();
+                premierStage.show();
 
             }
 
@@ -476,15 +482,13 @@ public class MainApplication extends Application {
     /**
      * Initialisation du modèle avec la generation des paires
      */
-    public void initialiserModele() {
+    public void initialiserModele(Stage premierStage) {
 
         if (MainApplication.DEBUGAGE) {
             System.out.println("MainApplication.initialiserModele");
         }
 
-        GenerateurPaires p = new GenerateurPaires(4, 4, 2);
-
-        this.grille = new Grille(p.genererPaires());
+        this.grille = new Grille();
 
         this.grille.addObserver(new Observer() {
 
@@ -522,6 +526,14 @@ public class MainApplication extends Application {
                         }
 
                     //System.out.println();
+                    }
+                    
+                    if(grille.getPartieTerminee() == true) {
+                        
+                        grille.formaterGrille();
+                        
+                        messageFin(premierStage, deuxiemeStage);
+                        
                     }
 
                 }
@@ -567,6 +579,27 @@ public class MainApplication extends Application {
 
         }
 
+    }
+    
+    public void messageFin(Stage premierStage, Stage deuxiemeStage) {
+        
+        Alert messageFin = new Alert(AlertType.CONFIRMATION);
+        messageFin.setTitle("Partie finie");
+        messageFin.setContentText("Prtie terminée ! Voulez-vous rejouer ?");
+
+        Optional<ButtonType> result = messageFin.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            
+            grille.reinitialiser();
+            
+        } else {
+            
+            premierStage.show();
+            
+            deuxiemeStage.close();
+            
+        }
+        
     }
 
 }

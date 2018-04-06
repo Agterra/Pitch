@@ -1,6 +1,9 @@
 package model;
 
 import java.util.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class Grille extends Observable {
 
@@ -12,18 +15,20 @@ public class Grille extends Observable {
 
     private int longueur;
 
-    private final int pairesSymboles;
+    private int pairesSymboles;
 
-    private int pairesCompletes = 0;
+    private int pairesCompletes;
     
     private int[] derniereCaseConnue = new int[2];
 
-    private final Case[][] plateauOrigin;
+    private Case[][] plateauOrigine;
     
     private Case[][] plateau;
+    
+    private boolean partieTerminee;
 
     /**
-     * Initialisation des paramètres à leurs valeurs par défaut
+     * Initialise les paramètres à leurs valeurs par défaut
      */
     public Grille() {
 
@@ -51,14 +56,16 @@ public class Grille extends Observable {
 
         this.plateau[taille - 1][taille - 1].setSymbole(Symbole.ROND);
 
-        this.plateauOrigin = this.clonePlateau(this.plateau);
+        this.plateauOrigine = this.clonePlateau(this.plateau);
         
         this.pairesSymboles = 1;
+        
+        this.partieTerminee = false;
 
     }
 
     /**
-     * Initialisation des paramètres avec des valeurs
+     * Initialise les paramètres avec des valeurs
      *
      * @param points .
      */
@@ -103,12 +110,14 @@ public class Grille extends Observable {
 
         this.pairesSymboles = points.size() / 2;
 
-        this.plateauOrigin = this.clonePlateau(this.plateau);
+        this.plateauOrigine = this.clonePlateau(this.plateau);
+        
+        this.partieTerminee = false;
         
     }
 
     /**
-     * Initialisation des paramètres avec des valeurs
+     * Initialise les paramètres avec des valeurs
      *
      * @param largeur la largeur de la grille
      * @param longueur la longueur de la grille
@@ -116,6 +125,8 @@ public class Grille extends Observable {
      */
     public Grille(int largeur, int longueur, int pairesSymboles) {
 
+        GenerateurPaires p = new GenerateurPaires(4, 4, 2);
+        
         this.chemins = new ArrayList<>();
 
         this.largeur = largeur;
@@ -136,13 +147,15 @@ public class Grille extends Observable {
 
         this.pairesSymboles = pairesSymboles;
 
-        this.plateauOrigin = this.clonePlateau(this.plateau);
+        this.plateauOrigine = this.clonePlateau(this.plateau);
+        
+        this.partieTerminee = false;
         
         // Algo pour déterminer possibilité de placement de deux symboles TO DO
     }
 
     /**
-     * Getter de chemins
+     * Lit la variable chemins
      *
      * @return la liste des chemins
      */
@@ -151,34 +164,32 @@ public class Grille extends Observable {
     }
 
     /**
-     * Setter de chemins
+     * Ecrit a variable chemins
      *
-     * @param chemins .
+     * @param chemins La variable membre chemins
      */
     public void setChemins(ArrayList<Chemin> chemins) {
         this.chemins = chemins;
     }
 
     /**
-     * Getter de largeur
-     *
-     * @return la largeur de la grille
+     * Lit la variable largeur
      */
     public int getLargeur() {
         return largeur;
     }
 
     /**
-     * Setter de largeur
+     * Ecrit la variable largeur
      *
-     * @param largeur .
+     * @param largeur  La variable membre largeur
      */
     public void setLargeur(int largeur) {
         this.largeur = largeur;
     }
 
     /**
-     * Getter de longueur
+     * Lit la variable longueur
      *
      * @return la longueur de la grille
      */
@@ -187,16 +198,16 @@ public class Grille extends Observable {
     }
 
     /**
-     * Setter de longueur
+     * Ecrit la variable longueur
      *
-     * @param longueur .
+     * @param longueur La variable membre longueur
      */
     public void setLongueur(int longueur) {
         this.longueur = longueur;
     }
 
     /**
-     * Getter de plateau
+     * Lit la variable plateau
      *
      * @return le plateau
      */
@@ -205,37 +216,89 @@ public class Grille extends Observable {
     }
 
     /**
-     * Setter de plateau
+     * Ecrit la variable plateau
      *
-     * @param plateau .
+     * @param plateau La variable membre plateau
      */
     public void setPlateau(Case[][] plateau) {
         this.plateau = plateau;
     }
 
     /**
-     * Getter de cheminActuel
+     * Lit la variable cheminActuel
      *
-     * @return le chemin en cours
+     * @return Le chemin en cours
      */
     public Chemin getCheminActuel() {
         return cheminActuel;
     }
 
     /**
-     * Setter de cheminActuel
+     * Ecrit la variable cheminActuel
      *
-     * @param cheminActuel .
+     * @param cheminActuel La variable membre cheminActuel
      */
     public void setCheminActuel(Chemin cheminActuel) {
         this.cheminActuel = cheminActuel;
     }
 
     /**
+     * Lit la dernière case du chemin que l'utilisateur trace
+     * @return La dernière case du chemin actuel
+     */
+    public Case getDerniereCaseCheminActuel() {
+
+        return this.cheminActuel.getDernierElement();
+
+    }
+    
+    /**
+     * Lit la première case du chemin que l'ulisateur trace
+     * @return La premiere case du chemin actuel
+     */
+    public Case getPremiereCaseCheminActuel() {
+        
+        return this.cheminActuel.getPremierElement();
+        
+    }
+
+    /**
+     * 
+     * @param y
+     * @param x
+     * @return Un clone d'une case du tableau en y,x
+     */
+    public Case getCase(int y, int x) {
+
+        return this.plateau[y][x];
+
+    }
+    
+    /**
+     * Lit la variable partieTerminee
+     * @return La variable membre partieTerminee
+     */
+    public boolean getPartieTerminee() {
+        
+        return this.partieTerminee;
+        
+    }
+    
+    /**
+     * Ecrit la variable partieTerminee
+     * @param partieTerminee La variable membre partieTerminee
+     */
+    public void setPartieTerminee(boolean partieTerminee) {
+        
+        this.partieTerminee = partieTerminee;
+        
+    }
+
+    /**
      * Supprime le chemin quand on clique dessus
      *
-     * @param x abscisse de la case
-     * @param y ordonnée de la case
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
     public void clic(int x, int y) {
 
@@ -270,14 +333,12 @@ public class Grille extends Observable {
         
         this.notifyObservers();
     }
-
     
-
     /**
-     * Commencer le drag and drop sur un symbole
+     * Commence le drag and drop sur un symbole
      *
-     * @param x abscisse de la case
-     * @param y ordonnée de la case
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
     public void commencerDragAndDrop(int x, int y) {
 
@@ -300,10 +361,10 @@ public class Grille extends Observable {
     }
 
     /**
-     * Avancer dans le drag and drop pour dessiner un chemin
+     * Avance dans le drag and drop pour dessiner un chemin
      *
-     * @param x abscisse de la case
-     * @param y ordonnée de la case
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
     public void majDragAndDrop(int x, int y) {
 
@@ -334,9 +395,9 @@ public class Grille extends Observable {
     }
 
     /**
-     * Arrêter le drag and drop quad on arrive sur le deuxieme symbole
-     * @param x
-     * @param y 
+     * Arrête le drag and drop quad on arrive sur le deuxieme symbole
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
     public void finirDragAndDrop( int x, int y ) {
 
@@ -358,7 +419,11 @@ public class Grille extends Observable {
                 
                 this.mettreAJourPlateau();
                 
+                this.pairesCompletes ++;
+                
                 if ( this.jeuTermine() ){
+                    
+                    this.partieTerminee = true;
                     
                     System.out.println("Partie finie");
                     
@@ -387,9 +452,8 @@ public class Grille extends Observable {
     }
     
     /**
-     * Reinitialiser la grille à son état de départ
+     * Réinitialise la grille à son état de départ (mêmes symboles mais tous les liens osnt supprimés)
      */
-    
     public void reinitialiser(){
         
         this.chemins = new ArrayList<>();
@@ -398,7 +462,9 @@ public class Grille extends Observable {
         
         this.pairesCompletes = 0;
         
-        this.plateau = this.clonePlateau(this.plateauOrigin);
+        this.plateau = this.clonePlateau(this.plateauOrigine);
+        
+        this.partieTerminee = false;
         
         this.setChanged();
         
@@ -407,9 +473,8 @@ public class Grille extends Observable {
     }
     
     /**
-     * Annuler le dernier coup
+     * Annule le dernier coup
      */
-    
     public void annulerDernierCoup() {
         
         this.afficherPlateau();
@@ -443,8 +508,8 @@ public class Grille extends Observable {
     /**
      * Renvoie vrai si la case est libre (sans symbole ni lien), faux sinon
      *
-     * @param c une case
-     * @return vrai ou faux
+     * @param c Une Case
+     * @return Vrai ou faux
      */
     private boolean caseEstLibre(Case c) {
 
@@ -453,78 +518,9 @@ public class Grille extends Observable {
     }
 
     /**
-     * Renvoie vrai si le tableau est plein, faux sinon
-     *
-     * @return vrai ou faux
-     */
-    private boolean plateauEstPlein() {
-
-        boolean plein = true;
-
-        for (Case[] ligne : this.plateau) {
-
-            for (Case c : ligne) {
-
-                if (caseEstLibre(c)) {
-
-                    return false;
-
-                }
-
-            }
-
-        }
-
-        return plein;
-
-    }
-
-    /**
-     * Renvoie vrai si le jeu est terminé (toutes las cases sont occupées et
-     * tous les symboles sont reliés), faux sinon
-     *
-     * @return vrai ou faux
-     */
-    private boolean jeuTermine() {
-
-        boolean termine = true;
-
-        for (Chemin chemin : this.chemins) {
-
-            if (!cheminEstValide(chemin)) {
-
-                System.out.println("Partie non terminée : un des chemins est invalide.");
-
-                return false;
-
-            }
-
-        }
-
-        if (!plateauEstPlein()) {
-
-            System.out.println("Partie non terminée : le plateau n'est pas plein.");
-
-            return false;
-
-        }
-
-        if (this.pairesCompletes != this.pairesSymboles) {
-
-            System.out.println("Partie non terminée : toutes les paires ne sont pas reliées.");
-
-            return false;
-
-        }
-
-        return termine;
-
-    }
-
-    /**
      * Renvoie vrai si le chemin est valide, faux sinon
      *
-     * @return vrai ou faux
+     * @return Vrai ou faux
      */
     private boolean cheminEstValide(Chemin chemin) {
 
@@ -555,9 +551,82 @@ public class Grille extends Observable {
     }
 
     /**
+     * Renvoie vrai si le tableau est plein, faux sinon
+     *
+     * @return Vrai ou faux
+     */
+    private boolean plateauEstPlein() {
+
+        boolean plein = true;
+
+        for (Case[] ligne : this.plateau) {
+
+            for (Case c : ligne) {
+
+                if (caseEstLibre(c)) {
+
+                    return false;
+
+                }
+
+            }
+
+        }
+
+        return plein;
+
+    }
+
+    /**
+     * Renvoie vrai si le jeu est terminé (toutes las cases sont occupées et
+     * tous les symboles sont reliés), faux sinon
+     *
+     * @return Vrai ou faux
+     */
+    private boolean jeuTermine() {
+
+        boolean termine = true;
+
+        for (Chemin chemin : this.chemins) {
+
+            if (!cheminEstValide(chemin)) {
+
+                System.out.println("Partie non terminée : un des chemins est invalide.");
+
+                return false;
+
+            }
+
+        }
+
+        if (!plateauEstPlein()) {
+
+            System.out.println("Partie non terminée : le plateau n'est pas plein.");
+
+            return false;
+
+        }
+
+        if (this.pairesCompletes != this.pairesSymboles) {
+
+            System.out.println("Partie non terminée : toutes les paires ne sont pas reliées.");
+            
+            System.out.println("this.pairescompletes = " + this.pairesCompletes);
+            
+            System.out.println("this.pairesSymboles = " + this.pairesSymboles);
+
+            return false;
+
+        }
+
+        return termine;
+
+    }
+
+    /**
      *
      * @param chemin .
-     * @return .
+     * @return Vrai ou faux
      */
     public boolean cheminMemePaire(Chemin chemin) {
 
@@ -601,7 +670,7 @@ public class Grille extends Observable {
     }
 
     /**
-     * Renvoie vrai si c1 et c2 sont voisine, faux sinon
+     * Renvoie vrai si c1 et c2 sont voisines, faux sinon
      *
      * @param c1 une case
      * @param c2 une autre case
@@ -621,45 +690,42 @@ public class Grille extends Observable {
 
     }
 
-    /**
-     *
-     * @return la dernière case du chemin actuel
-     */
-    public Case getDerniereCaseCheminActuel() {
+    
+    public void formaterGrille() {
+        
+        this.chemins = new ArrayList<>();
 
-        return this.cheminActuel.getDernierElement();
+        this.plateau = new Case[this.longueur][this.largeur];
 
+        for (int i = 0; i < this.largeur; i++) {
+
+            for (int j = 0; j < this.longueur; j++) {
+
+                this.plateau[i][j] = new Case(j, i);
+
+            }
+
+        }
+
+        this.plateauOrigine = this.clonePlateau(this.plateau);
+        
+        this.pairesCompletes = 0;
+        
+        this.partieTerminee = false;
+
+        this.supprimerChemin(cheminActuel);
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
     }
     
-    /**
-     * 
-     * @return la premiere case du chemin actuel
-     */
-    public Case getPremiereCaseCheminActuel() {
-        
-        return this.cheminActuel.getPremierElement();
-        
-    }
-
-    /**
-     * 
-     * @param y
-     * @param x
-     * @return un clone d'une case du tableau en y,x
-     */
-    
-    public Case getCase(int y, int x) {
-
-        return this.plateau[y][x];
-
-    }
-
     /**
      * Clone le plateau
      * @param cases
-     * @return un clone du plateau
+     * @return Un clone du plateau
      */
-    
     public Case[][] clonePlateau( Case[][] cases ){
         
         Case[][] copieCases = new Case[this.longueur][this.largeur];
@@ -681,7 +747,6 @@ public class Grille extends Observable {
     /**
      * Afficher le plateau actuel
      */
-    
     public void afficherPlateau() {
         
         System.out.println();
@@ -701,7 +766,7 @@ public class Grille extends Observable {
         System.out.println();
         
     }
-    
+
     /**
      * Construit une chaîne de caractère regroupant les propriétés d'un objet
      * Grille
@@ -712,5 +777,6 @@ public class Grille extends Observable {
     public String toString() {
         return "Grille{" + "chemins=" + chemins + ", cheminActuel=" + cheminActuel + ", largeur=" + largeur + ", longueur=" + longueur + ", plateau=" + plateau + '}';
     }
-
+    
+    
 }

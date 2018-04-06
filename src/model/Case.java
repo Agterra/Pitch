@@ -13,7 +13,7 @@ public class Case {
     private int y;
 
     /**
-     * Initialisation des paramètres à leurs valeurs par défaut
+     * Initialise les paramètres à leurs valeurs par défaut
      */
     public Case() {
 
@@ -28,12 +28,12 @@ public class Case {
     }
 
     /**
-     * Initialisation des paramètres avec des valeurs
+     * Initialise les paramètres avec des valeurs
      *
      * @param symbole Un symbole
      * @param lien Un lien
-     * @param x Abscisse de la case
-     * @param y Ordonnée de la case
+     * @param x Abscisse de la Case
+     * @param y Ordonnée de la Case
      */
     public Case(Symbole symbole, Lien lien, int x, int y) {
 
@@ -48,10 +48,10 @@ public class Case {
     }
 
     /**
-     * Initialisation des paramètres avec des valeurs
+     * Initialise les paramètres avec des valeurs
      *
-     * @param x Abscisse de la case
-     * @param y Ordonnée de la case
+     * @param x Abscisse de la Case
+     * @param y Ordonnée de la Case
      */
     public Case(int x, int y) {
 
@@ -66,82 +66,98 @@ public class Case {
     }
 
     /**
-     * Getter de symbole
+     * Lit la variable symbole
      *
-     * @return Le symbole de la case
+     * @return L'attribut membre symbole
      */
     public Symbole getSymbole() {
+        
         return symbole;
+        
     }
 
     /**
-     * Setter de symbole
+     * Ecrit la variable symbole
      *
-     * @param symbole un symbole
+     * @param symbole Un symbole
      */
     public void setSymbole(Symbole symbole) {
+        
         this.symbole = symbole;
+        
     }
 
     /**
-     * Getter de lien
+     * Lit la variable lien
      *
-     * @return Le lien de la case
+     * @return L'attribut membre lien
      */
     public Lien getLien() {
+        
         return lien;
+        
     }
 
     /**
-     * Setter de lien
+     * Ecrit la variable lien
      *
      * @param lien Un lien
      */
     public void setLien(Lien lien) {
+        
         this.lien = lien;
+        
     }
 
     /**
-     * Getter de x
+     * Lit la variable x
      *
-     * @return L'abscisse de la case
+     * @return L'attribut membre x (abscisse)
      */
     public int getX() {
+        
         return x;
+        
     }
 
     /**
-     * Setter de x
+     * Ecrit la variable x
      *
-     * @param x L'abscisse de la case
+     * @param x L'abscisse de la Case
      */
     public void setX(int x) {
+        
         this.x = x;
+        
     }
 
     /**
-     * Getter de y
+     * Lit la variable y
      *
-     * @return L'ordonnée de la case
+     * @return L'attribut membre y (ordonnée)
      */
     public int getY() {
+        
         return y;
+        
     }
 
     /**
-     * Setter de y
+     * Ecrit la variable y
      *
-     * @param y L'ordonnée de la case
+     * @param y L'ordonnée de la Case
      */
     public void setY(int y) {
+        
         this.y = y;
+        
     }
 
     /**
      * Retourne vrai si les deux cases sont identiques, faux sinon
      *
-     * @param o un objet (une Case)
-     * @return vrai ou faux
+     * @param o Un objet (une Case)
+     * @return Vrai ou faux
      */
     @Override
     public boolean equals(Object o) {
