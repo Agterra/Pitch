@@ -244,6 +244,8 @@ public class MainApplication extends Application {
                 
                 TextInputDialog demanderTaille = new TextInputDialog("");
 
+                demanderTaille.initOwner(premierStage);
+                
                 demanderTaille.setTitle("Changement de taille");
 
                 demanderTaille.setHeaderText("Change la taille de la grille");
@@ -260,6 +262,8 @@ public class MainApplication extends Application {
                     
                     grille.formaterGrille(longueur, 6);
                     
+                    initialiserJeu(premierStage, deuxiemeStage);
+               
                     premierStage.close();
                     
                     deuxiemeStage.show();
@@ -527,6 +531,8 @@ public class MainApplication extends Application {
                 
                 grille.formaterGrille();
                 
+                initialiserJeu(premierStage, deuxiemeStage);
+               
                 deuxiemeStage.close();
                 
                 premierStage.show();
@@ -591,6 +597,8 @@ public class MainApplication extends Application {
                         
                         grille.formaterGrille();
                         
+                        initialiserJeu(premierStage, deuxiemeStage);
+               
                         messageFin(premierStage, deuxiemeStage);
                         
                     }
@@ -643,14 +651,21 @@ public class MainApplication extends Application {
     public void messageFin(Stage premierStage, Stage deuxiemeStage) {
         
         Alert messageFin = new Alert(AlertType.CONFIRMATION);
+        
+        messageFin.initOwner(deuxiemeStage);
+        
         messageFin.setTitle("Partie finie");
+        
         messageFin.setContentText("Prtie terminée ! Voulez-vous rejouer ?");
 
         Optional<ButtonType> result = messageFin.showAndWait();
+        
         if (result.get() == ButtonType.OK) {
             
-            grille.reinitialiser();
+            grille.formaterGrille();
             
+            initialiserJeu(premierStage, deuxiemeStage);
+               
         } else {
             
             premierStage.show();

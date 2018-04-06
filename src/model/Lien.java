@@ -43,7 +43,7 @@ public enum Lien {
      * @param lien Un Lien
      * @return L'opposé du lien
      */
-    public static Lien getOppose(Lien lien) {
+    public static Lien getLienValide(Lien lien) {
 
         Lien l = VIDE;
 
@@ -55,21 +55,9 @@ public enum Lien {
 
                 break;
 
-            case VERTICAL_VALIDE:
-
-                l = VERTICAL;
-
-                break;
-
             case HORIZONTAL:
 
                 l = HORIZONTAL_VALIDE;
-
-                break;
-
-            case HORIZONTAL_VALIDE:
-
-                l = HORIZONTAL;
 
                 break;
 
@@ -79,21 +67,9 @@ public enum Lien {
 
                 break;
 
-            case COUDE_HAUT_DROIT_VALIDE:
-
-                l = COUDE_HAUT_DROIT;
-
-                break;
-
             case COUDE_HAUT_GAUCHE:
 
                 l = COUDE_HAUT_GAUCHE_VALIDE;
-
-                break;
-
-            case COUDE_HAUT_GAUCHE_VALIDE:
-
-                l = COUDE_HAUT_GAUCHE;
 
                 break;
 
@@ -103,18 +79,66 @@ public enum Lien {
 
                 break;
 
-            case COUDE_BAS_DROIT_VALIDE:
-
-                l = COUDE_BAS_DROIT;
-
-                break;
-
             case COUDE_BAS_GAUCHE:
 
                 l = COUDE_BAS_GAUCHE_VALIDE;
 
                 break;
 
+            case VIDE_INVALIDE:
+
+                l = VIDE;
+
+                break;
+
+            default:
+                
+                l = lien;
+
+                break;
+
+        }
+
+        return l;
+
+    }
+    
+    public static Lien getLienInvalide( Lien lien ) {
+        
+        Lien l = VIDE;
+
+        switch (lien) {
+
+            case VERTICAL_VALIDE:
+
+                l = VERTICAL;
+
+                break;
+
+            case HORIZONTAL_VALIDE:
+
+                l = HORIZONTAL;
+
+                break;
+
+            case COUDE_HAUT_DROIT_VALIDE:
+
+                l = COUDE_HAUT_DROIT;
+
+                break;
+
+            case COUDE_HAUT_GAUCHE_VALIDE:
+
+                l = COUDE_HAUT_GAUCHE;
+
+                break;
+
+            case COUDE_BAS_DROIT_VALIDE:
+
+                l = COUDE_BAS_DROIT;
+
+                break;
+                
             case COUDE_BAS_GAUCHE_VALIDE:
 
                 l = COUDE_BAS_GAUCHE;
@@ -127,20 +151,17 @@ public enum Lien {
 
                 break;
 
-            case VIDE_INVALIDE:
-
-                l = VIDE;
-
-                break;
-
             default:
 
+                l = lien;
+                
                 break;
 
         }
 
         return l;
 
+        
     }
 
 }

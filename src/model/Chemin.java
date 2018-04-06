@@ -97,6 +97,8 @@ public class Chemin {
      */
     public void supprimer() {
 
+        this.invaliderLesCases();
+        
         for (int i = 0; i < cases.size(); i++) {
 
             cases.get(i).setLien(Lien.VIDE);
@@ -220,11 +222,11 @@ public class Chemin {
 
             if (c.getSymbole() != Symbole.VIDE) {
 
-                c.setSymbole(Symbole.getOpposite(c.getSymbole()));
+                c.setSymbole(Symbole.getSymboleValide(c.getSymbole()));
 
             } else if (c.getLien() != Lien.VIDE) {
 
-                c.setLien(Lien.getOppose(c.getLien()));
+                c.setLien(Lien.getLienValide(c.getLien()));
 
             }
 
@@ -243,11 +245,11 @@ public class Chemin {
 
             if (c.getSymbole() != Symbole.VIDE) {
 
-                c.setSymbole(Symbole.getOpposite(c.getSymbole()));
+                c.setSymbole(Symbole.getSymboleInvalide(c.getSymbole()));
 
             } else if (c.getLien() != Lien.VIDE) {
 
-                c.setLien(Lien.getOppose(c.getLien()));
+                c.setLien(Lien.getLienInvalide(c.getLien()));
 
             }
 

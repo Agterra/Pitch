@@ -42,7 +42,7 @@ public enum Symbole {
      * @param symbole Un Symbole
      * @return L'opposé du symbole
      */
-    public static Symbole getOpposite(Symbole symbole) {
+    public static Symbole getSymboleValide(Symbole symbole) {
 
         Symbole s = VIDE;
 
@@ -54,21 +54,9 @@ public enum Symbole {
 
                 break;
 
-            case ETOILE_VALIDE:
-
-                s = ETOILE;
-
-                break;
-
             case ROND:
 
                 s = ROND_VALIDE;
-
-                break;
-
-            case ROND_VALIDE:
-
-                s = ROND;
 
                 break;
 
@@ -78,21 +66,9 @@ public enum Symbole {
 
                 break;
 
-            case TRIANGLE_VALIDE:
-
-                s = TRIANGLE;
-
-                break;
-
             case CARRE:
 
                 s = CARRE_VALIDE;
-
-                break;
-
-            case CARRE_VALIDE:
-
-                s = CARRE;
 
                 break;
 
@@ -102,13 +78,9 @@ public enum Symbole {
 
                 break;
 
-            case LOSANGE_VALIDE:
-
-                s = LOSANGE;
-
-                break;
-
             default:
+                
+                s = symbole;
 
                 break;
 
@@ -118,6 +90,59 @@ public enum Symbole {
 
     }
 
+     /**
+     * Renvoie l'opposé du lien (symbole en fond vert)
+     * @param symbole Un Symbole
+     * @return L'opposé du symbole
+     */
+    public static Symbole getSymboleInvalide(Symbole symbole) {
+
+        Symbole s = VIDE;
+
+        switch (symbole) {
+
+            case ETOILE_VALIDE:
+
+                s = ETOILE;
+
+                break;
+
+            case ROND_VALIDE:
+
+                s = ROND;
+
+                break;
+
+            case TRIANGLE_VALIDE:
+
+                s = TRIANGLE;
+
+                break;
+
+            case CARRE_VALIDE:
+
+                s = CARRE;
+
+                break;
+                
+            case LOSANGE_VALIDE:
+
+                s = LOSANGE;
+
+                break;
+
+            default:
+
+                s = symbole;
+                
+                break;
+
+        }
+
+        return s;
+
+    }
+    
     /**
      *
      * @return .
