@@ -22,6 +22,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.*;
@@ -161,11 +162,20 @@ public class MainApplication extends Application {
         // ... et trois boutons
         Button boutonNouvellePartie = new Button();
 
-        boutonNouvellePartie.setText("Nouvelle partie");
+        boutonNouvellePartie.setText("Nouvelle partie (4*4)");
 
         boutonNouvellePartie.setMaxWidth(200);
 
         boutonNouvellePartie.setFont(Font.font("Verdana", 16));
+        
+        
+        Button boutonChangerTaille = new Button();
+        
+        boutonChangerTaille.setText("Modifier la taille");
+        
+        boutonChangerTaille.setMaxWidth(200);
+        
+        boutonChangerTaille.setFont(Font.font("Verdana", 16));
 
         
         Button boutonRegles = new Button();
@@ -185,9 +195,9 @@ public class MainApplication extends Application {
 
         boutonQuitter.setFont(Font.font("Verdana", 16));
         
-        initialiserActionsAccueil(boutonNouvellePartie, boutonRegles, boutonQuitter, premierStage);
+        initialiserActionsAccueil(boutonNouvellePartie, boutonChangerTaille, boutonRegles, boutonQuitter, premierStage);
 
-        VBox menu = new VBox(titre, boutonNouvellePartie, boutonRegles, boutonQuitter); // On crée un menu vertical contenant les boutons
+        VBox menu = new VBox(titre, boutonNouvellePartie, boutonChangerTaille, boutonRegles, boutonQuitter); // On crée un menu vertical contenant les boutons
 
         menu.setSpacing(20);
 
@@ -211,7 +221,7 @@ public class MainApplication extends Application {
      * @param boutonQuitter Bouton pour quitter le jeu
      * @param premierStage Fenêtre du menu
      */
-    public void initialiserActionsAccueil(Button boutonNouvellePartie, Button boutonRegles, Button boutonQuitter, Stage premierStage) {
+    public void initialiserActionsAccueil(Button boutonNouvellePartie, Button boutonChangerTaille, Button boutonRegles, Button boutonQuitter, Stage premierStage) {
         
         boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -224,6 +234,33 @@ public class MainApplication extends Application {
 
             }
 
+        });
+        
+        boutonChangerTaille.setOnAction(new EventHandler<ActionEvent>() {
+        
+            @Override
+            public void handle(ActionEvent evenement) {
+                
+                TextInputDialog demanderTaille = new TextInputDialog("");
+
+                demanderTaille.setTitle("Changement de taille");
+
+                demanderTaille.setHeaderText("Change la taille de la grille");
+
+                demanderTaille.setContentText("Taille ");
+
+                Optional<String> result = demanderTaille.showAndWait();
+                
+                if (result.isPresent()) {
+                    
+                    premierStage.close();
+                    
+                    deuxiemeStage.show();
+                    
+                }
+
+            }
+            
         });
         
         boutonRegles.setOnAction(new EventHandler<ActionEvent>() {
@@ -468,7 +505,7 @@ public class MainApplication extends Application {
            @Override
            public void handle(ActionEvent evenement) {
                
-               System.out.println("Nouvelle partie");
+               grille.formaterGrille();
                
            }
             
