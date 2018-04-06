@@ -296,12 +296,14 @@ public class MainApplication extends Application {
 
         MenuItem itemPartieRecommencer = new MenuItem("Recommencer");
 
+        MenuItem itemNouvellePartie = new MenuItem("Recommencer une nouvelle partie");
+
         MenuItem itemPartieQuitter = new MenuItem("Quitter la partie");
 
-        initialiserActionsMenu(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter, premierStage);
+        initialiserActionsMenu(itemPartieAnnulerCoup, itemPartieRecommencer, itemNouvellePartie ,itemPartieQuitter, premierStage);
         
         // Ajout des items dans le menu
-        menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemPartieQuitter);
+        menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemNouvellePartie, itemPartieQuitter);
 
         menuBar.getMenus().addAll(menu);
 
@@ -435,7 +437,7 @@ public class MainApplication extends Application {
      * @param recommencerItem
      * @param quitterItem
      */
-    public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem quitterItem, Stage premierStage ) {
+    public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem, Stage premierStage ) {
         
         
         // Ajout des interactions sur le menu
@@ -459,6 +461,17 @@ public class MainApplication extends Application {
 
             }
 
+        });
+        
+        nouvellePartieItem.setOnAction( new EventHandler<ActionEvent>() {
+            
+           @Override
+           public void handle(ActionEvent evenement) {
+               
+               System.out.println("Nouvelle partie");
+               
+           }
+            
         });
 
         quitterItem.setOnAction(new EventHandler<ActionEvent>() {

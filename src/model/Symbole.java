@@ -1,19 +1,21 @@
 package model;
 
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 
 public enum Symbole {
 
     ROND("file:src/assets/circle.png"),
-    ROND_VALIDE("file:src/assets/circle_valide.png"),
     TRIANGLE("file:src/assets/triangle.png"),
-    TRIANGLE_VALIDE("file:src/assets/triangle_valide.png"),
     ETOILE("file:src/assets/star.png"),
-    ETOILE_VALIDE("file:src/assets/star_valide.png"),
     CARRE("file:src/assets/square.png"),
-    CARRE_VALIDE("file:src/assets/square_valide.png"),
     LOSANGE("file:src/assets/losange.png"),
+    
+    ROND_VALIDE("file:src/assets/circle_valide.png"),
+    TRIANGLE_VALIDE("file:src/assets/triangle_valide.png"),
+    ETOILE_VALIDE("file:src/assets/star_valide.png"),
+    CARRE_VALIDE("file:src/assets/square_valide.png"),
     LOSANGE_VALIDE("file:src/assets/losange_valide.png"),
     VIDE("file:src/assets/vide.png");
 
@@ -125,4 +127,19 @@ public enum Symbole {
         return Symbole.VIDE;
 
     }
+    
+    public static Symbole[] getSymbolesNormaux () {
+        
+        Symbole[] symboles = new Symbole[5];
+        
+        for ( int i = 0; i < 5 ; i++ ){
+            
+            symboles[i] = Symbole.values()[i];
+            
+        }
+        
+        return symboles;
+        
+    }
+    
 }

@@ -25,6 +25,8 @@ public class Grille extends Observable {
     
     private Case[][] plateau;
     
+    private boolean cheminNonValide = false;
+    
     private boolean partieTerminee;
 
     /**
@@ -69,7 +71,7 @@ public class Grille extends Observable {
      *
      * @param points .
      */
-    public Grille(ArrayList<int[]> points) {
+    public Grille(ArrayList<int[]> points, ArrayList<Symbole> symboles) {
 
         int taille = 4;
 
@@ -96,9 +98,7 @@ public class Grille extends Observable {
 
                     if (points.get(k)[0] == tuple[0] && points.get(k)[1] == tuple[1]) {
 
-                        this.plateau[i][j].setSymbole(Symbole.ROND);
-
-                        System.out.println("Trouvé à :" + i + " " + j);
+                        this.plateau[i][j].setSymbole(symboles.get(k));
 
                     }
 
@@ -383,8 +383,14 @@ public class Grille extends Observable {
 
             this.cheminActuel.ajouter(c);
             
+            this.cheminNonValide = false;
+            
             System.out.println("Ajout");
 
+        } else {
+            
+            this.cheminNonValide = true;
+            
         }
 
         //System.out.println("y: "+ c.getY() +" x: " + c.getX());
@@ -407,7 +413,9 @@ public class Grille extends Observable {
             
             this.cheminActuel.ajouter(c);
             
-            if (this.cheminEstValide(this.cheminActuel)){
+            System.out.println(this.cheminActuel.toString());
+            
+            if (this.cheminEstValide(this.cheminActuel) && this.cheminNonValide == false ){
                 
                 System.out.println("Chemin Valide");
                 
@@ -445,6 +453,9 @@ public class Grille extends Observable {
                 
         }
         
+        
+        this.mettreAJourPlateau();
+                
         this.setChanged();
 
         this.notifyObservers();
@@ -630,7 +641,7 @@ public class Grille extends Observable {
      */
     public boolean cheminMemePaire(Chemin chemin) {
 
-        return chemin.getCases().get(0).getSymbole() != chemin.getDernierElement().getSymbole();
+        return chemin.getCases().get(0).getSymbole() == chemin.getDernierElement().getSymbole();
 
     }
 

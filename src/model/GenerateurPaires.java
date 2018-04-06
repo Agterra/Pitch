@@ -6,6 +6,8 @@ import java.util.Random;
 public class GenerateurPaires {
 
     private ArrayList< int[]> paires;
+    
+    public ArrayList< Symbole > symbolesPaires;
 
     private int[][] grille;
 
@@ -26,6 +28,8 @@ public class GenerateurPaires {
 
         this.paires = new ArrayList<>();
 
+        this.symbolesPaires = new ArrayList<>();
+
         this.grille = new int[this.longueur][this.largeur];
 
         this.nombrePaires = 0;
@@ -45,6 +49,8 @@ public class GenerateurPaires {
         this.largeur = largeur;
 
         this.paires = new ArrayList<>();
+
+        this.symbolesPaires = new ArrayList<>();
 
         this.grille = new int[longueur][largeur];
 
@@ -132,10 +138,16 @@ public class GenerateurPaires {
 
         Random aleatoire = new Random();
 
+        Symbole[] symboles = Symbole.getSymbolesNormaux();
+        
         int[] points = new int[2];
 
         for (int i = 0; i < this.nombrePaires; i++) {
 
+            int symboleAleatoire = aleatoire.nextInt(symboles.length);
+            
+            Symbole s = symboles[symboleAleatoire];
+            
             int x = aleatoire.nextInt(this.largeur);
 
             int y = aleatoire.nextInt(this.longueur);
@@ -157,6 +169,8 @@ public class GenerateurPaires {
             points[1] = x;
 
             this.paires.add(points);
+            
+            this.symbolesPaires.add(s);
 
             int nX = aleatoire.nextInt(this.largeur);
 
@@ -179,6 +193,8 @@ public class GenerateurPaires {
             points[1] = nX;
 
             this.paires.add(points);
+
+            this.symbolesPaires.add(s);
 
         }
         /*  
