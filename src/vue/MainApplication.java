@@ -23,6 +23,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
+import static javafx.scene.input.KeyCode.T;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.*;
@@ -252,6 +253,12 @@ public class MainApplication extends Application {
                 Optional<String> result = demanderTaille.showAndWait();
                 
                 if (result.isPresent()) {
+                    
+                    int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
+                    
+                    System.out.println(longueur);
+                    
+                    grille.formaterGrille(longueur, 6);
                     
                     premierStage.close();
                     

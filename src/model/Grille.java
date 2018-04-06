@@ -670,7 +670,9 @@ public class Grille extends Observable {
 
     }
 
-    
+    /**
+     * Formate la grille à son état de base
+     */
     public void formaterGrille() {
         
         GenerateurPaires p = new GenerateurPaires(this.longueur, this.largeur, this.pairesSymboles);
@@ -690,6 +692,78 @@ public class Grille extends Observable {
             for (int j = 0; j < this.longueur; j++) {
 
                 this.plateau[i][j] = new Case(j, i);
+
+                tuple[0] = i;
+                tuple[1] = j;
+
+                for (int k = 0; k < points.size(); k++) {
+
+                    if (points.get(k)[0] == tuple[0] && points.get(k)[1] == tuple[1]) {
+
+                        this.plateau[i][j].setSymbole(symboles.get(k));
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        this.pairesSymboles = points.size() / 2;
+
+        this.plateauOrigine = this.clonePlateau(this.plateau);
+        
+        this.pairesCompletes = 0;
+        
+        this.partieTerminee = false;
+
+        this.supprimerChemin(cheminActuel);
+        
+        this.cheminActuel = new Chemin();
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
+    }
+    
+    /**
+     * Formate la grille à son état de base
+     * @param longueur La longueur saisie par l'utilisateur
+     * @param largeur La largeur saisie par l'utilisateur
+     */
+    public void formaterGrille(int longueur, int largeur) {
+        
+        GenerateurPaires p = new GenerateurPaires(longueur, largeur, this.pairesSymboles);
+        
+        ArrayList<int[]> points = p.genererPaires();
+        
+        ArrayList<Symbole> symboles = p.symbolesPaires;
+                
+        this.chemins = new ArrayList<>();
+        
+        this.longueur = longueur;
+        
+        this.largeur = largeur;
+        
+        System.out.println(longueur + " ; " + largeur);
+        
+        System.out.println(this.longueur + " ; " + this.largeur);
+
+        this.plateau = new Case[this.longueur][this.largeur];
+
+        int[] tuple = new int[2];
+
+        for (int i = 0; i < this.longueur; i++) {
+
+            for (int j = 0; j < this.largeur; j++) {
+                
+                System.out.println(i + " ; " + j);
+
+                this.plateau[i][j] = new Case(j, i);
+                
+               // System.out.println(this.plateau[i][j].toString());
 
                 tuple[0] = i;
                 tuple[1] = j;
