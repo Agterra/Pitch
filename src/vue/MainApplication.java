@@ -501,7 +501,7 @@ public class MainApplication extends Application {
             System.out.println("MainApplication.initialiserModele");
         }
 
-        this.grille = new Grille();
+        this.grille = new Grille(4, 4, 2);
 
         this.grille.addObserver(new Observer() {
 

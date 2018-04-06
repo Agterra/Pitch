@@ -69,19 +69,25 @@ public class Grille extends Observable {
     /**
      * Initialise les paramètres avec des valeurs
      *
-     * @param points .
+     * @param largeur la largeur de la grille
+     * @param longueur la longueur de la grille
+     * @param pairesSymboles les paires de symboles à placer sur la grille
      */
-    public Grille(ArrayList<int[]> points, ArrayList<Symbole> symboles) {
+    public Grille(int largeur, int longueur, int pairesSymboles) {
 
-        int taille = 4;
-
+        GenerateurPaires p = new GenerateurPaires(4, 4, 2);
+        
+        ArrayList<int[]> points = p.genererPaires();
+        
+        ArrayList<Symbole> symboles = p.symbolesPaires;
+                
         this.chemins = new ArrayList<>();
 
-        this.largeur = taille;
+        this.largeur = largeur;
 
-        this.longueur = taille;
+        this.longueur = longueur;
 
-        this.plateau = new Case[taille][taille];
+        this.plateau = new Case[longueur][largeur];
 
         int[] tuple = new int[2];
 
@@ -109,43 +115,6 @@ public class Grille extends Observable {
         }
 
         this.pairesSymboles = points.size() / 2;
-
-        this.plateauOrigine = this.clonePlateau(this.plateau);
-        
-        this.partieTerminee = false;
-        
-    }
-
-    /**
-     * Initialise les paramètres avec des valeurs
-     *
-     * @param largeur la largeur de la grille
-     * @param longueur la longueur de la grille
-     * @param pairesSymboles les paires de symboles à placer sur la grille
-     */
-    public Grille(int largeur, int longueur, int pairesSymboles) {
-
-        GenerateurPaires p = new GenerateurPaires(4, 4, 2);
-        
-        this.chemins = new ArrayList<>();
-
-        this.largeur = largeur;
-
-        this.longueur = longueur;
-
-        this.plateau = new Case[longueur][largeur];
-
-        for (int i = 0; i < this.largeur; i++) {
-
-            for (int j = 0; j < this.longueur; j++) {
-
-                this.plateau[i][j] = new Case(j, i);
-
-            }
-
-        }
-
-        this.pairesSymboles = pairesSymboles;
 
         this.plateauOrigine = this.clonePlateau(this.plateau);
         
@@ -704,9 +673,17 @@ public class Grille extends Observable {
     
     public void formaterGrille() {
         
+        GenerateurPaires p = new GenerateurPaires(this.longueur, this.largeur, this.pairesSymboles);
+        
+        ArrayList<int[]> points = p.genererPaires();
+        
+        ArrayList<Symbole> symboles = p.symbolesPaires;
+                
         this.chemins = new ArrayList<>();
 
         this.plateau = new Case[this.longueur][this.largeur];
+
+        int[] tuple = new int[2];
 
         for (int i = 0; i < this.largeur; i++) {
 
@@ -714,9 +691,24 @@ public class Grille extends Observable {
 
                 this.plateau[i][j] = new Case(j, i);
 
+                tuple[0] = i;
+                tuple[1] = j;
+
+                for (int k = 0; k < points.size(); k++) {
+
+                    if (points.get(k)[0] == tuple[0] && points.get(k)[1] == tuple[1]) {
+
+                        this.plateau[i][j].setSymbole(symboles.get(k));
+
+                    }
+
+                }
+
             }
 
         }
+
+        this.pairesSymboles = points.size() / 2;
 
         this.plateauOrigine = this.clonePlateau(this.plateau);
         
@@ -725,6 +717,8 @@ public class Grille extends Observable {
         this.partieTerminee = false;
 
         this.supprimerChemin(cheminActuel);
+        
+        this.cheminActuel = new Chemin();
         
         this.setChanged();
         
