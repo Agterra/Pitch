@@ -97,9 +97,9 @@ public class MainApplication extends Application {
      */
     public void initialiserVariablesMembres() {
 
-        this.hauteurFenetre = 600;
+        this.hauteurFenetre = 300;//600
 
-        this.largeurFenetre = 580;
+        this.largeurFenetre = 280;//580
 
         this.grille = new Grille();
 

@@ -9,13 +9,13 @@ public enum Symbole {
     ROND("file:src/assets/circle.png"),
     TRIANGLE("file:src/assets/triangle.png"),
     ETOILE("file:src/assets/star.png"),
-    CARRE("file:src/assets/square.png"),
+    CARRE("file:src/assets/carre.png"),
     LOSANGE("file:src/assets/losange.png"),
     
     ROND_VALIDE("file:src/assets/circle_valide.png"),
     TRIANGLE_VALIDE("file:src/assets/triangle_valide.png"),
     ETOILE_VALIDE("file:src/assets/star_valide.png"),
-    CARRE_VALIDE("file:src/assets/square_valide.png"),
+    CARRE_VALIDE("file:src/assets/carre_valide.png"),
     LOSANGE_VALIDE("file:src/assets/losange_valide.png"),
     VIDE("file:src/assets/vide.png");
 

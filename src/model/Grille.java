@@ -25,8 +25,6 @@ public class Grille extends Observable {
     
     private Case[][] plateau;
     
-    private boolean cheminNonValide = false;
-    
     private boolean partieTerminee;
 
     /**
@@ -119,6 +117,8 @@ public class Grille extends Observable {
         this.plateauOrigine = this.clonePlateau(this.plateau);
         
         this.partieTerminee = false;
+        
+        this.afficherPlateau();
         
         // Algo pour déterminer possibilité de placement de deux symboles TO DO
     }
@@ -352,14 +352,8 @@ public class Grille extends Observable {
 
             this.cheminActuel.ajouter(c);
             
-            this.cheminNonValide = false;
-            
             System.out.println("Ajout");
 
-        } else {
-            
-            this.cheminNonValide = true;
-            
         }
 
         //System.out.println("y: "+ c.getY() +" x: " + c.getX());
@@ -378,50 +372,39 @@ public class Grille extends Observable {
 
         Case c = this.getCase(this.derniereCaseConnue[1], this.derniereCaseConnue[0]);
         
-        if ( c.getSymbole() == this.cheminActuel.getCases().get(0).getSymbole() ){
-            
-            this.cheminActuel.ajouter(c);
-            
-            System.out.println(this.cheminActuel.toString());
-            
-            if (this.cheminEstValide(this.cheminActuel) && this.cheminNonValide == false ){
-                
-                System.out.println("Chemin Valide");
-                
-                this.cheminActuel.validerLesCases();
-                
-                this.chemins.add(this.cheminActuel);
-                
-                this.cheminActuel = new Chemin();
-                
-                this.mettreAJourPlateau();
-                
-                this.pairesCompletes ++;
-                
-                if ( this.jeuTermine() ){
-                    
-                    this.partieTerminee = true;
-                    
-                    System.out.println("Partie finie");
-                    
-                }
-                
-            } else {
-                
-                this.supprimerChemin(this.cheminActuel);
-            
-                this.cheminActuel = new Chemin();
-                
-            }
-            
-        } else {
-            
-            this.supprimerChemin(this.cheminActuel);
-            
+        this.cheminActuel.ajouter(c);
+
+        System.out.println(this.cheminActuel.toString());
+
+        if (this.cheminEstValide(this.cheminActuel)){
+
+            System.out.println("Chemin Valide");
+
+            this.cheminActuel.validerLesCases();
+
+            this.chemins.add(this.cheminActuel);
+
             this.cheminActuel = new Chemin();
-                
+
+            this.mettreAJourPlateau();
+
+            this.pairesCompletes ++;
+
+            if ( this.jeuTermine() ){
+
+                this.partieTerminee = true;
+
+                System.out.println("Partie finie");
+
+            }
+
+        } else {
+
+        this.supprimerChemin(this.cheminActuel);
+
+            this.cheminActuel = new Chemin();
+
         }
-        
         
         this.mettreAJourPlateau();
                 
@@ -504,18 +487,46 @@ public class Grille extends Observable {
      */
     private boolean cheminEstValide(Chemin chemin) {
 
-        if (cheminMemePaire(chemin)) {
+        if ( !cheminMemePaire(chemin)) {
 
+            System.out.println("Pas le même symbole !");
+            
             return false;
 
         } else {
 
+            int i = 0;
+            
+            Case casePrecedente = new Case();
+            
             for (Case ca : chemin.getCases()) {
 
+                if ( this.caseEstLibre(ca) ) {
+                    
+                    return false;
+                    
+                }
+                
+                if ( i > 0 ) {
+                    
+                    if ( !this.sontVoisines(ca, casePrecedente) ) {
+                        
+                        return false;
+                        
+                    }
+                    
+                }
+                
+                casePrecedente = ca;
+                    
+                i++;
+                
                 for (Chemin ch : this.getChemins()) {
 
                     if (ch != chemin && ch.getCases().indexOf(ca) != -1) {
 
+                        System.out.println("Case déjà présente sur un autre chemin");
+                        
                         return false;
 
                     }
@@ -523,6 +534,7 @@ public class Grille extends Observable {
                 }
 
             }
+            
 
         }
 
