@@ -4,14 +4,26 @@ import java.util.Objects;
 
 public class Case {
 
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
+    
+    private int x;
+
+    private int y;
+    
     private Symbole symbole;
 
     private Lien lien;
 
-    private int x;
-
-    private int y;
-
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
+    
+    /**************************************************************************/
+    // CONSTRUCTEURS
+    /**************************************************************************/
+    
     /**
      * Initialise les paramètres à leurs valeurs par défaut
      */
@@ -30,39 +42,87 @@ public class Case {
     /**
      * Initialise les paramètres avec des valeurs
      *
-     * @param symbole Un symbole
-     * @param lien Un lien
-     * @param x Abscisse de la Case
-     * @param y Ordonnée de la Case
-     */
-    public Case(Symbole symbole, Lien lien, int x, int y) {
-
-        this.symbole = symbole;
-
-        this.lien = lien;
-
-        this.x = x;
-
-        this.y = y;
-
-    }
-
-    /**
-     * Initialise les paramètres avec des valeurs
-     *
      * @param x Abscisse de la Case
      * @param y Ordonnée de la Case
      */
     public Case(int x, int y) {
 
+        this.x = x;
+
+        this.y = y;
+        
         this.symbole = Symbole.VIDE;
 
         this.lien = Lien.VIDE;
 
+    }
+    
+    /**
+     * Initialise les paramètres avec des valeurs
+     *
+     * @param symbole Un symbole
+     * @param lien Un lien
+     * @param x Abscisse de la Case
+     * @param y Ordonnée de la Case
+     */
+    public Case(int x, int y, Symbole symbole, Lien lien) {
+
         this.x = x;
 
         this.y = y;
+        
+        this.symbole = symbole;
 
+        this.lien = lien;
+
+    }
+
+    /**************************************************************************/
+    // ACCESSEURS & MUTATEURS
+    /**************************************************************************/
+    
+    /**
+     * Lit la variable x
+     *
+     * @return L'attribut membre x (abscisse)
+     */
+    public int getX() {
+        
+        return x;
+        
+    }
+
+    /**
+     * Ecrit la variable x
+     *
+     * @param x L'abscisse de la Case
+     */
+    public void setX(int x) {
+        
+        this.x = x;
+        
+    }
+
+    /**
+     * Lit la variable y
+     *
+     * @return L'attribut membre y (ordonnée)
+     */
+    public int getY() {
+        
+        return y;
+        
+    }
+
+    /**
+     * Ecrit la variable y
+     *
+     * @param y L'ordonnée de la Case
+     */
+    public void setY(int y) {
+        
+        this.y = y;
+        
     }
 
     /**
@@ -108,51 +168,11 @@ public class Case {
         this.lien = lien;
         
     }
-
-    /**
-     * Lit la variable x
-     *
-     * @return L'attribut membre x (abscisse)
-     */
-    public int getX() {
-        
-        return x;
-        
-    }
-
-    /**
-     * Ecrit la variable x
-     *
-     * @param x L'abscisse de la Case
-     */
-    public void setX(int x) {
-        
-        this.x = x;
-        
-    }
-
-    /**
-     * Lit la variable y
-     *
-     * @return L'attribut membre y (ordonnée)
-     */
-    public int getY() {
-        
-        return y;
-        
-    }
-
-    /**
-     * Ecrit la variable y
-     *
-     * @param y L'ordonnée de la Case
-     */
-    public void setY(int y) {
-        
-        this.y = y;
-        
-    }
-
+    
+    /**************************************************************************/
+    // FONCTIONS OVERRIDE
+    /**************************************************************************/
+    
     /**
      * Retourne vrai si les deux cases sont identiques, faux sinon
      *

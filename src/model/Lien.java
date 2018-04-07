@@ -4,6 +4,10 @@ import javafx.scene.image.Image;
 
 public enum Lien {
 
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
+    
     VERTICAL("file:src/assets/vertical.png"),
     VERTICAL_VALIDE("file:src/assets/vertical_valide.png"),
     HORIZONTAL("file:src/assets/horizontal.png"),
@@ -21,12 +25,24 @@ public enum Lien {
 
     private final Image image;
 
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
+    
+    /**************************************************************************/
+    // CONSTRUCTEURS
+    /**************************************************************************/
+    
     private Lien(String chemin) {
 
         this.image = new Image(chemin);
 
     }
 
+    /**************************************************************************/
+    // ACCESSEURS & MUTATEURS
+    /**************************************************************************/
+    
     /**
      * Lit la variable image
      * @return La variable membre image
@@ -38,10 +54,10 @@ public enum Lien {
     }
 
     /**
-     * Renvoie l'opposé du lien (lien en fond vert)
+     * Renvoie le lien (lien en fond blanc)
      *
      * @param lien Un Lien
-     * @return L'opposé du lien
+     * @return Le lien
      */
     public static Lien getLienValide(Lien lien) {
 
@@ -103,6 +119,12 @@ public enum Lien {
 
     }
     
+    /**
+     * Renvoie l'opposé du lien (lien en fond vert)
+     *
+     * @param lien Un Lien
+     * @return L'opposé du lien
+     */
     public static Lien getLienInvalide( Lien lien ) {
         
         Lien l = VIDE;

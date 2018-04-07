@@ -32,9 +32,10 @@ import model.*;
 
 public class MainApplication extends Application {
 
-    ///////////////////////////////////////////
+    /**************************************************************************/
     // VARIABLES MEMBRES
-    ///////////////////////////////////////////
+    /**************************************************************************/
+    
     public static boolean DEBUGAGE = true;
 
     // Propriétés de fenêtre
@@ -75,7 +76,8 @@ public class MainApplication extends Application {
     }
 
     /**
-     *
+     * Initialise les composants et lance unepartie
+     * @param premierStage Fenêtre du menu
      */
     @Override
     public void start(Stage premierStage) throws Exception {
@@ -88,12 +90,12 @@ public class MainApplication extends Application {
 
         initialiserModele(premierStage);
 
-        initialisationGraphique(premierStage, this.deuxiemeStage);
+        initialiserGraphiques(premierStage, this.deuxiemeStage);
 
     }
 
     /**
-     * Initialisation des variables membres (stages, scènes, panes...)
+     * Initialise les variables membres (stages, scènes, panes...)
      */
     public void initialiserVariablesMembres() {
 
@@ -122,30 +124,30 @@ public class MainApplication extends Application {
     }
 
     /**
-     * Initialisation des composants graphiques : menu et jeu
+     * Initialise les composants graphiques : menu et jeu
      *
      * @param premierStage Fenêtre du menu
      * @param deuxiemeStage Fenêtre du jeu
      */
-    public void initialisationGraphique(Stage premierStage, Stage deuxiemeStage) {
+    public void initialiserGraphiques(Stage premierStage, Stage deuxiemeStage) {
 
         if (MainApplication.DEBUGAGE) {
             System.out.println("MainApplication.initialisationGraphique");
         }
 
-        initialiserMenu(premierStage, deuxiemeStage);
+        initialiserMenuAccueil(premierStage, deuxiemeStage);
 
         initialiserJeu(premierStage, deuxiemeStage);
 
     }
-
+    
     /**
-     * Construction du menu avec le titre et les boutons
+     * Construit le menu avec le titre et les boutons
      *
      * @param premierStage Fenêtre du menu
      * @param deuxiemeStage Fenêtre du jeu
      */
-    public void initialiserMenu(Stage premierStage, Stage deuxiemeStage) {
+    public void initialiserMenuAccueil(Stage premierStage, Stage deuxiemeStage) {
 
         premierStage.setTitle("Javaline");
 
@@ -215,9 +217,10 @@ public class MainApplication extends Application {
     }
     
     /**
-     * Ajout des évènements sur les boutons du menu d'accueil
+     * Ajoute des évènements sur les boutons du menu d'accueil
      *
      * @param boutonNouvellePartie Bouton pour lancer une nouvelle partie
+     * @param boutonChangerTaille Bouton pour changer la taille de la grille
      * @param boutonRegles Bouton pour afficher les règles du jeu
      * @param boutonQuitter Bouton pour quitter le jeu
      * @param premierStage Fenêtre du menu
@@ -315,7 +318,7 @@ public class MainApplication extends Application {
     }
 
     /**
-     * Initialisation du jeu avec le modèle (grille) et ajout d'un menu
+     * Initialise le jeu avec le modèle (grille) et ajoute le menu
      *
      * @param premierStage Fenêtre du menu
      * @param deuxiemeStage Fenêtre du jeu
@@ -480,10 +483,12 @@ public class MainApplication extends Application {
     }
 
     /**
-     * Initialisation des actions du menu
-     * @param annulerCoupItem
-     * @param recommencerItem
-     * @param quitterItem
+     * Initialise les actions du menu
+     * @param annulerCoupItem Item pour annuler le dernier coup
+     * @param recommencerItem Item pour commencer la partie en cours
+     * @param nouvellePartieItem Item pour jouer une nouvelle partie
+     * @param quitterItem Item pour revenir à l'écran d'accueil
+     * @param premierStage Fenêtre du menu
      */
     public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem, Stage premierStage ) {
         
@@ -543,9 +548,9 @@ public class MainApplication extends Application {
         
     }
     
-    
     /**
-     * Initialisation du modèle avec la generation des paires
+     * Initialise le modèle avec la génération des paires
+     * @param premierStage Fenêtre du menu
      */
     public void initialiserModele(Stage premierStage) {
 
@@ -612,7 +617,7 @@ public class MainApplication extends Application {
     }
 
     /**
-     *
+     * Ajoute les images en fonction des actions de l'utilisateur
      * @param grilleCases .
      * @param c .
      */
@@ -648,6 +653,11 @@ public class MainApplication extends Application {
 
     }
     
+    /**
+     * Affiche une popup quand la partie est terminée
+     * @param premierStage Fenêtre du menu
+     * @param deuxiemeStage  Fenêtre du jeu
+     */
     public void messageFin(Stage premierStage, Stage deuxiemeStage) {
         
         Alert messageFin = new Alert(AlertType.CONFIRMATION);

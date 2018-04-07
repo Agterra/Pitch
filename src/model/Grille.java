@@ -7,6 +7,10 @@ import javafx.scene.control.ButtonType;
 
 public class Grille extends Observable {
 
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
+    
     private ArrayList<Chemin> chemins;
 
     Chemin cheminActuel = new Chemin();
@@ -27,6 +31,14 @@ public class Grille extends Observable {
     
     private boolean partieTerminee;
 
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
+    
+    /**************************************************************************/
+    // CONSTRUCTEURS
+    /**************************************************************************/
+    
     /**
      * Initialise les paramètres à leurs valeurs par défaut
      */
@@ -123,6 +135,10 @@ public class Grille extends Observable {
         // Algo pour déterminer possibilité de placement de deux symboles TO DO
     }
 
+    /**************************************************************************/
+    // ACCESSEURS & MUTATEURS
+    /**************************************************************************/
+    
     /**
      * Lit la variable chemins
      *
@@ -262,58 +278,10 @@ public class Grille extends Observable {
         this.partieTerminee = partieTerminee;
         
     }
-
-    /**
-     * Supprime le chemin quand on clique dessus
-     *
-     * @param x L'abscisse de la Case
-     * @param y L'ordonnée de la Case
-     */
-    public void clic(int x, int y) {
-
-        Chemin cheminASupprimer = new Chemin();
-        
-        for (Chemin c : this.chemins) {
-
-            if (c.contient(x, y)) {
-
-                this.supprimerChemin(c);
-                
-                cheminASupprimer = c;
-
-                this.pairesCompletes --;
-                
-            }
-
-        }
-        
-        System.out.println(this.chemins.size());
-        
-        this.chemins.remove(cheminASupprimer);
-
-        System.out.println(this.chemins.size());
-        
-        this.setChanged();
-
-        this.notifyObservers();
-
-    }
     
-    /**
-     * Supprime tous les chemins d'une grille
-     */
-    public void supprimerTousLesChemins() {
-        
-        for(Chemin c : this.chemins) {
-            
-            c.supprimer();
-            
-        }
-        
-        this.setChanged();
-        
-        this.notifyObservers();
-    }
+    /**************************************************************************/
+    // FONCTIONS DRAG AND DROP
+    /**************************************************************************/
     
     /**
      * Commence le drag and drop sur un symbole
@@ -402,7 +370,7 @@ public class Grille extends Observable {
 
             this.pairesCompletes ++;
 
-            if ( this.jeuTermine() ){
+            if ( this.jeuEstTermine() ){
 
                 this.partieTerminee = true;
 
@@ -426,26 +394,76 @@ public class Grille extends Observable {
 
     }
     
+    /**************************************************************************/
+    // FONCTIONS CHEMINS
+    /**************************************************************************/
+    
     /**
-     * Réinitialise la grille à son état de départ (mêmes symboles mais tous les liens osnt supprimés)
+     * Supprime le chemin quand on clique dessus
+     *
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
-    public void reinitialiser(){
+    public void clic(int x, int y) {
+
+        Chemin cheminASupprimer = new Chemin();
         
-        this.chemins = new ArrayList<>();
+        for (Chemin c : this.chemins) {
+
+            if (c.contient(x, y)) {
+
+                this.supprimerChemin(c);
+                
+                cheminASupprimer = c;
+
+                this.pairesCompletes --;
+                
+            }
+
+        }
         
-        this.supprimerChemin(cheminActuel);
+        System.out.println(this.chemins.size());
         
-        this.pairesCompletes = 0;
+        this.chemins.remove(cheminASupprimer);
+
+        System.out.println(this.chemins.size());
         
-        this.plateau = this.clonePlateau(this.plateauOrigine);
+        this.setChanged();
+
+        this.notifyObservers();
+
+    }
+    
+    /**
+     * Supprime tous les chemins d'une grille
+     */
+    public void supprimerTousLesChemins() {
         
-        this.partieTerminee = false;
+        for(Chemin c : this.chemins) {
+            
+            c.supprimer();
+            
+        }
         
         this.setChanged();
         
         this.notifyObservers();
-        
     }
+    
+    /**
+     * Supprime un chemin
+     *
+     * @param chemin le chemin à supprimer
+     */
+    private void supprimerChemin(Chemin chemin) {
+
+        chemin.supprimer();
+
+    }
+
+    /**************************************************************************/
+    // FONCTIONS GRILLE
+    /**************************************************************************/
     
     /**
      * Annule le dernier coup
@@ -480,6 +498,26 @@ public class Grille extends Observable {
         
     }
 
+    /**
+     * Réinitialise la grille à son état de départ (mêmes symboles mais tous les liens osnt supprimés)
+     */
+    public void reinitialiser(){
+        
+        this.chemins = new ArrayList<>();
+        
+        this.supprimerChemin(cheminActuel);
+        
+        this.pairesCompletes = 0;
+        
+        this.plateau = this.clonePlateau(this.plateauOrigine);
+        
+        this.partieTerminee = false;
+        
+        this.setChanged();
+        
+        this.notifyObservers();
+        
+    }
     
     /**
      * Formate la grille à son état de base
@@ -612,6 +650,80 @@ public class Grille extends Observable {
     }
     
     /**
+     *
+     * @param chemin
+     */
+    private void mettreAJourPlateau() {
+
+        for ( Chemin chemin : this.chemins ) {
+            
+            for ( Case c : chemin.getCases() ) {
+                
+                Case casePlateau = this.plateau[c.getY()][c.getX()];
+                
+                if ( casePlateau.getSymbole() == Symbole.VIDE ) {
+                    
+                    casePlateau.setLien( c.getLien() );
+                
+                }
+                
+            }
+            
+        }
+
+    }
+
+    /**
+     * Afficher le plateau actuel
+     */
+    public void afficherPlateau() {
+        
+        System.out.println();
+        
+        for(int i = 0; i < this.longueur; i ++){
+            
+            for(int j = 0; j < this.largeur; j++){
+                
+                System.out.print("["+this.plateau[i][j]+"]");
+                
+            }
+            
+            System.out.println();
+            
+        }
+        
+        System.out.println();
+        
+    }
+    
+    /**
+     * Clone le plateau
+     * @param cases
+     * @return Un clone du plateau
+     */
+    public Case[][] clonePlateau( Case[][] cases ){
+        
+        Case[][] copieCases = new Case[this.longueur][this.largeur];
+        
+        for(int i = 0; i < this.longueur; i++){
+            
+            for(int j = 0; j < this.largeur; j++){
+                
+                copieCases[i][j] = (Case)cases[i][j].clone();
+                
+            }
+            
+        }
+        
+        return copieCases;
+        
+    }
+
+    /**************************************************************************/
+    // FONCTIONS BOOLEENNES
+    /**************************************************************************/
+    
+    /**
      * Renvoie vrai si la case est libre (sans symbole ni lien), faux sinon
      *
      * @param c Une Case
@@ -718,7 +830,7 @@ public class Grille extends Observable {
      *
      * @return Vrai ou faux
      */
-    private boolean jeuTermine() {
+    private boolean jeuEstTermine() {
 
         boolean termine = true;
 
@@ -770,41 +882,6 @@ public class Grille extends Observable {
     }
 
     /**
-     * Supprime un chemin
-     *
-     * @param chemin le chemin à supprimer
-     */
-    private void supprimerChemin(Chemin chemin) {
-
-        chemin.supprimer();
-
-    }
-
-    /**
-     *
-     * @param chemin
-     */
-    private void mettreAJourPlateau() {
-
-        for ( Chemin chemin : this.chemins ) {
-            
-            for ( Case c : chemin.getCases() ) {
-                
-                Case casePlateau = this.plateau[c.getY()][c.getX()];
-                
-                if ( casePlateau.getSymbole() == Symbole.VIDE ) {
-                    
-                    casePlateau.setLien( c.getLien() );
-                
-                }
-                
-            }
-            
-        }
-
-    }
-
-    /**
      * Renvoie vrai si c1 et c2 sont voisines, faux sinon
      *
      * @param c1 une case
@@ -825,52 +902,10 @@ public class Grille extends Observable {
 
     }
     
-    /**
-     * Clone le plateau
-     * @param cases
-     * @return Un clone du plateau
-     */
-    public Case[][] clonePlateau( Case[][] cases ){
-        
-        Case[][] copieCases = new Case[this.longueur][this.largeur];
-        
-        for(int i = 0; i < this.longueur; i++){
-            
-            for(int j = 0; j < this.largeur; j++){
-                
-                copieCases[i][j] = (Case)cases[i][j].clone();
-                
-            }
-            
-        }
-        
-        return copieCases;
-        
-    }
+    /**************************************************************************/
+    // FONCTIONS OVERRIDE
+    /**************************************************************************/
     
-    /**
-     * Afficher le plateau actuel
-     */
-    public void afficherPlateau() {
-        
-        System.out.println();
-        
-        for(int i = 0; i < this.longueur; i ++){
-            
-            for(int j = 0; j < this.largeur; j++){
-                
-                System.out.print("["+this.plateau[i][j]+"]");
-                
-            }
-            
-            System.out.println();
-            
-        }
-        
-        System.out.println();
-        
-    }
-
     /**
      * Construit une chaîne de caractère regroupant les propriétés d'un objet
      * Grille
@@ -881,6 +916,5 @@ public class Grille extends Observable {
     public String toString() {
         return "Grille{" + "chemins=" + chemins + ", cheminActuel=" + cheminActuel + ", largeur=" + largeur + ", longueur=" + longueur + ", plateau=" + plateau + '}';
     }
-    
     
 }

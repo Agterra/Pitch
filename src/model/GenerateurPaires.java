@@ -5,6 +5,10 @@ import java.util.Random;
 
 public class GenerateurPaires {
 
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
+    
     private ArrayList< int[]> paires;
     
     public ArrayList< Symbole > symbolesPaires;
@@ -17,6 +21,14 @@ public class GenerateurPaires {
 
     private int nombrePaires;
 
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
+    
+    /**************************************************************************/
+    // CONSTRUCTEURS
+    /**************************************************************************/
+    
     /**
      * Initialise les paramètres à leurs valeurs par défaut
      */
@@ -68,6 +80,10 @@ public class GenerateurPaires {
 
     }
 
+    /**************************************************************************/
+    // FONCTIONS GENERATEUR
+    /**************************************************************************/
+    
     /**
      *
      * @return Une liste de paires
@@ -211,6 +227,30 @@ public class GenerateurPaires {
     }
 
     /**
+     *
+     * @param tableau .
+     */
+    public void afficherTableau(int[][] tableau) {
+
+        for (int i = 0; i < tableau.length; i++) {
+
+            for (int j = 0; j < tableau[i].length; j++) {
+
+                System.out.print("[" + tableau[i][j] + "]");
+
+            }
+
+            System.out.println();
+
+        }
+
+    }
+    
+    /**************************************************************************/
+    // FONCTIONS BOOLEENNES
+    /**************************************************************************/
+    
+    /**
      * Renvoie vrai si le tableau est plein, faux sinon
      * @return Vrai ou faux
      */
@@ -231,26 +271,6 @@ public class GenerateurPaires {
         }
 
         return true;
-
-    }
-
-    /**
-     *
-     * @param tableau .
-     */
-    public void afficherTableau(int[][] tableau) {
-
-        for (int i = 0; i < tableau.length; i++) {
-
-            for (int j = 0; j < tableau[i].length; j++) {
-
-                System.out.print("[" + tableau[i][j] + "]");
-
-            }
-
-            System.out.println();
-
-        }
 
     }
 
