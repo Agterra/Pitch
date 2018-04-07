@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Jeu "Javaline"
 
 ## Synopsis
@@ -30,6 +29,3 @@ Ce jeu, développé dans le cadre de l'UE "Algorithmique et Programmation Orient
 Ce projet est sous copyright.
 
 COPYRIGHTS @ Nelly BARRET et Louis LE BRUN - LIFAP7 2018
-=======
-# Pitch
->>>>>>> master
