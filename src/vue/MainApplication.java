@@ -62,9 +62,10 @@ public class MainApplication extends Application {
 
     private GridPane gridPaneJeu;
 
-    ///////////////////////////////////////////
+    /**************************************************************************/
     // FONCTIONS MEMBRES
-    ///////////////////////////////////////////
+    /**************************************************************************/
+    
     public static void main(String[] args) {
 
         if (MainApplication.DEBUGAGE) {
