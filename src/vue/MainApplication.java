@@ -70,6 +70,10 @@ public class MainApplication extends Application {
     // FONCTIONS MEMBRES
     /**************************************************************************/
     
+    /**
+     * La fonction principale
+     * @param args Les paramètres d'exécution
+     */
     public static void main(String[] args) {
 
         if (MainApplication.DEBUGAGE) {
@@ -88,7 +92,9 @@ public class MainApplication extends Application {
     public void start(Stage premierStage) throws Exception {
 
         if (MainApplication.DEBUGAGE) {
+            
             System.out.println("MainApplication.start");
+            
         }
 
         initialiserVariablesMembres();
@@ -130,7 +136,7 @@ public class MainApplication extends Application {
 
         this.deuxiemeScene = new Scene(this.racine2, this.largeurFenetre, this.hauteurFenetre);
 
-        grille = new Grille(hauteur, largeur, (int)Math.floor(hauteur/2));
+        grille = new Grille(hauteur, largeur, (int)Math.floor(hauteur/2)); // Grille(hauteur de la grille, largeur de la grille, nombre de symboles)
 
     }
 
@@ -143,7 +149,9 @@ public class MainApplication extends Application {
     public void initialiserGraphiques(Stage premierStage, Stage deuxiemeStage) {
 
         if (MainApplication.DEBUGAGE) {
+            
             System.out.println("MainApplication.initialisationGraphique");
+            
         }
 
         initialiserMenuAccueil(premierStage, deuxiemeStage);
@@ -160,6 +168,12 @@ public class MainApplication extends Application {
      */
     public void initialiserMenuAccueil(Stage premierStage, Stage deuxiemeStage) {
 
+        if (MainApplication.DEBUGAGE) {
+            
+            System.out.println("MainApplication.initialiserMenuAccueil");
+            
+        }
+        
         premierStage.setTitle("Javaline");
 
         // On positionne la fenetre
@@ -173,7 +187,7 @@ public class MainApplication extends Application {
 
         titre.setFont(Font.font("Verdana", 42));
 
-        // ... et trois boutons
+        // ... et quatre boutons
         Button boutonNouvellePartie = new Button();
 
         boutonNouvellePartie.setText("Nouvelle partie");
@@ -238,6 +252,12 @@ public class MainApplication extends Application {
      */
     public void initialiserActionsAccueil(Button boutonNouvellePartie, Button boutonChangerTaille, Button boutonRegles, Button boutonQuitter, Stage premierStage) {
         
+        if (MainApplication.DEBUGAGE) {
+            
+            System.out.println("MainApplication.initialiserActionsAccueil");
+            
+        }
+        
         boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -262,7 +282,7 @@ public class MainApplication extends Application {
                 
                 demanderTaille.setTitle("Changement de taille");
 
-                demanderTaille.setHeaderText("Change la taille de la grille");
+                demanderTaille.setHeaderText("Changer la taille de la grille");
 
                 demanderTaille.setContentText("Taille ");
 
@@ -283,8 +303,6 @@ public class MainApplication extends Application {
                     initialiserJeu(premierStage, deuxiemeStage);
                
                     initialiserModele(premierStage);
-                    
-                    //grille.formaterGrille(hauteur, largeur);
                     
                     premierStage.close();
                     
@@ -419,7 +437,9 @@ public class MainApplication extends Application {
                         public void handle(MouseEvent evenement) {
 
                             if (MainApplication.DEBUGAGE) {
+                                
                                 System.out.println("MainApplication.image.onDragDetected");
+                                
                             }
 
                             Dragboard db = image.startDragAndDrop(TransferMode.ANY);
@@ -448,7 +468,9 @@ public class MainApplication extends Application {
 
                             // attention, le setOnDragDone est déclenché par la source du Drag&Drop
                             if (MainApplication.DEBUGAGE) {
+                                
                                 System.out.println("MainApplication.image.onDragDone");
+                                
                             }
 
                             grille.clic(x, y);
@@ -464,7 +486,9 @@ public class MainApplication extends Application {
                     public void handle(DragEvent evenement) {
 
                         if (MainApplication.DEBUGAGE) {
+                            
                             System.out.println("MainApplication.image.onDragEntered");
+                            
                         }
 
                         evenement.consume();
@@ -482,10 +506,12 @@ public class MainApplication extends Application {
                         // attention, le setOnDragDone est déclenché par la source du Drag&Drop
                         
                         if (MainApplication.DEBUGAGE) {
+                            
                             System.out.println("MainApplication.image.onDragDone");
+                            
                         }
 
-                        grille.finirDragAndDrop( x, y );
+                        grille.finirDragAndDrop(x, y);
 
                     }
 
@@ -509,8 +535,13 @@ public class MainApplication extends Application {
      * @param quitterItem Item pour revenir à l'écran d'accueil
      * @param premierStage Fenêtre du menu
      */
-    public void initialiserActionsMenu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem, Stage premierStage ) {
+    public void initialiserActionsMenu(MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem, Stage premierStage) {
         
+        if (MainApplication.DEBUGAGE) {
+            
+            System.out.println("MainApplication.initialiserActionsMenu");
+            
+        }
         
         // Ajout des interactions sur le menu
         annulerCoupItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -535,16 +566,16 @@ public class MainApplication extends Application {
 
         });
         
-        nouvellePartieItem.setOnAction( new EventHandler<ActionEvent>() {
+        nouvellePartieItem.setOnAction(new EventHandler<ActionEvent>() {
             
-           @Override
-           public void handle(ActionEvent evenement) {
-               
-               grille.formaterGrille();
-               
-               initialiserJeu(premierStage, deuxiemeStage);
-               
-           }
+            @Override
+            public void handle(ActionEvent evenement) {
+
+                grille.formaterGrille();
+
+                initialiserJeu(premierStage, deuxiemeStage);
+
+            }
             
         });
 
@@ -574,13 +605,11 @@ public class MainApplication extends Application {
     public void initialiserModele(Stage premierStage) {
 
         if (MainApplication.DEBUGAGE) {
+            
             System.out.println("MainApplication.initialiserModele");
+            
         }
         
-        System.out.println("MAIN hauteur = " + this.hauteur);
-        
-        System.out.println("MAIN largeur = " + this.largeur);
-
         this.grille.addObserver(new Observer() {
 
             @Override
@@ -590,17 +619,17 @@ public class MainApplication extends Application {
 
                     Grille grille = (Grille) o;
                     
-                    System.out.println("GRILLE hauteur = " + grille.getLongueur());
-                    
-                    System.out.println("GRILLE largeur = " + grille.getLargeur());
-
                     ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
                     
-                    System.out.println(cheminActuel.toString());
+                    if (MainApplication.DEBUGAGE) {
+                        
+                        System.out.println(cheminActuel.toString());
+                        
+                    }
                     
                     
                     //Dessiner chemin actuel
-                    for ( Case c : cheminActuel ) {
+                    for (Case c : cheminActuel) {
                         
                         Object grilleCases = gridPaneJeu.getChildren().get(c.getY() * grille.getLargeur() + c.getX());
 
@@ -608,15 +637,11 @@ public class MainApplication extends Application {
 
                     }
                     
-                    System.out.println("OK1");
-                    
                     for (int i = 0; i < grille.getLongueur(); i++) {
 
                         for (int j = 0; j < grille.getLargeur(); j++) {
 
                             Object grilleCases = gridPaneJeu.getChildren().get(i * grille.getLargeur() + j);
-
-                            //System.out.println("grilleCases num " + i * grille.getLargeur() + j);
                             
                             Case c = grille.getCase(i, j);
                             
@@ -625,8 +650,6 @@ public class MainApplication extends Application {
                         }
                         
                     }
-                    
-                    System.out.println("OK2");
                     
                     if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
                         
@@ -638,8 +661,6 @@ public class MainApplication extends Application {
                         
                     }
                     
-                    System.out.println("OK3");
-
                 }
                        
             }

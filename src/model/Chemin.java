@@ -68,7 +68,7 @@ public class Chemin {
     
     /**
      * Renvoie la première case d'un chemin
-     * @return 
+     * @return La première case
      */
     public Case getPremierElement() {
         
@@ -93,7 +93,7 @@ public class Chemin {
     
     /**
      * 
-     * @param c .
+     * @param c La case à ajouter
      */
     public void ajouter(Case c) {
 
@@ -104,8 +104,7 @@ public class Chemin {
             Case caseP2 = cases.get(cases.size() - 2);
 
             caseP1.setLien(calculer(c, caseP1, caseP2));
-
-            //System.out.println(caseP1.getLien());
+            
         }
 
         cases.add(c);

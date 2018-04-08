@@ -79,9 +79,9 @@ public class Grille extends Observable {
     /**
      * Initialise les paramètres avec des valeurs
      *
-     * @param largeur la largeur de la grille
-     * @param longueur la longueur de la grille
-     * @param pairesSymboles les paires de symboles à placer sur la grille
+     * @param largeur La largeur de la grille
+     * @param longueur La longueur de la grille
+     * @param pairesSymboles Les paires de symboles à placer sur la grille
      */
     public Grille(int largeur, int longueur, int pairesSymboles) {
 
@@ -142,16 +142,16 @@ public class Grille extends Observable {
     /**
      * Lit la variable chemins
      *
-     * @return la liste des chemins
+     * @return La liste des chemins
      */
     public ArrayList<Chemin> getChemins() {
         return chemins;
     }
 
     /**
-     * Ecrit a variable chemins
+     * Ecrit la variable chemins
      *
-     * @param chemins La variable membre chemins
+     * @param chemins Un tableau représentant des chemins
      */
     public void setChemins(ArrayList<Chemin> chemins) {
         this.chemins = chemins;
@@ -159,6 +159,7 @@ public class Grille extends Observable {
 
     /**
      * Lit la variable largeur
+     * @return L'attribut membre largeur
      */
     public int getLargeur() {
         return largeur;
@@ -167,7 +168,7 @@ public class Grille extends Observable {
     /**
      * Ecrit la variable largeur
      *
-     * @param largeur  La variable membre largeur
+     * @param largeur La largeur de la grille
      */
     public void setLargeur(int largeur) {
         this.largeur = largeur;
@@ -176,7 +177,7 @@ public class Grille extends Observable {
     /**
      * Lit la variable longueur
      *
-     * @return la longueur de la grille
+     * @return L'attribut membre longueur
      */
     public int getLongueur() {
         return longueur;
@@ -185,7 +186,7 @@ public class Grille extends Observable {
     /**
      * Ecrit la variable longueur
      *
-     * @param longueur La variable membre longueur
+     * @param longueur La longueur de la grille
      */
     public void setLongueur(int longueur) {
         this.longueur = longueur;
@@ -194,7 +195,7 @@ public class Grille extends Observable {
     /**
      * Lit la variable plateau
      *
-     * @return le plateau
+     * @return L'attribut membre plateau
      */
     public Case[][] getPlateau() {
         return plateau;
@@ -203,7 +204,7 @@ public class Grille extends Observable {
     /**
      * Ecrit la variable plateau
      *
-     * @param plateau La variable membre plateau
+     * @param plateau Un plateau de jeu
      */
     public void setPlateau(Case[][] plateau) {
         this.plateau = plateau;
@@ -212,7 +213,7 @@ public class Grille extends Observable {
     /**
      * Lit la variable cheminActuel
      *
-     * @return Le chemin en cours
+     * @return L'attribut membre cheminActuel
      */
     public Chemin getCheminActuel() {
         return cheminActuel;
@@ -221,7 +222,7 @@ public class Grille extends Observable {
     /**
      * Ecrit la variable cheminActuel
      *
-     * @param cheminActuel La variable membre cheminActuel
+     * @param cheminActuel Le chemin actuel
      */
     public void setCheminActuel(Chemin cheminActuel) {
         this.cheminActuel = cheminActuel;
@@ -248,10 +249,10 @@ public class Grille extends Observable {
     }
 
     /**
-     * 
-     * @param y
-     * @param x
-     * @return Un clone d'une case du tableau en y,x
+     * Lit la variable Case de coordonnées (y, x)
+     * @param y L'ordonnée de la Case
+     * @param x L'abscisse de la Case
+     * @return La Case[y][x]
      */
     public Case getCase(int y, int x) {
 
@@ -261,7 +262,7 @@ public class Grille extends Observable {
     
     /**
      * Lit la variable partieTerminee
-     * @return La variable membre partieTerminee
+     * @return L'attribut membre partieTerminee
      */
     public int getPartieTerminee() {
         
@@ -271,7 +272,7 @@ public class Grille extends Observable {
     
     /**
      * Ecrit la variable partieTerminee
-     * @param partieTerminee La variable membre partieTerminee
+     * @param partieTerminee La valeur correpsondant à a fin de la partie
      */
     public void setPartieTerminee(int partieTerminee) {
         
@@ -279,24 +280,40 @@ public class Grille extends Observable {
         
     }
 
+    /**
+     * Lit la variable pairesSymboles
+     * @return L'attribut membre pairesSymboles
+     */
     public int getPairesSymboles() {
         
         return pairesSymboles;
         
     }
 
+    /**
+     * Ecrit la variable pairesSymboles
+     * @param pairesSymboles Le nombre de paires de symboles
+     */
     public void setPairesSymboles(int pairesSymboles) {
         
         this.pairesSymboles = pairesSymboles;
         
     }
 
+    /**
+     * Lit la variable pairesCompletes
+     * @return L'attribut membre pairesCompletes
+     */
     public int getPairesCompletes() {
         
         return pairesCompletes;
         
     }
 
+    /**
+     * Ecrit la variable pairesCompletes
+     * @param pairesCompletes Le nombre de paires de symboles reliés
+     */
     public void setPairesCompletes(int pairesCompletes) {
         
         this.pairesCompletes = pairesCompletes;
@@ -352,7 +369,7 @@ public class Grille extends Observable {
         //System.out.println(this.cheminActuel.getCases().toString());
         Case casePrecedente = this.getDerniereCaseCheminActuel();
 
-        if ( caseEstLibre(c) && sontVoisines(casePrecedente, c) ) {
+        if (caseEstLibre(c) && sontVoisines(casePrecedente, c)) {
 
             this.cheminActuel.ajouter(c);
             
@@ -372,7 +389,7 @@ public class Grille extends Observable {
      * @param x L'abscisse de la Case
      * @param y L'ordonnée de la Case
      */
-    public void finirDragAndDrop( int x, int y ) {
+    public void finirDragAndDrop(int x, int y) {
 
         Case c = this.getCase(this.derniereCaseConnue[1], this.derniereCaseConnue[0]);
         
@@ -668,20 +685,20 @@ public class Grille extends Observable {
     }
     
     /**
-     *
-     * @param chemin
+     * Met à jour le plateau en ajoutant les liens
+     * @param chemin Le chemin à dessiner
      */
     private void mettreAJourPlateau() {
 
-        for ( Chemin chemin : this.chemins ) {
+        for (Chemin chemin : this.chemins) {
             
-            for ( Case c : chemin.getCases() ) {
+            for (Case c : chemin.getCases()) {
                 
                 Case casePlateau = this.plateau[c.getY()][c.getX()];
                 
-                if ( casePlateau.getSymbole() == Symbole.VIDE ) {
+                if (casePlateau.getSymbole() == Symbole.VIDE) {
                     
-                    casePlateau.setLien( c.getLien() );
+                    casePlateau.setLien(c.getLien());
                 
                 }
                 
@@ -716,10 +733,10 @@ public class Grille extends Observable {
     
     /**
      * Clone le plateau
-     * @param cases
+     * @param cases Un tableau de Cases
      * @return Un clone du plateau
      */
-    public Case[][] clonePlateau( Case[][] cases ){
+    public Case[][] clonePlateau(Case[][] cases){
         
         Case[][] copieCases = new Case[this.longueur][this.largeur];
         
@@ -764,13 +781,13 @@ public class Grille extends Observable {
         
         Case dernierElement = chemin.getDernierElement();
         
-        if ( !cheminMemePaire(chemin)) {
+        if (!cheminMemePaire(chemin)) {
 
             System.out.println("Pas le même symbole !");
             
             return false;
 
-        } else if ( premierElement.getX() == dernierElement.getX() && premierElement.getY() == dernierElement.getY() ){
+        } else if (premierElement.getX() == dernierElement.getX() && premierElement.getY() == dernierElement.getY()){
             
             System.out.println("On ne peut pas faire un chemin avec le même symbole !");
             
@@ -784,7 +801,7 @@ public class Grille extends Observable {
             
             for (Case ca : chemin.getCases()) {
 
-                if ( this.caseEstLibre(ca) ) {
+                if (this.caseEstLibre(ca)) {
                     
                     System.out.println("La case n'est pas libre");
                     
@@ -792,9 +809,9 @@ public class Grille extends Observable {
                     
                 }
                 
-                if ( i > 0 ) {
+                if (i > 0) {
                     
-                    if ( !this.sontVoisines(ca, casePrecedente) ) {
+                    if (!this.sontVoisines(ca, casePrecedente)) {
                         
                         System.out.println("Erreur dans le chemin, deux cases ne sont pas voisines!");
                         
@@ -918,8 +935,8 @@ public class Grille extends Observable {
     }
 
     /**
-     *
-     * @param chemin .
+     * Renvoie vrai si les deux symboles reliés sont identiques, faux sinon
+     * @param chemin Le chemin à vérifier
      * @return Vrai ou faux
      */
     public boolean cheminMemePaire(Chemin chemin) {

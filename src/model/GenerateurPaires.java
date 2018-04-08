@@ -85,7 +85,7 @@ public class GenerateurPaires {
     /**************************************************************************/
     
     /**
-     *
+     * Génère un tableau contenant des paires
      * @return Une liste de paires
      */
     public ArrayList< int[]> genererPaires() {
@@ -148,7 +148,7 @@ public class GenerateurPaires {
     }
 
     /**
-     *
+     * Place les paires aléatoirement sur la grille
      */
     private void placerPointsAleatoirement() {
 
@@ -227,8 +227,8 @@ public class GenerateurPaires {
     }
 
     /**
-     *
-     * @param tableau .
+     * Affiche le tableau des paires générées
+     * @param tableau Le tableau de paires à afficher
      */
     public void afficherTableau(int[][] tableau) {
 

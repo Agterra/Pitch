@@ -125,7 +125,7 @@ public enum Lien {
      * @param lien Un Lien
      * @return L'opposé du lien
      */
-    public static Lien getLienInvalide( Lien lien ) {
+    public static Lien getLienInvalide(Lien lien) {
         
         Lien l = VIDE;
 
