@@ -603,11 +603,13 @@ public class MainApplication extends Application {
                         
                         System.out.println("update = " + grille.getPartieTerminee());
                         
+                        messageFin(premierStage, deuxiemeStage);
+                        
                         grille.formaterGrille();
                         
                         initialiserJeu(premierStage, deuxiemeStage);
                
-                        messageFin(premierStage, deuxiemeStage);
+                        
                         
                     }
 
