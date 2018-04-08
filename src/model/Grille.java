@@ -397,8 +397,10 @@ public class Grille extends Observable {
             this.partieTerminee = this.jeuEstTermine();
 
         } else {
-
-        this.supprimerChemin(this.cheminActuel);
+            
+            this.cheminActuel.getCases().remove(this.cheminActuel.getCases().size() - 1);
+        
+            this.supprimerChemin(this.cheminActuel);
 
             this.cheminActuel = new Chemin();
 
@@ -501,6 +503,10 @@ public class Grille extends Observable {
             //this.majGrilleAvecChemin();
             
             this.chemins.remove(this.chemins.size() - 1);
+            
+            System.out.println(this.pairesCompletes);
+            
+            this.pairesCompletes--;
             
         } else {
             
@@ -760,12 +766,20 @@ public class Grille extends Observable {
      */
     private boolean cheminEstValide(Chemin chemin) {
 
+        Case premierElement = chemin.getPremierElement();
+        
+        Case dernierElement = chemin.getDernierElement();
+        
         if ( !cheminMemePaire(chemin)) {
 
             System.out.println("Pas le même symbole !");
             
             return false;
 
+        } else if ( premierElement.getX() == dernierElement.getX() && premierElement.getY() == premierElement.getY() ){
+            
+            return false;
+            
         } else {
 
             int i = 0;
