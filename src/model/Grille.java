@@ -709,7 +709,7 @@ public class Grille extends Observable {
     }
 
     /**
-     * Afficher le plateau actuel
+     * Affiche le plateau actuel
      */
     public void afficherPlateau() {
         
