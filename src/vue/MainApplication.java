@@ -601,6 +601,8 @@ public class MainApplication extends Application {
                     
                     if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
                         
+                        System.out.println("update = " + grille.getPartieTerminee());
+                        
                         grille.formaterGrille();
                         
                         initialiserJeu(premierStage, deuxiemeStage);
