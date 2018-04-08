@@ -77,7 +77,7 @@ public class MainApplication extends Application {
     }
 
     /**
-     * Initialise les composants et lance unepartie
+     * Initialise les composants et lance une partie
      * @param premierStage Fenêtre du menu
      */
     @Override
@@ -566,7 +566,6 @@ public class MainApplication extends Application {
             @Override
             public void update(Observable o, Object arg) {
 
-                //System.out.println("update: " + arg);
                 if (o instanceof Grille) {
 
                     Grille grille = (Grille) o;
@@ -595,21 +594,16 @@ public class MainApplication extends Application {
                             colorierCase(grilleCases, c);
 
                         }
-
-                    //System.out.println();
+                        
                     }
                     
                     if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
-                        
-                        System.out.println("update = " + grille.getPartieTerminee());
                         
                         messageFin(premierStage, deuxiemeStage);
                         
                         grille.formaterGrille();
                         
                         initialiserJeu(premierStage, deuxiemeStage);
-               
-                        
                         
                     }
 
@@ -671,23 +665,13 @@ public class MainApplication extends Application {
         
         messageFin.setTitle("Partie finie");
         
-        System.out.println("termine = " + grille.getPartieTerminee());
-        
         if(grille.getPartieTerminee() == 1) {
-            
-            System.out.println("MAIN - partie gagnée");
             
             messageFin.setContentText("Partie gagnée ! Voulez-vous rejouer ?");
             
         } else if(grille.getPartieTerminee() == 0) {
             
-            System.out.println("MAIN - partie perdue");
-            
             messageFin.setContentText("Partie perdue ! Voulez-vous rejouer ?");
-            
-        } else {
-            
-            System.out.println("MAIN - Autre");
             
         }
 

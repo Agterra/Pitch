@@ -394,19 +394,7 @@ public class Grille extends Observable {
 
             this.pairesCompletes ++;
 
-            if ( this.jeuEstTermine() == 0 ){
-
-                this.partieTerminee = 0;
-
-                System.out.println("Partie perdue");
-
-            } else if (this.jeuEstTermine() == 1) {
-                
-                this.partieTerminee = 1;
-                
-                System.out.println("Partie gagnée");
-                
-            }
+            this.partieTerminee = this.jeuEstTermine();
 
         } else {
 
@@ -879,27 +867,17 @@ public class Grille extends Observable {
 
         }
         
-        System.out.println("GRILLE");
-        
-        System.out.println("tableauPlein = " + plateauEstPlein());
-        
-        System.out.println("pairesSymboles = " + this.pairesSymboles);
-        
-        System.out.println("pairesCompletes = " + this.pairesCompletes);
-        
         if(plateauEstPlein()) {
-            
-            System.out.println("GRILLE- plateauEstPlein");
             
             if(this.pairesCompletes == this.pairesSymboles) {
                 
-                System.out.println("GRILLE- plateauEstPlein && pairesCompletes");
+                System.out.println("Partie gagnée");
                 
                 return 1;
                 
             } else if(this.pairesCompletes != this.pairesSymboles) {
                 
-                System.out.println("GRILLE- plateauEstPlein && !pairesCompletes");
+                System.out.println("Partie perdue : toutes les paires ne sont pas complètes !");
                 
                 return 0;
                 
@@ -907,67 +885,20 @@ public class Grille extends Observable {
             
         } else if (!plateauEstPlein()) {
             
-            System.out.println("GRILLE- !plateauEstPlein");
-            
             if(this.pairesCompletes == this.pairesSymboles) {
                 
-                System.out.println("GRILLE- !plateauEstPlein && pairesCompletes");
+                System.out.println("Partie perdue :  le tableau n'est pas plein");
                 
                 return 0;
                 
             } else if(this.pairesCompletes != this.pairesSymboles) {
-                
-                System.out.println("GRILLE- !plateauEstPlein && !pairesCompletes");
                 
                 return -1;
                 
             }
             
         }
-        /*
-        //Plateau non plein mais toutes les paires sont reliees => partie perdue
-        if(this.pairesCompletes == this.pairesSymboles) {
-            
-            if(!plateauEstPlein()) {
-                
-                return 0; // partie perdue
-                
-            } else if(plateauEstPlein()) {
-                
-                return 1; // partie gagnee
-                
-            }
-            
-        }
-
-        // Plateau non plein
-        if (this.pairesCompletes != this.pairesSymboles) {
-
-            //System.out.println("Partie non terminée : le plateau n'est pas plein.");
-
-            if(!plateauEstPlein()) {
-                
-                return 0;
-                
-            } else if(plateauEstPlein()) {
-                
-                return 1;
-                
-            }
-
-        }*/
-/*
-        if (this.pairesCompletes != this.pairesSymboles) {
-
-            System.out.println("Partie non terminée : toutes les paires ne sont pas reliées.");
-            
-            System.out.println("this.pairescompletes = " + this.pairesCompletes);
-            
-            System.out.println("this.pairesSymboles = " + this.pairesSymboles);
-
-            return -1;
-
-        }*/
+        
         return 0;
 
     }
