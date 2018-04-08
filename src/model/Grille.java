@@ -85,7 +85,7 @@ public class Grille extends Observable {
      */
     public Grille(int largeur, int longueur, int pairesSymboles) {
 
-        GenerateurPaires p = new GenerateurPaires(4, 4, 2);
+        GenerateurPaires p = new GenerateurPaires(longueur, largeur, pairesSymboles);
         
         ArrayList<int[]> points = p.genererPaires();
         
@@ -770,7 +770,9 @@ public class Grille extends Observable {
             
             return false;
 
-        } else if ( premierElement.getX() == dernierElement.getX() && premierElement.getY() == premierElement.getY() ){
+        } else if ( premierElement.getX() == dernierElement.getX() && premierElement.getY() == dernierElement.getY() ){
+            
+            System.out.println("On ne peut pas faire un chemin avec le même symbole !");
             
             return false;
             
@@ -784,6 +786,8 @@ public class Grille extends Observable {
 
                 if ( this.caseEstLibre(ca) ) {
                     
+                    System.out.println("La case n'est pas libre");
+                    
                     return false;
                     
                 }
@@ -791,6 +795,8 @@ public class Grille extends Observable {
                 if ( i > 0 ) {
                     
                     if ( !this.sontVoisines(ca, casePrecedente) ) {
+                        
+                        System.out.println("Erreur dans le chemin, deux cases ne sont pas voisines!");
                         
                         return false;
                         

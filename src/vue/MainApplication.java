@@ -130,6 +130,8 @@ public class MainApplication extends Application {
 
         this.deuxiemeScene = new Scene(this.racine2, this.largeurFenetre, this.hauteurFenetre);
 
+        grille = new Grille(hauteur, largeur, (int)Math.floor(hauteur/2));
+
     }
 
     /**
@@ -174,7 +176,7 @@ public class MainApplication extends Application {
         // ... et trois boutons
         Button boutonNouvellePartie = new Button();
 
-        boutonNouvellePartie.setText("Nouvelle partie (4*4)");
+        boutonNouvellePartie.setText("Nouvelle partie");
 
         boutonNouvellePartie.setMaxWidth(200);
 
@@ -274,12 +276,16 @@ public class MainApplication extends Application {
                     
                     largeur = longueur;
                     
-                    initialiserModele(premierStage);
-                    
-                    grille.formaterGrille(hauteur, largeur);
-                    
+                    grille = new Grille(hauteur, largeur, (int)Math.floor(hauteur/2));
+
+                    ratio = Math.floor(largeurFenetre / grille.getLargeur()) - 10;
+
                     initialiserJeu(premierStage, deuxiemeStage);
                
+                    initialiserModele(premierStage);
+                    
+                    //grille.formaterGrille(hauteur, largeur);
+                    
                     premierStage.close();
                     
                     deuxiemeStage.show();
@@ -575,8 +581,6 @@ public class MainApplication extends Application {
         
         System.out.println("MAIN largeur = " + this.largeur);
 
-        this.grille = new Grille(this.hauteur, this.largeur, 2);
-
         this.grille.addObserver(new Observer() {
 
             @Override
@@ -612,7 +616,7 @@ public class MainApplication extends Application {
 
                             Object grilleCases = gridPaneJeu.getChildren().get(i * grille.getLargeur() + j);
 
-                            System.out.println("grilleCases num " + i * grille.getLargeur() + j);
+                            //System.out.println("grilleCases num " + i * grille.getLargeur() + j);
                             
                             Case c = grille.getCase(i, j);
                             
