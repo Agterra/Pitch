@@ -29,7 +29,7 @@ public class Grille extends Observable {
     
     private Case[][] plateau;
     
-    private boolean partieTerminee;
+    private int partieTerminee; //-1 : non terminée, 0 : perdu, 1 : gagné
 
     /**************************************************************************/
     // FONCTIONS MEMBRES
@@ -72,7 +72,7 @@ public class Grille extends Observable {
         
         this.pairesSymboles = 1;
         
-        this.partieTerminee = false;
+        this.partieTerminee = -1;
 
     }
 
@@ -128,7 +128,7 @@ public class Grille extends Observable {
 
         this.plateauOrigine = this.clonePlateau(this.plateau);
         
-        this.partieTerminee = false;
+        this.partieTerminee = -1;
         
         this.afficherPlateau();
         
@@ -263,7 +263,7 @@ public class Grille extends Observable {
      * Lit la variable partieTerminee
      * @return La variable membre partieTerminee
      */
-    public boolean getPartieTerminee() {
+    public int getPartieTerminee() {
         
         return this.partieTerminee;
         
@@ -273,9 +273,33 @@ public class Grille extends Observable {
      * Ecrit la variable partieTerminee
      * @param partieTerminee La variable membre partieTerminee
      */
-    public void setPartieTerminee(boolean partieTerminee) {
+    public void setPartieTerminee(int partieTerminee) {
         
         this.partieTerminee = partieTerminee;
+        
+    }
+
+    public int getPairesSymboles() {
+        
+        return pairesSymboles;
+        
+    }
+
+    public void setPairesSymboles(int pairesSymboles) {
+        
+        this.pairesSymboles = pairesSymboles;
+        
+    }
+
+    public int getPairesCompletes() {
+        
+        return pairesCompletes;
+        
+    }
+
+    public void setPairesCompletes(int pairesCompletes) {
+        
+        this.pairesCompletes = pairesCompletes;
         
     }
     
@@ -370,12 +394,18 @@ public class Grille extends Observable {
 
             this.pairesCompletes ++;
 
-            if ( this.jeuEstTermine() ){
+            if ( this.jeuEstTermine() == 0 ){
 
-                this.partieTerminee = true;
+                this.partieTerminee = 0;
 
-                System.out.println("Partie finie");
+                System.out.println("Partie perdue");
 
+            } else if (this.jeuEstTermine() == 1) {
+                
+                this.partieTerminee = 1;
+                
+                System.out.println("Partie gagnée");
+                
             }
 
         } else {
@@ -511,7 +541,7 @@ public class Grille extends Observable {
         
         this.plateau = this.clonePlateau(this.plateauOrigine);
         
-        this.partieTerminee = false;
+        this.partieTerminee = -1;
         
         this.setChanged();
         
@@ -565,7 +595,7 @@ public class Grille extends Observable {
         
         this.pairesCompletes = 0;
         
-        this.partieTerminee = false;
+        this.partieTerminee = -1;
 
         this.supprimerChemin(cheminActuel);
         
@@ -637,7 +667,7 @@ public class Grille extends Observable {
         
         this.pairesCompletes = 0;
         
-        this.partieTerminee = false;
+        this.partieTerminee = -1;
 
         this.supprimerChemin(cheminActuel);
         
@@ -830,30 +860,103 @@ public class Grille extends Observable {
      *
      * @return Vrai ou faux
      */
-    private boolean jeuEstTermine() {
+    private int jeuEstTermine() {
+        
+        // -1 : jeu non terminé
+        // 0 : jeu terminé et perdu
+        // 1 : jeu terminé et gagné
 
-        boolean termine = true;
-
+        // Verification des chemins
         for (Chemin chemin : this.chemins) {
 
             if (!cheminEstValide(chemin)) {
 
                 System.out.println("Partie non terminée : un des chemins est invalide.");
 
-                return false;
+                return -1; // false
 
             }
 
         }
-
-        if (!plateauEstPlein()) {
-
-            System.out.println("Partie non terminée : le plateau n'est pas plein.");
-
-            return false;
-
+        
+        System.out.println("GRILLE");
+        
+        System.out.println("tableauPlein = " + plateauEstPlein());
+        
+        System.out.println("pairesSymboles = " + this.pairesSymboles);
+        
+        System.out.println("pairesCompletes = " + this.pairesCompletes);
+        
+        if(plateauEstPlein()) {
+            
+            System.out.println("GRILLE- plateauEstPlein");
+            
+            if(this.pairesCompletes == this.pairesSymboles) {
+                
+                System.out.println("GRILLE- plateauEstPlein && pairesCompletes");
+                
+                return 1;
+                
+            } else if(this.pairesCompletes != this.pairesSymboles) {
+                
+                System.out.println("GRILLE- plateauEstPlein && !pairesCompletes");
+                
+                return 0;
+                
+            }
+            
+        } else if (!plateauEstPlein()) {
+            
+            System.out.println("GRILLE- !plateauEstPlein");
+            
+            if(this.pairesCompletes == this.pairesSymboles) {
+                
+                System.out.println("GRILLE- !plateauEstPlein && pairesCompletes");
+                
+                return 0;
+                
+            } else if(this.pairesCompletes != this.pairesSymboles) {
+                
+                System.out.println("GRILLE- !plateauEstPlein && !pairesCompletes");
+                
+                return -1;
+                
+            }
+            
+        }
+        /*
+        //Plateau non plein mais toutes les paires sont reliees => partie perdue
+        if(this.pairesCompletes == this.pairesSymboles) {
+            
+            if(!plateauEstPlein()) {
+                
+                return 0; // partie perdue
+                
+            } else if(plateauEstPlein()) {
+                
+                return 1; // partie gagnee
+                
+            }
+            
         }
 
+        // Plateau non plein
+        if (this.pairesCompletes != this.pairesSymboles) {
+
+            //System.out.println("Partie non terminée : le plateau n'est pas plein.");
+
+            if(!plateauEstPlein()) {
+                
+                return 0;
+                
+            } else if(plateauEstPlein()) {
+                
+                return 1;
+                
+            }
+
+        }*/
+/*
         if (this.pairesCompletes != this.pairesSymboles) {
 
             System.out.println("Partie non terminée : toutes les paires ne sont pas reliées.");
@@ -862,11 +965,10 @@ public class Grille extends Observable {
             
             System.out.println("this.pairesSymboles = " + this.pairesSymboles);
 
-            return false;
+            return -1;
 
-        }
-
-        return termine;
+        }*/
+        return 0;
 
     }
 

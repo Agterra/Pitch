@@ -599,7 +599,7 @@ public class MainApplication extends Application {
                     //System.out.println();
                     }
                     
-                    if(grille.getPartieTerminee() == true) {
+                    if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
                         
                         grille.formaterGrille();
                         
@@ -667,7 +667,25 @@ public class MainApplication extends Application {
         
         messageFin.setTitle("Partie finie");
         
-        messageFin.setContentText("Prtie terminée ! Voulez-vous rejouer ?");
+        System.out.println("termine = " + grille.getPartieTerminee());
+        
+        if(grille.getPartieTerminee() == 1) {
+            
+            System.out.println("MAIN - partie gagnée");
+            
+            messageFin.setContentText("Partie gagnée ! Voulez-vous rejouer ?");
+            
+        } else if(grille.getPartieTerminee() == 0) {
+            
+            System.out.println("MAIN - partie perdue");
+            
+            messageFin.setContentText("Partie perdue ! Voulez-vous rejouer ?");
+            
+        } else {
+            
+            System.out.println("MAIN - Autre");
+            
+        }
 
         Optional<ButtonType> result = messageFin.showAndWait();
         
