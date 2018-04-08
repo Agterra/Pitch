@@ -46,8 +46,12 @@ public class MainApplication extends Application {
     private double ratio;
 
     // Eléments du modele
-    private Grille grille;
+    private int hauteur;
+    
+    private int largeur;
 
+    private Grille grille;
+    
     // Eléments graphiques du menu
     private Scene premiereScene;
 
@@ -105,6 +109,10 @@ public class MainApplication extends Application {
         this.largeurFenetre = 580;
 
         this.grille = new Grille();
+        
+        this.hauteur = 4;
+        
+        this.largeur = 4;
 
         this.ratio = Math.floor(this.largeurFenetre / this.grille.getLargeur()) - 10;
 
@@ -262,9 +270,13 @@ public class MainApplication extends Application {
                     
                     int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
                     
-                    System.out.println(longueur);
+                    hauteur = longueur;
                     
-                    grille.formaterGrille(longueur, 6);
+                    largeur = longueur;
+                    
+                    initialiserModele(premierStage);
+                    
+                    grille.formaterGrille(hauteur, largeur);
                     
                     initialiserJeu(premierStage, deuxiemeStage);
                
@@ -558,8 +570,12 @@ public class MainApplication extends Application {
         if (MainApplication.DEBUGAGE) {
             System.out.println("MainApplication.initialiserModele");
         }
+        
+        System.out.println("MAIN hauteur = " + this.hauteur);
+        
+        System.out.println("MAIN largeur = " + this.largeur);
 
-        this.grille = new Grille(4, 4, 2);
+        this.grille = new Grille(this.hauteur, this.largeur, 2);
 
         this.grille.addObserver(new Observer() {
 
@@ -569,10 +585,15 @@ public class MainApplication extends Application {
                 if (o instanceof Grille) {
 
                     Grille grille = (Grille) o;
+                    
+                    System.out.println("GRILLE hauteur = " + grille.getLongueur());
+                    
+                    System.out.println("GRILLE largeur = " + grille.getLargeur());
 
                     ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
-
+                    
                     System.out.println(cheminActuel.toString());
+                    
                     
                     //Dessiner chemin actuel
                     for ( Case c : cheminActuel ) {
@@ -583,12 +604,16 @@ public class MainApplication extends Application {
 
                     }
                     
+                    System.out.println("OK1");
+                    
                     for (int i = 0; i < grille.getLongueur(); i++) {
 
                         for (int j = 0; j < grille.getLargeur(); j++) {
 
                             Object grilleCases = gridPaneJeu.getChildren().get(i * grille.getLargeur() + j);
 
+                            System.out.println("grilleCases num " + i * grille.getLargeur() + j);
+                            
                             Case c = grille.getCase(i, j);
                             
                             colorierCase(grilleCases, c);
@@ -596,6 +621,8 @@ public class MainApplication extends Application {
                         }
                         
                     }
+                    
+                    System.out.println("OK2");
                     
                     if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
                         
@@ -606,6 +633,8 @@ public class MainApplication extends Application {
                         initialiserJeu(premierStage, deuxiemeStage);
                         
                     }
+                    
+                    System.out.println("OK3");
 
                 }
                        

@@ -613,10 +613,6 @@ public class Grille extends Observable {
         this.longueur = longueur;
         
         this.largeur = largeur;
-        
-        System.out.println(longueur + " ; " + largeur);
-        
-        System.out.println(this.longueur + " ; " + this.largeur);
 
         this.plateau = new Case[this.longueur][this.largeur];
 
@@ -625,8 +621,6 @@ public class Grille extends Observable {
         for (int i = 0; i < this.longueur; i++) {
 
             for (int j = 0; j < this.largeur; j++) {
-                
-                System.out.println(i + " ; " + j);
 
                 this.plateau[i][j] = new Case(j, i);
                 
