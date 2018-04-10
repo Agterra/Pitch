@@ -6,13 +6,20 @@ Ce jeu, développé dans le cadre de l'UE "Algorithmique et Programmation Orient
 
 ## Lancer l'application
 
+Exécuter le commande suivante à la racine du projet :
+
+java -jar dist/ProjetJava.jar
+
 ### Prérequis
 
-
+Aucun
 
 ### Installation
 
+Aucune installation requise
+
 ### Fonctionnalités
+
 * Jouer une partie sur une grille de taille standard (4x4)
 * Possibilité de modification de la taille de la grille de jeu
 * Plateau généré aléatoirement par un générateur aléatoire de paires de symboles
