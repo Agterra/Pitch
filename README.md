@@ -12,6 +12,13 @@ Ce jeu, développé dans le cadre de l'UE "Algorithmique et Programmation Orient
 
 ### Installation
 
+### Fonctionnalités
+* Jouer une partie sur une grille de taille standard (4x4)
+* Possibilité de modification de la taille de la grille de jeu
+* Plateau généré aléatoirement par un générateur aléatoire de paires de symboles
+* Menus utilisateur en accueil et interne au jeu
+* Possibilité d'annuler le dernier coup, de recommencer la partie ou derecommencer une nouvelle partie
+* Affichage des règles en cas de besoin
 
 
 ### Voir aussi 
