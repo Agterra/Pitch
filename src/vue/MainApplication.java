@@ -395,6 +395,23 @@ public class MainApplication extends Application {
 
         menuBar.getMenus().addAll(menu);
 
+        Chronometre c = new Chronometre();
+        
+        c.addObserver( new Observer() {
+                    
+            @Override
+            public void update( Observable o, Object arg ){
+
+                messageFin(premierStage, deuxiemeStage);
+
+            }
+                    
+        });
+        
+        Thread t = new Thread( c );
+        
+        t.start();
+        
         this.racine2.setTop(menuBar); // on les ajoute en haut du BorderPane
 
         this.gridPaneJeu = new GridPane();

@@ -36,7 +36,7 @@ public class Chronometre extends Observable implements Runnable {
         
     }
     
-    public synchronized void lancerChronometre( int temps ) {
+    public void lancerChronometre( int temps ) {
         
         while(tempsActuel < temps) {
             
@@ -56,9 +56,11 @@ public class Chronometre extends Observable implements Runnable {
             
         }
         
-        this.hasChanged();
+        System.out.println("Observers notified");
         
-        this.notifyObservers();
+        super.setChanged();
+        
+        super.notifyObservers();
         
     }
     
