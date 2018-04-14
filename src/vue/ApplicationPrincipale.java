@@ -112,6 +112,8 @@ public class ApplicationPrincipale extends Application {
         
         this.grille = new Grille(4, 4, 2);
         
+        this.controleur = new Controleur( this, this.grille );
+        
         initialisationModele();
         
         initialisationFenetres();
@@ -119,8 +121,6 @@ public class ApplicationPrincipale extends Application {
     }
     
     public void initialisationModele() {
-        
-        this.controleur = new Controleur( this, this.grille );
         
         this.grille.addObserver( this.controleur );
         

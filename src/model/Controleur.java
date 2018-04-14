@@ -193,6 +193,8 @@ public class Controleur implements Observer, EventHandler {
         
         this.grille = new Grille( nouvelleTaille, nouvelleTaille, (int)Math.floor(nouvelleTaille/2));
         
+        this.application.grille = this.grille;
+        
     }
     
     public void messageFinOk() {
@@ -251,8 +253,6 @@ public class Controleur implements Observer, EventHandler {
             if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
 
                 this.application.afficherMessageDeFin();
-                
-                this.grille.formaterGrille();
                 
             }
 
