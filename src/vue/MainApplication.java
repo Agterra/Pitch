@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.IDActions;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -52,7 +53,12 @@ public class MainApplication extends Application {
 
     private Grille grille;
     
+    // Eléments du controleur
+    private Controleur controleur;
+    
     // Eléments graphiques du menu
+    private Stage premierStage;
+    
     private Scene premiereScene;
 
     private BorderPane racine1;
@@ -97,6 +103,10 @@ public class MainApplication extends Application {
             
         }
 
+        this.premierStage = premierStage;
+        
+        //Controleur c = new Controleur( this, this.grille );
+        
         initialiserVariablesMembres();
 
         initialiserModele(premierStage);
@@ -109,10 +119,6 @@ public class MainApplication extends Application {
      * Initialise les variables membres (stages, scènes, panes...)
      */
     public void initialiserVariablesMembres() {
-
-        this.hauteurFenetre = 600;
-
-        this.largeurFenetre = 580;
 
         this.grille = new Grille();
         
@@ -178,8 +184,11 @@ public class MainApplication extends Application {
 
         // On positionne la fenetre
         premierStage.setX(Screen.getPrimary().getBounds().getMaxX()/2 - this.largeurFenetre/2);
+        
         premierStage.setY(Screen.getPrimary().getBounds().getMaxY()/2 - this.hauteurFenetre/2);
+        
         premierStage.setWidth(this.largeurFenetre);
+        
         premierStage.setHeight(this.hauteurFenetre);
 
         // On ajoute un titre...
@@ -258,61 +267,15 @@ public class MainApplication extends Application {
             
         }
         
-        boutonNouvellePartie.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent evenement) {
-                
-                premierStage.close(); // on ferme la fenêtre de menu
-
-                deuxiemeStage.show(); // on affiche la nouvelle partie
-
-            }
-
-        });
+        boutonNouvellePartie.setId(IDActions.MENU_ACCUEIL_NOUVELLE_PARTIE.toString());
         
-        boutonChangerTaille.setOnAction(new EventHandler<ActionEvent>() {
+        boutonNouvellePartie.setOnAction( this.controleur );
         
-            @Override
-            public void handle(ActionEvent evenement) {
-                
-                TextInputDialog demanderTaille = new TextInputDialog("");
-
-                demanderTaille.initOwner(premierStage);
-                
-                demanderTaille.setTitle("Changement de taille");
-
-                demanderTaille.setHeaderText("Changer la taille de la grille");
-
-                demanderTaille.setContentText("Taille ");
-
-                Optional<String> result = demanderTaille.showAndWait();
-                
-                if (result.isPresent()) {
-                    
-                    int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
-                    
-                    hauteur = longueur;
-                    
-                    largeur = longueur;
-                    
-                    grille = new Grille(hauteur, largeur, (int)Math.floor(hauteur/2));
-
-                    ratio = Math.floor(largeurFenetre / grille.getLargeur()) - 10;
-
-                    initialiserJeu(premierStage, deuxiemeStage);
-               
-                    initialiserModele(premierStage);
-                    
-                    premierStage.close();
-                    
-                    deuxiemeStage.show();
-                    
-                }
-
-            }
-            
-        });
+        
+        boutonChangerTaille.setId(IDActions.MENU_ACCUEIL_MODIFIER_TAILLE.toString());
+        
+        boutonChangerTaille.setOnAction( this.controleur );
+        
         
         boutonRegles.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -410,7 +373,7 @@ public class MainApplication extends Application {
         
         Thread t = new Thread( c );
         
-        t.start();
+        //t.start();
         
         this.racine2.setTop(menuBar); // on les ajoute en haut du BorderPane
 
@@ -763,5 +726,41 @@ public class MainApplication extends Application {
         }
         
     }
+    
+    
+    public void actionBoutonMenuPrincipaleModifierTaille() {
+        
+        TextInputDialog demanderTaille = new TextInputDialog("");
 
+        demanderTaille.initOwner(premierStage);
+
+        demanderTaille.setTitle("Changement de taille");
+
+        demanderTaille.setHeaderText("Changer la taille de la grille");
+
+        demanderTaille.setContentText("Taille ");
+
+        Optional<String> result = demanderTaille.showAndWait();
+
+        if (result.isPresent()) {
+
+            int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
+
+            this.ratio = Math.floor(this.largeurFenetre / longueur ) - 10;
+            
+            this.controleur.mettreAJourTailleGrille( longueur );
+            
+            initialiserJeu(premierStage, deuxiemeStage);
+
+            initialiserModele(premierStage);
+
+            premierStage.close();
+
+            deuxiemeStage.show();
+
+        }
+
+        
+    }
+    
 }

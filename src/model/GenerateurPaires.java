@@ -192,7 +192,7 @@ public class GenerateurPaires {
 
             int nY = aleatoire.nextInt(this.longueur);
 
-            while ((nX == x && nY == y) || this.grille[nY][nX] != -1) {
+            while ((nX == x && nY == y) || this.grille[nY][nX] != -1 && (Math.abs(nX - x) == 0 && Math.abs(nY - y) == 0) ) {
 
                 nX = aleatoire.nextInt(this.largeur);
 
