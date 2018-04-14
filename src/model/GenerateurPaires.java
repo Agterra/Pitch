@@ -146,6 +146,17 @@ public class GenerateurPaires {
         return this.paires;
 
     }
+    
+    public ArrayList< int[]> genererPaires( int nombrePairs ) {
+        
+        // Pas encore implémenté
+        
+        this.placerPointsAleatoirement();
+      
+        return this.paires;
+        
+    }
+
 
     /**
      * Place les paires aléatoirement sur la grille
