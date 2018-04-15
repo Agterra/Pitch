@@ -48,13 +48,15 @@ import model.Chronometre;
 import model.Controleur;
 import model.Grille;
 import model.Symbole;
-import vue.MainApplication;
+import vue.ApplicationPrincipale;
 
 /**
  *
  * @author agterra
  */
 public class ApplicationPrincipale extends Application {
+    
+    public static final boolean DEBUGAGE = false;
 
     // Propriété des fenêtres
     private int hauteurFenetre;
@@ -91,9 +93,9 @@ public class ApplicationPrincipale extends Application {
     public Grille grille;
     
     
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         
-        launch( args );
+        launch(args);
         
     }
     
@@ -112,7 +114,7 @@ public class ApplicationPrincipale extends Application {
         
         this.grille = new Grille(4, 4, 2);
         
-        this.controleur = new Controleur( this, this.grille );
+        this.controleur = new Controleur(this, this.grille);
         
         initialisationModele();
         
@@ -122,7 +124,7 @@ public class ApplicationPrincipale extends Application {
     
     public void initialisationModele() {
         
-        this.grille.addObserver( this.controleur );
+        this.grille.addObserver(this.controleur);
         
     }
     
@@ -195,7 +197,7 @@ public class ApplicationPrincipale extends Application {
 
         MenuItem itemPartieQuitter = new MenuItem("Quitter la partie");
 
-        initialiserActionsMenuJeu(itemPartieAnnulerCoup, itemPartieRecommencer, itemNouvellePartie ,itemPartieQuitter );
+        initialiserActionsMenuJeu(itemPartieAnnulerCoup, itemPartieRecommencer, itemNouvellePartie ,itemPartieQuitter);
         
         // Ajout des items dans le menu
         menu.getItems().addAll(itemPartieAnnulerCoup, itemPartieRecommencer, itemNouvellePartie, itemPartieQuitter);
@@ -241,19 +243,19 @@ public class ApplicationPrincipale extends Application {
 
                     image.setImage(this.grille.getCase(y, x).getSymbole().getImage());
 
-                    image.setOnDragDetected( this.controleur );
+                    image.setOnDragDetected(this.controleur);
                     
                 } else {
 
                     image.setImage(this.grille.getCase(y, x).getLien().getImage());
 
-                    image.setOnMouseClicked( this.controleur );
+                    image.setOnMouseClicked(this.controleur);
                     
                 }
                 
-                image.setOnDragEntered( this.controleur );
+                image.setOnDragEntered(this.controleur);
 
-                image.setOnDragDone( this.controleur );
+                image.setOnDragDone(this.controleur);
                 
                 pane.getChildren().add(image);
 
@@ -265,27 +267,27 @@ public class ApplicationPrincipale extends Application {
         
     }
     
-    public void initialiserActionsMenuJeu( MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem ) {
+    public void initialiserActionsMenuJeu(MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem) {
         
         // Ajout des interactions sur le menu
         annulerCoupItem.setId(IDActions.MENU_JEU_ANNULER_DERNIER_COUP.toString());
         
-        annulerCoupItem.setOnAction( this.controleur );
+        annulerCoupItem.setOnAction(this.controleur);
         
         
         recommencerItem.setId(IDActions.MENU_JEU_RECOMMENCER.toString());
         
-        recommencerItem.setOnAction( this.controleur );
+        recommencerItem.setOnAction(this.controleur);
         
         
         nouvellePartieItem.setId(IDActions.MENU_JEU_RECOMMENCER_NOUVELLE_PARTIE.toString());
         
-        nouvellePartieItem.setOnAction( this.controleur );
+        nouvellePartieItem.setOnAction(this.controleur);
         
         
         quitterItem.setId(IDActions.MENU_JEU_QUITTER.toString());
         
-        quitterItem.setOnAction( this.controleur );
+        quitterItem.setOnAction(this.controleur);
         
     }
     
@@ -340,39 +342,39 @@ public class ApplicationPrincipale extends Application {
 
         this.racine1.setCenter(menu); // on les ajoute au centre du BorderPane
 
-        initialiserActionsMenuAccueil( boutonNouvellePartie, boutonChangerTaille, boutonRegles, boutonQuitter );
+        initialiserActionsMenuAccueil(boutonNouvellePartie, boutonChangerTaille, boutonRegles, boutonQuitter);
 
     }
     
-    public void initialiserActionsMenuAccueil( Button boutonNouvellePartie, Button boutonChangerTaille, Button boutonRegles, Button boutonQuitter ) {
+    public void initialiserActionsMenuAccueil(Button boutonNouvellePartie, Button boutonChangerTaille, Button boutonRegles, Button boutonQuitter) {
         
         boutonNouvellePartie.setId(IDActions.MENU_ACCUEIL_NOUVELLE_PARTIE.toString());
         
-        boutonNouvellePartie.setOnAction( this.controleur );
+        boutonNouvellePartie.setOnAction(this.controleur);
         
         
         boutonChangerTaille.setId(IDActions.MENU_ACCUEIL_MODIFIER_TAILLE.toString());
         
-        boutonChangerTaille.setOnAction( this.controleur );
+        boutonChangerTaille.setOnAction(this.controleur);
         
         
         boutonRegles.setId(IDActions.MENU_ACCUEIL_REGLES.toString());
         
         this.nombreClics = 0;
         
-        boutonRegles.setOnAction( this.controleur );
+        boutonRegles.setOnAction(this.controleur);
              
         
         boutonQuitter.setId(IDActions.MENU_ACCUEIL_QUITTER.toString());
         
-        boutonQuitter.setOnAction( this.controleur );
+        boutonQuitter.setOnAction(this.controleur);
         
     }
     
     
     // Actions du menu principal
     
-    public void actionBoutonMenuPrincipalNouvellePartie(){
+    public void actionBoutonMenuPrincipalNouvellePartie() {
         
         premierStage.close(); // on ferme la fenêtre de menu
 
@@ -398,9 +400,9 @@ public class ApplicationPrincipale extends Application {
 
             int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
 
-            this.ratio = Math.floor(this.largeurFenetre / longueur ) - 10;
+            this.ratio = Math.floor(this.largeurFenetre / longueur) - 10;
             
-            this.controleur.mettreAJourTailleGrille( longueur );
+            this.controleur.mettreAJourTailleGrille(longueur);
             
             initialiserJeu();
 
@@ -450,7 +452,7 @@ public class ApplicationPrincipale extends Application {
     }
     
     // Events
-    public void startDragAndDrop( ImageView image ) {
+    public void startDragAndDrop(ImageView image) {
         
         Dragboard db = image.startDragAndDrop(TransferMode.ANY);
 
@@ -467,7 +469,7 @@ public class ApplicationPrincipale extends Application {
      * @param grilleCases .
      * @param c .
      */
-    public void colorierCase( Case c ) {
+    public void colorierCase(Case c) {
 
         Object grilleCases = gridPaneJeu.getChildren().get(c.getY() * grille.getLargeur() + c.getX());
 

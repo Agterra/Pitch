@@ -20,7 +20,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
-import vue.MainApplication;
+import vue.ApplicationPrincipale;
 
 /**
  *
@@ -32,7 +32,7 @@ public class Controleur implements Observer, EventHandler {
     
     private ApplicationPrincipale application;
 
-    public Controleur ( ApplicationPrincipale application, Grille grille ){
+    public Controleur (ApplicationPrincipale application, Grille grille) {
         
         this.application = application;
         
@@ -51,9 +51,9 @@ public class Controleur implements Observer, EventHandler {
         
         int x = -1, y = -1;
         
-        if( event instanceof ActionEvent ) {
+        if(event instanceof ActionEvent) {
             
-            if( source instanceof Button ) {
+            if(source instanceof Button) {
                 
                 Button bouton = (Button)source;
             
@@ -61,7 +61,7 @@ public class Controleur implements Observer, EventHandler {
 
                 ID = IDActions.valueOf(stringID);
             
-            } else if ( source instanceof MenuItem ) {
+            } else if (source instanceof MenuItem) {
                 
                 MenuItem item = (MenuItem) source;
                 
@@ -71,13 +71,13 @@ public class Controleur implements Observer, EventHandler {
              
             }
             
-        } else if ( event instanceof MouseEvent ) {
+        } else if (event instanceof MouseEvent) {
             
             MouseEvent mouseEvent = (MouseEvent) event;
             
             EventType type = mouseEvent.getEventType();
             
-            ID = IDActions.valueOf( type.getName() );
+            ID = IDActions.valueOf(type.getName());
             
             String[] stringID = ((ImageView)source).getId().split(",");
             
@@ -85,13 +85,13 @@ public class Controleur implements Observer, EventHandler {
             
             y = Integer.parseInt(stringID[1]);
             
-        } else if ( event instanceof DragEvent ) {
+        } else if (event instanceof DragEvent) {
             
             DragEvent dragEvent = (DragEvent) event;
             
             EventType type = dragEvent.getEventType();
             
-            ID = IDActions.valueOf( type.getName() );
+            ID = IDActions.valueOf(type.getName());
             
             String[] stringID = ((ImageView)source).getId().split(",");
             
@@ -101,7 +101,7 @@ public class Controleur implements Observer, EventHandler {
             
         }
         
-        switch( ID ) {
+        switch(ID) {
 
             case MENU_ACCUEIL_NOUVELLE_PARTIE :
 
@@ -189,9 +189,9 @@ public class Controleur implements Observer, EventHandler {
         
     }
     
-    public void mettreAJourTailleGrille( int nouvelleTaille ){
+    public void mettreAJourTailleGrille(int nouvelleTaille) {
         
-        this.grille = new Grille( nouvelleTaille, nouvelleTaille, (int)Math.floor(nouvelleTaille/2));
+        this.grille = new Grille(nouvelleTaille, nouvelleTaille, (int)Math.floor(nouvelleTaille/2));
         
         this.application.grille = this.grille;
         
@@ -224,7 +224,7 @@ public class Controleur implements Observer, EventHandler {
 
             ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
 
-            if (MainApplication.DEBUGAGE) {
+            if (ApplicationPrincipale.DEBUGAGE) {
 
                 System.out.println(cheminActuel.toString());
 
@@ -234,7 +234,7 @@ public class Controleur implements Observer, EventHandler {
             //Dessiner chemin actuel
             for (Case c : cheminActuel) {
 
-                this.application.colorierCase( c );
+                this.application.colorierCase(c);
 
             }
 
@@ -244,7 +244,7 @@ public class Controleur implements Observer, EventHandler {
 
                     Case c = grille.getCase(i, j);
 
-                    this.application.colorierCase( c );
+                    this.application.colorierCase(c);
 
                 }
 

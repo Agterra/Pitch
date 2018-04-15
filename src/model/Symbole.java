@@ -177,7 +177,7 @@ public enum Symbole {
         
         Symbole[] symboles = new Symbole[5];
         
-        for (int i = 0; i < 5 ; i++){
+        for (int i = 0; i < 5 ; i++) {
             
             symboles[i] = Symbole.values()[i];
             

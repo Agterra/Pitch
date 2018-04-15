@@ -140,14 +140,14 @@ public class GenerateurPaires {
 			
 			this.afficherTableau(gridCopy);
 			
-			try{Thread.sleep(500);}catch(InterruptedException e){}
+			try{Thread.sleep(500);}catch(InterruptedException e) {}
 			
 		}*/
         return this.paires;
 
     }
     
-    public ArrayList< int[]> genererPaires( int nombrePairs ) {
+    public ArrayList< int[]> genererPaires(int nombrePairs) {
         
         // Pas encore implémenté
         
@@ -203,7 +203,7 @@ public class GenerateurPaires {
 
             int nY = aleatoire.nextInt(this.longueur);
 
-            while ((nX == x && nY == y) || this.grille[nY][nX] != -1 && (Math.abs(nX - x) == 0 && Math.abs(nY - y) == 0) ) {
+            while ((nX == x && nY == y) || this.grille[nY][nX] != -1 && (Math.abs(nX - x) == 0 && Math.abs(nY - y) == 0)) {
 
                 nX = aleatoire.nextInt(this.largeur);
 
@@ -225,7 +225,7 @@ public class GenerateurPaires {
 
         }
         /*  
-		for (int i = 0; i < this.pairs.size(); i++){
+		for (int i = 0; i < this.pairs.size(); i++) {
 			
 			System.out.println(this.pairs.get(i)[0] +" " + this.pairs.get(i)[1]);
 			
@@ -233,7 +233,7 @@ public class GenerateurPaires {
 		
 		this.afficherTableau(this.grid);
 		
-		try{Thread.sleep(5000);}catch(InterruptedException e){}
+		try{Thread.sleep(5000);}catch(InterruptedException e) {}
          */
     }
 

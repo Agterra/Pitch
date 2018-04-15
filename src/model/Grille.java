@@ -397,7 +397,7 @@ public class Grille extends Observable {
 
         System.out.println(this.cheminActuel.toString());
 
-        if (this.cheminEstValide(this.cheminActuel)){
+        if (this.cheminEstValide(this.cheminActuel)) {
 
             System.out.println("Chemin Valide");
 
@@ -509,7 +509,7 @@ public class Grille extends Observable {
         
         this.afficherPlateau();
         
-        if (this.chemins.size() > 0){
+        if (this.chemins.size() > 0) {
             
             Chemin chemin = this.chemins.get(this.chemins.size() - 1);
             
@@ -542,7 +542,7 @@ public class Grille extends Observable {
     /**
      * Réinitialise la grille à son état de départ (mêmes symboles mais tous les liens osnt supprimés)
      */
-    public void reinitialiser(){
+    public void reinitialiser() {
         
         this.chemins = new ArrayList<>();
         
@@ -715,9 +715,9 @@ public class Grille extends Observable {
         
         System.out.println();
         
-        for(int i = 0; i < this.longueur; i ++){
+        for(int i = 0; i < this.longueur; i ++) {
             
-            for(int j = 0; j < this.largeur; j++){
+            for(int j = 0; j < this.largeur; j++) {
                 
                 System.out.print("["+this.plateau[i][j]+"]");
                 
@@ -736,13 +736,13 @@ public class Grille extends Observable {
      * @param cases Un tableau de Cases
      * @return Un clone du plateau
      */
-    public Case[][] clonePlateau(Case[][] cases){
+    public Case[][] clonePlateau(Case[][] cases) {
         
         Case[][] copieCases = new Case[this.longueur][this.largeur];
         
-        for(int i = 0; i < this.longueur; i++){
+        for(int i = 0; i < this.longueur; i++) {
             
-            for(int j = 0; j < this.largeur; j++){
+            for(int j = 0; j < this.largeur; j++) {
                 
                 copieCases[i][j] = (Case)cases[i][j].clone();
                 
@@ -787,7 +787,7 @@ public class Grille extends Observable {
             
             return false;
 
-        } else if (premierElement.getX() == dernierElement.getX() && premierElement.getY() == dernierElement.getY()){
+        } else if (premierElement.getX() == dernierElement.getX() && premierElement.getY() == dernierElement.getY()) {
             
             System.out.println("On ne peut pas faire un chemin avec le même symbole !");
             
