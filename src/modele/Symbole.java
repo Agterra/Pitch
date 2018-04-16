@@ -1,6 +1,5 @@
-package model;
+package modele;
 
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 
@@ -10,18 +9,18 @@ public enum Symbole {
     // VARIABLES MEMBRES
     /**************************************************************************/
     
-    ROND("file:src/assets/circle.png"),
-    TRIANGLE("file:src/assets/triangle.png"),
-    ETOILE("file:src/assets/star.png"),
-    CARRE("file:src/assets/carre.png"),
-    LOSANGE("file:src/assets/losange.png"),
+    ROND("file:src/ressources/circle.png"),
+    TRIANGLE("file:src/ressources/triangle.png"),
+    ETOILE("file:src/ressources/star.png"),
+    CARRE("file:src/ressources/carre.png"),
+    LOSANGE("file:src/ressources/losange.png"),
     
-    ROND_VALIDE("file:src/assets/circle_valide.png"),
-    TRIANGLE_VALIDE("file:src/assets/triangle_valide.png"),
-    ETOILE_VALIDE("file:src/assets/star_valide.png"),
-    CARRE_VALIDE("file:src/assets/carre_valide.png"),
-    LOSANGE_VALIDE("file:src/assets/losange_valide.png"),
-    VIDE("file:src/assets/vide.png");
+    ROND_VALIDE("file:src/ressources/circle_valide.png"),
+    TRIANGLE_VALIDE("file:src/ressources/triangle_valide.png"),
+    ETOILE_VALIDE("file:src/ressources/star_valide.png"),
+    CARRE_VALIDE("file:src/ressources/carre_valide.png"),
+    LOSANGE_VALIDE("file:src/ressources/losange_valide.png"),
+    VIDE("file:src/ressources/vide.png");
 
     private final Image image;
 
@@ -33,6 +32,11 @@ public enum Symbole {
     // CONSTRUCTEURS
     /**************************************************************************/
     
+    /**
+     * Initialise les paramètres avec des valeurs
+     * 
+     * @param cheminImage Le chemin de symbole à afficher
+     */
     private Symbole(String cheminImage) {
 
         this.image = new Image(cheminImage);
@@ -45,18 +49,19 @@ public enum Symbole {
     
     /**
      * Lit la variable image
+     * 
      * @return La variable membre image
      */
     public Image getImage() {
-
         return this.image;
-
     }
 
     /**
-     * Renvoie l'opposé du lien (symbole en fond vert)
+     * Renvoie le symbole valide (symbole en fond blanc)
+     * 
      * @param symbole Un Symbole
-     * @return L'opposé du symbole
+     * 
+     * @return Le symbole
      */
     public static Symbole getSymboleValide(Symbole symbole) {
 
@@ -107,8 +112,10 @@ public enum Symbole {
     }
 
     /**
-     * Renvoie l'opposé du lien (symbole en fond vert)
+     * Renvoie l'opposé du symbole (symbole en fond vert)
+     * 
      * @param symbole Un Symbole
+     * 
      * @return L'opposé du symbole
      */
     public static Symbole getSymboleInvalide(Symbole symbole) {
@@ -161,17 +168,16 @@ public enum Symbole {
     
     /**
      * Retourne un symbole aléatoire
+     * 
      * @return Un symbole aléatoire
      */
     public static Symbole getRandomSymbole() {
-
         return Symbole.VIDE;
-
     }
     
     /**
      * 
-     * @return .
+     * @return Un tableau de Symboles
      */
     public static Symbole[] getSymbolesNormaux () {
         

@@ -1,22 +1,24 @@
-package model;
+package modele;
 
 
 import java.util.Observable;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author agterra
- */
 public class Chronometre extends Observable implements Runnable {
 
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
+    
     private int tempsActuel = 0;
     
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
+    
+    /**
+     * Lance un chronomètre
+     */
     @Override
     public void run() {
         
@@ -28,6 +30,9 @@ public class Chronometre extends Observable implements Runnable {
         
     }
     
+    /**
+     * Réinitialise le temps du chronomètre à 0
+     */
     public void reinitialiserTemps() {
         
         System.out.println("Reinitialiser le temps");
@@ -36,7 +41,12 @@ public class Chronometre extends Observable implements Runnable {
         
     }
     
-    public void lancerChronometre( int temps ) {
+    /**
+     * Lance le chronomètre pour un temps donné
+     * 
+     * @param temps La durée
+     */
+    public void lancerChronometre(int temps) {
         
         while(tempsActuel < temps) {
             

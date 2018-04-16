@@ -1,4 +1,5 @@
-package model;
+package modele;
+
 
 public class Case {
 
@@ -40,8 +41,8 @@ public class Case {
     /**
      * Initialise les paramètres avec des valeurs
      *
-     * @param x Abscisse de la Case
-     * @param y Ordonnée de la Case
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
     public Case(int x, int y) {
 
@@ -60,8 +61,8 @@ public class Case {
      *
      * @param symbole Un symbole
      * @param lien Un lien
-     * @param x Abscisse de la Case
-     * @param y Ordonnée de la Case
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
      */
     public Case(int x, int y, Symbole symbole, Lien lien) {
 
@@ -175,6 +176,7 @@ public class Case {
      * Retourne vrai si les deux cases sont identiques, faux sinon
      *
      * @param o Un objet (une Case)
+     * 
      * @return Vrai ou faux
      */
     @Override
@@ -197,7 +199,7 @@ public class Case {
     }
 
     /**
-     * Construit une chaîne de caractère regroupant les propriétés d'un objet Case
+     * Construit une chaîne de caractères regroupant les propriétés d'un objet Case
      *
      * @return Les propriétés de Case
      */

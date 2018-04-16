@@ -1,9 +1,7 @@
-package model;
+package modele;
 
 import java.util.*;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+
 
 public class Grille extends Observable {
 
@@ -142,7 +140,7 @@ public class Grille extends Observable {
     /**
      * Lit la variable chemins
      *
-     * @return La liste des chemins
+     * @return L'attribut membre chemins
      */
     public ArrayList<Chemin> getChemins() {
         return chemins;
@@ -151,7 +149,7 @@ public class Grille extends Observable {
     /**
      * Ecrit la variable chemins
      *
-     * @param chemins Un tableau représentant des chemins
+     * @param chemins La liste des chemins
      */
     public void setChemins(ArrayList<Chemin> chemins) {
         this.chemins = chemins;
@@ -159,6 +157,7 @@ public class Grille extends Observable {
 
     /**
      * Lit la variable largeur
+     * 
      * @return L'attribut membre largeur
      */
     public int getLargeur() {
@@ -230,6 +229,7 @@ public class Grille extends Observable {
 
     /**
      * Lit la dernière case du chemin que l'utilisateur trace
+     * 
      * @return La dernière case du chemin actuel
      */
     public Case getDerniereCaseCheminActuel() {
@@ -240,6 +240,7 @@ public class Grille extends Observable {
     
     /**
      * Lit la première case du chemin que l'ulisateur trace
+     * 
      * @return La premiere case du chemin actuel
      */
     public Case getPremiereCaseCheminActuel() {
@@ -250,8 +251,10 @@ public class Grille extends Observable {
 
     /**
      * Lit la variable Case de coordonnées (y, x)
+     * 
      * @param y L'ordonnée de la Case
      * @param x L'abscisse de la Case
+     * 
      * @return La Case[y][x]
      */
     public Case getCase(int y, int x) {
@@ -262,6 +265,7 @@ public class Grille extends Observable {
     
     /**
      * Lit la variable partieTerminee
+     * 
      * @return L'attribut membre partieTerminee
      */
     public int getPartieTerminee() {
@@ -272,7 +276,8 @@ public class Grille extends Observable {
     
     /**
      * Ecrit la variable partieTerminee
-     * @param partieTerminee La valeur correpsondant à a fin de la partie
+     * 
+     * @param partieTerminee La valeur correpsondant à la fin de la partie
      */
     public void setPartieTerminee(int partieTerminee) {
         
@@ -282,6 +287,7 @@ public class Grille extends Observable {
 
     /**
      * Lit la variable pairesSymboles
+     * 
      * @return L'attribut membre pairesSymboles
      */
     public int getPairesSymboles() {
@@ -302,6 +308,7 @@ public class Grille extends Observable {
 
     /**
      * Lit la variable pairesCompletes
+     * 
      * @return L'attribut membre pairesCompletes
      */
     public int getPairesCompletes() {
@@ -312,6 +319,7 @@ public class Grille extends Observable {
 
     /**
      * Ecrit la variable pairesCompletes
+     * 
      * @param pairesCompletes Le nombre de paires de symboles reliés
      */
     public void setPairesCompletes(int pairesCompletes) {
@@ -490,7 +498,7 @@ public class Grille extends Observable {
     /**
      * Supprime un chemin
      *
-     * @param chemin le chemin à supprimer
+     * @param chemin Le chemin à supprimer
      */
     private void supprimerChemin(Chemin chemin) {
 
@@ -540,7 +548,7 @@ public class Grille extends Observable {
     }
 
     /**
-     * Réinitialise la grille à son état de départ (mêmes symboles mais tous les liens osnt supprimés)
+     * Réinitialise la grille à son état de départ (mêmes symboles mais tous les liens sont supprimés)
      */
     public void reinitialiser() {
         
@@ -620,6 +628,7 @@ public class Grille extends Observable {
     
     /**
      * Formate la grille à son état de base
+     * 
      * @param longueur La longueur saisie par l'utilisateur
      * @param largeur La largeur saisie par l'utilisateur
      */
@@ -686,6 +695,7 @@ public class Grille extends Observable {
     
     /**
      * Met à jour le plateau en ajoutant les liens
+     * 
      * @param chemin Le chemin à dessiner
      */
     private void mettreAJourPlateau() {
@@ -733,7 +743,9 @@ public class Grille extends Observable {
     
     /**
      * Clone le plateau
+     * 
      * @param cases Un tableau de Cases
+     * 
      * @return Un clone du plateau
      */
     public Case[][] clonePlateau(Case[][] cases) {
@@ -762,6 +774,7 @@ public class Grille extends Observable {
      * Renvoie vrai si la case est libre (sans symbole ni lien), faux sinon
      *
      * @param c Une Case
+     * 
      * @return Vrai ou faux
      */
     private boolean caseEstLibre(Case c) {
@@ -773,6 +786,8 @@ public class Grille extends Observable {
     /**
      * Renvoie vrai si le chemin est valide, faux sinon
      *
+     * @param chemin Le Chemin dont on veut vérifier la validité
+     * 
      * @return Vrai ou faux
      */
     private boolean cheminEstValide(Chemin chemin) {
@@ -874,7 +889,7 @@ public class Grille extends Observable {
     }
 
     /**
-     * Renvoie vrai si le jeu est terminé (toutes las cases sont occupées et
+     * Renvoie vrai si le jeu est terminé (toutes les cases sont occupées et
      * tous les symboles sont reliés), faux sinon
      *
      * @return Vrai ou faux
@@ -936,7 +951,9 @@ public class Grille extends Observable {
 
     /**
      * Renvoie vrai si les deux symboles reliés sont identiques, faux sinon
+     * 
      * @param chemin Le chemin à vérifier
+     * 
      * @return Vrai ou faux
      */
     public boolean cheminMemePaire(Chemin chemin) {
@@ -950,7 +967,8 @@ public class Grille extends Observable {
      *
      * @param c1 une case
      * @param c2 une autre case
-     * @return vrai ou faux
+     * 
+     * @return Vrai ou faux
      */
     private boolean sontVoisines(Case c1, Case c2) {
 
@@ -971,7 +989,7 @@ public class Grille extends Observable {
     /**************************************************************************/
     
     /**
-     * Construit une chaîne de caractère regroupant les propriétés d'un objet
+     * Construit une chaîne de caractères regroupant les propriétés d'un objet
      * Grille
      *
      * @return les propriétés de Grille

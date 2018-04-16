@@ -1,6 +1,7 @@
-package model;
+package modele;
 
 import java.util.*;
+
 
 public class Chemin {
 
@@ -58,7 +59,7 @@ public class Chemin {
     /**
      * Ecrit la variable cases
      *
-     * @param cases .
+     * @param cases Une liste de Cases représentant un chemin
      */
     public void setCases(ArrayList<Case> cases) {
         
@@ -68,6 +69,7 @@ public class Chemin {
     
     /**
      * Renvoie la première case d'un chemin
+     * 
      * @return La première case
      */
     public Case getPremierElement() {
@@ -79,7 +81,7 @@ public class Chemin {
     /**
      * Renvoie la dernière case d'un chemin
      *
-     * @return la dernière case
+     * @return La dernière case
      */
     public Case getDernierElement() {
 
@@ -129,8 +131,9 @@ public class Chemin {
     /**
      * Renvoie vrai si la case (x,y) est contenue dans un Chemin, faux sinon
      *
-     * @param x L'abscisse de la case
-     * @param y L'ordonnée de la case
+     * @param x L'abscisse de la Case
+     * @param y L'ordonnée de la Case
+     * 
      * @return Vrai ou faux
      */
     public boolean contient(int x, int y) {
@@ -151,9 +154,11 @@ public class Chemin {
 
     /**
      * Calcule le lien correspondant aux Cases utilisées
+     * 
      * @param c1 Une Case
      * @param c2 Une Case voisine
      * @param c3 Une autre Case voisine
+     * 
      * @return Le lien correspondant aux cases
      */
     private static Lien calculer(Case c1, Case c2, Case c3) {
@@ -281,7 +286,7 @@ public class Chemin {
     /**************************************************************************/
     
     /**
-     * Construit une chaîne de caractère regroupant les propriétés d'un objet Chemin
+     * Construit une chaîne de caractères regroupant les propriétés d'un objet Chemin
      *
      * @return Les propriétés de Chemin
      */

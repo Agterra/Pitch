@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
+package modele;
 
-import vue.ApplicationPrincipale;
 import controleur.IDActions;
 import static controleur.IDActions.*;
 import java.util.ArrayList;
@@ -22,16 +16,31 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import vue.ApplicationPrincipale;
 
-/**
- *
- * @author agterra
- */
+
 public class Controleur implements Observer, EventHandler {
+    
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
     
     private Grille grille;
     
     private ApplicationPrincipale application;
-
+    
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
+    
+    /**************************************************************************/
+    // CONSTRUCTEURS
+    /**************************************************************************/
+    
+    /**
+     * Initialise les paramètres avec des valeurs
+     * 
+     * @param application L'application
+     * @param grille La grille du jeu en cours
+     */
     public Controleur (ApplicationPrincipale application, Grille grille) {
         
         this.application = application;
@@ -40,6 +49,11 @@ public class Controleur implements Observer, EventHandler {
         
     }
     
+    /**
+     * Gère les actions utilisateurs
+     * 
+     * @param event Un évènement utilisateur
+     */
     @Override
     public void handle(Event event) {
         
@@ -189,6 +203,10 @@ public class Controleur implements Observer, EventHandler {
         
     }
     
+    /**
+     * Met à jour la taille de la grille à partir de la saisie utilisateur
+     * @param nouvelleTaille La taille souhaitée par l'utilisateur
+     */
     public void mettreAJourTailleGrille(int nouvelleTaille) {
         
         this.grille = new Grille(nouvelleTaille, nouvelleTaille, (int)Math.floor(nouvelleTaille/2));
@@ -197,6 +215,9 @@ public class Controleur implements Observer, EventHandler {
         
     }
     
+    /**
+     * Gère la fin de partie quand l'utilisateur veut en commencer une nouvelle
+     */
     public void messageFinOk() {
         
         this.grille.formaterGrille();
@@ -209,12 +230,21 @@ public class Controleur implements Observer, EventHandler {
               
     }
 
+    /**
+     * Gère la fin de partie quand l'utilisateur ne veut pas en commencer une nouvelle
+     */
     public void messageFinCancel() {
         
         this.application.retourMenuPrincipal();
         
     }
     
+    /**
+     * .
+     * 
+     * @param o Un Observable
+     * @param arg  Un Objet
+     */
     @Override
     public void update(Observable o, Object arg) {
         

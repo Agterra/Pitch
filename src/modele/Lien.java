@@ -1,6 +1,7 @@
-package model;
+package modele;
 
 import javafx.scene.image.Image;
+
 
 public enum Lien {
 
@@ -8,20 +9,20 @@ public enum Lien {
     // VARIABLES MEMBRES
     /**************************************************************************/
     
-    VERTICAL("file:src/assets/vertical.png"),
-    VERTICAL_VALIDE("file:src/assets/vertical_valide.png"),
-    HORIZONTAL("file:src/assets/horizontal.png"),
-    HORIZONTAL_VALIDE("file:src/assets/horizontal_valide.png"),
-    COUDE_HAUT_DROIT("file:src/assets/coude_haut_droit.png"),
-    COUDE_HAUT_DROIT_VALIDE("file:src/assets/coude_haut_droit_valide.png"),
-    COUDE_HAUT_GAUCHE("file:src/assets/coude_haut_gauche.png"),
-    COUDE_HAUT_GAUCHE_VALIDE("file:src/assets/coude_haut_gauche_valide.png"),
-    COUDE_BAS_DROIT("file:src/assets/coude_bas_droit.png"),
-    COUDE_BAS_DROIT_VALIDE("file:src/assets/coude_bas_droit_valide.png"),
-    COUDE_BAS_GAUCHE("file:src/assets/coude_bas_gauche.png"),
-    COUDE_BAS_GAUCHE_VALIDE("file:src/assets/coude_bas_gauche_valide.png"),
-    VIDE("file:src/assets/vide.png"),
-    VIDE_INVALIDE("file:src/assets/vide_invalide.png");
+    VERTICAL("file:src/ressources/vertical.png"),
+    VERTICAL_VALIDE("file:src/ressources/vertical_valide.png"),
+    HORIZONTAL("file:src/ressources/horizontal.png"),
+    HORIZONTAL_VALIDE("file:src/ressources/horizontal_valide.png"),
+    COUDE_HAUT_DROIT("file:src/ressources/coude_haut_droit.png"),
+    COUDE_HAUT_DROIT_VALIDE("file:src/ressources/coude_haut_droit_valide.png"),
+    COUDE_HAUT_GAUCHE("file:src/ressources/coude_haut_gauche.png"),
+    COUDE_HAUT_GAUCHE_VALIDE("file:src/ressources/coude_haut_gauche_valide.png"),
+    COUDE_BAS_DROIT("file:src/ressources/coude_bas_droit.png"),
+    COUDE_BAS_DROIT_VALIDE("file:src/ressources/coude_bas_droit_valide.png"),
+    COUDE_BAS_GAUCHE("file:src/ressources/coude_bas_gauche.png"),
+    COUDE_BAS_GAUCHE_VALIDE("file:src/ressources/coude_bas_gauche_valide.png"),
+    VIDE("file:src/ressources/vide.png"),
+    VIDE_INVALIDE("file:src/ressources/vide_invalide.png");
 
     private final Image image;
 
@@ -33,6 +34,11 @@ public enum Lien {
     // CONSTRUCTEURS
     /**************************************************************************/
     
+    /**
+     * Initialise les paramètres avec des valeurs
+     * 
+     * @param chemin Le chemin actuel
+     */
     private Lien(String chemin) {
 
         this.image = new Image(chemin);
@@ -45,6 +51,7 @@ public enum Lien {
     
     /**
      * Lit la variable image
+     * 
      * @return La variable membre image
      */
     public Image getImage() {
@@ -57,6 +64,7 @@ public enum Lien {
      * Renvoie le lien (lien en fond blanc)
      *
      * @param lien Un Lien
+     * 
      * @return Le lien
      */
     public static Lien getLienValide(Lien lien) {
@@ -123,6 +131,7 @@ public enum Lien {
      * Renvoie l'opposé du lien (lien en fond vert)
      *
      * @param lien Un Lien
+     * 
      * @return L'opposé du lien
      */
     public static Lien getLienInvalide(Lien lien) {

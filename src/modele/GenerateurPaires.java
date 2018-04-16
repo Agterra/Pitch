@@ -1,7 +1,8 @@
-package model;
+package modele;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class GenerateurPaires {
 
@@ -50,6 +51,7 @@ public class GenerateurPaires {
 
     /**
      * Initialise les paramètres avec des valeurs
+     * 
      * @param longueur Le nombre de lignes
      * @param largeur Le nombre de colonnes
      * @param nombrePaires Le nombre de paires à générer

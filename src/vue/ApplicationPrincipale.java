@@ -1,18 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vue;
 
 import controleur.IDActions;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Optional;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,9 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
@@ -43,18 +31,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.Case;
-import model.Chronometre;
-import model.Controleur;
-import model.Grille;
-import model.Symbole;
-import vue.ApplicationPrincipale;
+import modele.Case;
+import modele.Controleur;
+import modele.Grille;
+import modele.Symbole;
 
-/**
- *
- * @author agterra
- */
+
 public class ApplicationPrincipale extends Application {
+    
+    /**************************************************************************/
+    // VARIABLES MEMBRES
+    /**************************************************************************/
     
     public static final boolean DEBUGAGE = false;
 
@@ -92,13 +79,25 @@ public class ApplicationPrincipale extends Application {
     // Modele
     public Grille grille;
     
+    /**************************************************************************/
+    // FONCTIONS MEMBRES
+    /**************************************************************************/
     
+    /**
+     * Fonction principale
+     * @param args Les paramètres d'exécution
+     */
     public static void main(String[] args) {
         
         launch(args);
         
     }
     
+    /**
+     * Lance l'initialisation d'un nouveau jeu
+     * @param premierStage Le menu d'accueil
+     * @throws Exception .
+     */
     @Override
     public void start(Stage premierStage) throws Exception {
     
@@ -110,6 +109,9 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Lance l'initialisation d'un nouveau jeu, du modèle et des fenêtres
+     */
     public void initialisation() {
         
         this.grille = new Grille(4, 4, 2);
@@ -122,12 +124,18 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Lance l'initialisation du modèle
+     */
     public void initialisationModele() {
         
         this.grille.addObserver(this.controleur);
         
     }
     
+    /**
+     * Lance l'initialisation des fenêtres
+     */
     public void initialisationFenetres() {
         
         // Propriétés de la fenêtre
@@ -175,6 +183,9 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Lance l'initailisation d'un nouveau jeu
+     */
     public void initialiserJeu() {
         
         this.secondStage.setTitle("Partie");
@@ -267,6 +278,14 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Initialise le menu interne au jeu
+     * 
+     * @param annulerCoupItem L'item "annuler le dernier coup" du menu
+     * @param recommencerItem L'item "recommencer la partie" du menu
+     * @param nouvellePartieItem L'item "nouvelle partie" du menu
+     * @param quitterItem L'item "quitter" du menu
+     */
     public void initialiserActionsMenuJeu(MenuItem annulerCoupItem, MenuItem recommencerItem, MenuItem nouvellePartieItem, MenuItem quitterItem) {
         
         // Ajout des interactions sur le menu
@@ -291,6 +310,9 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Initialise le menu d'accueil
+     */
     public void initialisationMenuAccueil() {
         
         // On ajoute un titre...
@@ -346,6 +368,14 @@ public class ApplicationPrincipale extends Application {
 
     }
     
+    /**
+     * Initialise les boutons du menu d'accueil
+     * 
+     * @param boutonNouvellePartie Le bouton "Nouvelle partie" du menu
+     * @param boutonChangerTaille Le bouton "Modifier la taille" du menu
+     * @param boutonRegles Le bouton "Règles" du menu
+     * @param boutonQuitter Le bouton "Quitter" du menu
+     */
     public void initialiserActionsMenuAccueil(Button boutonNouvellePartie, Button boutonChangerTaille, Button boutonRegles, Button boutonQuitter) {
         
         boutonNouvellePartie.setId(IDActions.MENU_ACCUEIL_NOUVELLE_PARTIE.toString());
@@ -372,8 +402,9 @@ public class ApplicationPrincipale extends Application {
     }
     
     
-    // Actions du menu principal
-    
+    /**
+     * Affiche la fenêtre de jeu
+     */
     public void actionBoutonMenuPrincipalNouvellePartie() {
         
         premierStage.close(); // on ferme la fenêtre de menu
@@ -382,7 +413,10 @@ public class ApplicationPrincipale extends Application {
         
     }
     
-     public void actionBoutonMenuPrincipalModifierTaille() {
+    /**
+     * Demande à l'utilisateur la taille qu'il veut pour la grille
+     */
+    public void actionBoutonMenuPrincipalModifierTaille() {
         
         TextInputDialog demanderTaille = new TextInputDialog("");
 
@@ -417,6 +451,9 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Affiche les règles du jeu
+     */
     public void actionBoutonMenuPrincipalRegles() {
         
         this.nombreClics = this.nombreClics + 1;
@@ -437,12 +474,18 @@ public class ApplicationPrincipale extends Application {
 
     }
     
+    /**
+     * Quitte le jeu
+     */
     public void actionBoutonMenuPrincipalQuitter() {
         
         this.premierStage.close(); // on ferme la fenêtre de menu
        
     }
     
+    /**
+     * Revient au menu d'accueil
+     */
     public void actionBoutonMenuJeuQuitter() {
         
         this.secondStage.close();
@@ -451,7 +494,10 @@ public class ApplicationPrincipale extends Application {
 
     }
     
-    // Events
+    /**
+     * Commence le drag and drop graphique
+     * @param image .
+     */
     public void startDragAndDrop(ImageView image) {
         
         Dragboard db = image.startDragAndDrop(TransferMode.ANY);
@@ -466,8 +512,7 @@ public class ApplicationPrincipale extends Application {
     
     /**
      * Ajoute les images en fonction des actions de l'utilisateur
-     * @param grilleCases .
-     * @param c .
+     * @param c La case à colorier
      */
     public void colorierCase(Case c) {
 
@@ -503,6 +548,9 @@ public class ApplicationPrincipale extends Application {
 
     }
     
+    /**
+     * Affiche le messgae de fin de partie en fonction de l'issue du jeu
+     */
     public void afficherMessageDeFin() {
         
         this.messageFin();
@@ -511,8 +559,9 @@ public class ApplicationPrincipale extends Application {
     
     /**
      * Affiche une popup quand la partie est terminée
+     * 
      * @param premierStage Fenêtre du menu
-     * @param deuxiemeStage  Fenêtre du jeu
+     * @param deuxiemeStage Fenêtre du jeu
      */
     private void messageFin() {
         
@@ -546,6 +595,9 @@ public class ApplicationPrincipale extends Application {
         
     }
     
+    /**
+     * Retourne au menu principal
+     */
     public void retourMenuPrincipal() {
             
         premierStage.show();
