@@ -627,7 +627,8 @@ public class ApplicationPrincipale extends Application implements Observer{
     }
 
     /**
-     * .
+     * L'application est l'observeur du modèle, la méthode update est appelée 
+     * dès que le modèle a été mofidié et met à jour la vue.
      * 
      * @param o Un Observable
      * @param arg Un objet
