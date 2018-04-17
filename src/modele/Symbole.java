@@ -177,6 +177,7 @@ public enum Symbole {
     }
     
     /**
+     * .
      * 
      * @return Un tableau de Symboles
      */

@@ -407,7 +407,6 @@ public class ApplicationPrincipale extends Application implements Observer{
         
     }
     
-    
     /**
      * Affiche la fenêtre de jeu
      */
@@ -627,6 +626,12 @@ public class ApplicationPrincipale extends Application implements Observer{
     
     }
 
+    /**
+     * .
+     * 
+     * @param o Un Observable
+     * @param arg Un objet
+     */
     @Override
     public void update(Observable o, Object arg) {
         

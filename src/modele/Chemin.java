@@ -94,7 +94,7 @@ public class Chemin {
     /**************************************************************************/
     
     /**
-     * 
+     * .
      * @param c La case à ajouter
      */
     public void ajouter(Case c) {
