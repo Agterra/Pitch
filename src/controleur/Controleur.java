@@ -1,4 +1,4 @@
-package modele;
+package controleur;
 
 import controleur.IDActions;
 import static controleur.IDActions.*;
@@ -14,10 +14,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import modele.Case;
+import modele.Grille;
 import vue.ApplicationPrincipale;
 
 
-public class Controleur implements Observer, EventHandler {
+public class Controleur implements EventHandler {
     
     /**************************************************************************/
     // VARIABLES MEMBRES
@@ -213,6 +215,8 @@ public class Controleur implements Observer, EventHandler {
         
         this.application.grille = this.grille;
         
+        this.application.grille.addObserver( this.application );
+        
     }
     
     /**
@@ -224,6 +228,8 @@ public class Controleur implements Observer, EventHandler {
         
         this.application.grille = this.grille;
             
+        this.application.grille.addObserver( this.application );
+        
         this.application.initialisationModele();
         
         this.application.initialiserJeu();
@@ -237,57 +243,6 @@ public class Controleur implements Observer, EventHandler {
         
         this.application.retourMenuPrincipal();
         
-    }
-    
-    /**
-     * .
-     * 
-     * @param o Un Observable
-     * @param arg  Un Objet
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        
-        if (o instanceof Grille) {
-
-            Grille grille = (Grille) o;
-
-            ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
-
-            if (ApplicationPrincipale.DEBUGAGE) {
-
-                System.out.println(cheminActuel.toString());
-
-            }
-
-
-            //Dessiner chemin actuel
-            for (Case c : cheminActuel) {
-
-                this.application.colorierCase(c);
-
-            }
-
-            for (int i = 0; i < grille.getLongueur(); i++) {
-
-                for (int j = 0; j < grille.getLargeur(); j++) {
-
-                    Case c = grille.getCase(i, j);
-
-                    this.application.colorierCase(c);
-
-                }
-
-            }
-
-            if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
-
-                this.application.afficherMessageDeFin();
-                
-            }
-
-        }
-
     }
     
 }

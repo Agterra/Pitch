@@ -167,29 +167,21 @@ public class GenerateurPaires {
 
         Random aleatoire = new Random();
 
-        Symbole[] symboles = Symbole.getSymbolesNormaux();
+        ArrayList< Symbole > symboles = new ArrayList( Symbole.getSymbolesNormaux() );
         
         int[] points = new int[2];
 
         for (int i = 0; i < this.nombrePaires; i++) {
 
-            int symboleAleatoire = aleatoire.nextInt(symboles.length);
+            int symboleAleatoire = aleatoire.nextInt(symboles.size());
             
-            Symbole s = symboles[symboleAleatoire];
+            Symbole s = symboles.get(symboleAleatoire);
+            
+            symboles.remove(symboleAleatoire);
             
             int x = aleatoire.nextInt(this.largeur);
 
             int y = aleatoire.nextInt(this.longueur);
-
-            while (this.grille[y][x] != -1) {
-
-                x = aleatoire.nextInt(this.largeur);
-
-                y = aleatoire.nextInt(this.longueur);
-
-            }
-
-            this.grille[y][x] = i;
 
             points = new int[2];
 
@@ -197,23 +189,28 @@ public class GenerateurPaires {
 
             points[1] = x;
 
+            while (this.grille[y][x] != -1 || this.paires.indexOf(points) != -1) {
+
+                x = aleatoire.nextInt(this.largeur);
+
+                y = aleatoire.nextInt(this.longueur);
+
+                points[0] = y;
+
+                points[1] = x;
+
+            }
+
+            this.grille[y][x] = i;
+
             this.paires.add(points);
             
             this.symbolesPaires.add(s);
+            
 
             int nX = aleatoire.nextInt(this.largeur);
 
             int nY = aleatoire.nextInt(this.longueur);
-
-            while ((nX == x && nY == y) || this.grille[nY][nX] != -1 && (Math.abs(nX - x) == 0 && Math.abs(nY - y) == 0)) {
-
-                nX = aleatoire.nextInt(this.largeur);
-
-                nY = aleatoire.nextInt(this.longueur);
-
-            }
-
-            this.grille[nY][nX] = i;
 
             points = new int[2];
 
@@ -221,22 +218,26 @@ public class GenerateurPaires {
 
             points[1] = nX;
 
+            while ((nX == x && nY == y) || this.grille[nY][nX] != -1 || (Math.abs(nX - x) == 0 && Math.abs(nY - y) == 0) || this.paires.indexOf(points) != -1) {
+
+                nX = aleatoire.nextInt(this.largeur);
+
+                nY = aleatoire.nextInt(this.longueur);
+
+                points[0] = nY;
+
+                points[1] = nX;
+
+            }
+
+            this.grille[nY][nX] = i;
+
             this.paires.add(points);
 
             this.symbolesPaires.add(s);
 
         }
-        /*  
-		for (int i = 0; i < this.pairs.size(); i++) {
-			
-			System.out.println(this.pairs.get(i)[0] +" " + this.pairs.get(i)[1]);
-			
-		}
-		
-		this.afficherTableau(this.grid);
-		
-		try{Thread.sleep(5000);}catch(InterruptedException e) {}
-         */
+        
     }
 
     /**

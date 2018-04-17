@@ -1,6 +1,8 @@
 package vue;
 
 import controleur.IDActions;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -32,12 +34,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import modele.Case;
-import modele.Controleur;
+import controleur.Controleur;
+import java.util.ArrayList;
 import modele.Grille;
 import modele.Symbole;
 
 
-public class ApplicationPrincipale extends Application {
+public class ApplicationPrincipale extends Application implements Observer{
     
     /**************************************************************************/
     // VARIABLES MEMBRES
@@ -129,7 +132,7 @@ public class ApplicationPrincipale extends Application {
      */
     public void initialisationModele() {
         
-        this.grille.addObserver(this.controleur);
+        this.grille.addObserver( this );
         
     }
     
@@ -424,7 +427,7 @@ public class ApplicationPrincipale extends Application {
 
         demanderTaille.setTitle("Changement de taille");
 
-        demanderTaille.setHeaderText("Changer la taille de la grille");
+        demanderTaille.setHeaderText("Changer la taille de la grille (Max = 11)");
 
         demanderTaille.setContentText("Taille ");
 
@@ -434,6 +437,8 @@ public class ApplicationPrincipale extends Application {
 
             int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
 
+            if (longueur > 11) longueur = 11;
+            
             this.ratio = Math.floor(this.largeurFenetre / longueur) - 10;
             
             this.controleur.mettreAJourTailleGrille(longueur);
@@ -571,11 +576,11 @@ public class ApplicationPrincipale extends Application {
         
         messageFin.setTitle("Partie finie");
         
-        if(grille.getPartieTerminee() == 1) {
+        if(this.grille.getPartieTerminee() == 1) {
             
             messageFin.setContentText("Partie gagnée ! Voulez-vous rejouer ?");
             
-        } else if(grille.getPartieTerminee() == 0) {
+        } else if(this.grille.getPartieTerminee() == 0) {
             
             messageFin.setContentText("Partie perdue ! Voulez-vous rejouer ?");
             
@@ -604,6 +609,52 @@ public class ApplicationPrincipale extends Application {
 
         secondStage.close();
     
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+        if (o instanceof Grille) {
+
+            Grille grille = (Grille) o;
+
+            ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
+
+            if (ApplicationPrincipale.DEBUGAGE) {
+
+                System.out.println(cheminActuel.toString());
+
+            }
+
+
+            //Dessiner chemin actuel
+            for (Case c : cheminActuel) {
+
+                this.colorierCase(c);
+
+            }
+
+            for (int i = 0; i < grille.getLongueur(); i++) {
+
+                for (int j = 0; j < grille.getLargeur(); j++) {
+
+                    Case c = grille.getCase(i, j);
+
+                    this.colorierCase(c);
+
+                }
+
+            }
+
+            if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
+
+                this.afficherMessageDeFin();
+                
+            }
+
+        }
+
+        
     }
     
 }

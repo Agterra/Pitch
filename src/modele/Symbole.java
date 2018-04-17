@@ -1,5 +1,6 @@
 package modele;
 
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 
@@ -179,13 +180,13 @@ public enum Symbole {
      * 
      * @return Un tableau de Symboles
      */
-    public static Symbole[] getSymbolesNormaux () {
+    public static ArrayList< Symbole > getSymbolesNormaux () {
         
-        Symbole[] symboles = new Symbole[5];
+        ArrayList< Symbole >  symboles = new ArrayList<>(5);
         
         for (int i = 0; i < 5 ; i++) {
             
-            symboles[i] = Symbole.values()[i];
+            symboles.add( Symbole.values()[i] );
             
         }
         
