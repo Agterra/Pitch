@@ -88,6 +88,7 @@ public class ApplicationPrincipale extends Application implements Observer{
     
     /**
      * Fonction principale
+     * 
      * @param args Les paramètres d'exécution
      */
     public static void main(String[] args) {
@@ -98,8 +99,10 @@ public class ApplicationPrincipale extends Application implements Observer{
     
     /**
      * Lance l'initialisation d'un nouveau jeu
+     * 
      * @param premierStage Le menu d'accueil
-     * @throws Exception .
+     * 
+     * @throws Exception Si quelque chose se passe mal, renvoie une exception
      */
     @Override
     public void start(Stage premierStage) throws Exception {
@@ -433,26 +436,33 @@ public class ApplicationPrincipale extends Application implements Observer{
 
         Optional<String> result = demanderTaille.showAndWait();
 
-        if (result.isPresent()) {
+        try{
+    
+            if (result.isPresent()) {
 
-            int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
+                int longueur = Integer.valueOf(result.get()); //on convertit la chaîne de caractères en entier
 
-            if (longueur > 11) longueur = 11;
+                if (longueur > 11) longueur = 11;
+
+                this.ratio = Math.floor(this.largeurFenetre / longueur) - 10;
+
+                this.controleur.mettreAJourTailleGrille(longueur);
+
+                initialiserJeu();
+
+                initialisationModele();
+
+                premierStage.close();
+
+                secondStage.show();
+
+            }
+
+        }catch (NumberFormatException exception) {
             
-            this.ratio = Math.floor(this.largeurFenetre / longueur) - 10;
+            System.err.println("Le nombre saisi n'est pas un entier ! \n" + exception.getMessage());
             
-            this.controleur.mettreAJourTailleGrille(longueur);
-            
-            initialiserJeu();
-
-            initialisationModele();
-
-            premierStage.close();
-
-            secondStage.show();
-
         }
-
         
     }
     
@@ -463,7 +473,7 @@ public class ApplicationPrincipale extends Application implements Observer{
         
         this.nombreClics = this.nombreClics + 1;
 
-        TextArea regles = new TextArea("Glissez votre souris pour connecter deux symboles identiques (créant ainsi un tuyau). Le but est de connecter toutes les paires et d'utiliser toutes les cases du tableau. Mais attention, les tuyaux se briseront s'ils se croisent ou se chevauchent!");
+        TextArea regles = new TextArea("Glissez votre souris pour connecter deux symboles identiques (créant ainsi un tuyau). Le but est de connecter toutes les paires et d'utiliser toutes les cases du tableau. Mais attention, les tuyaux se briseront s'ils se croisent ou se chevauchent !");
 
         regles.setFont(Font.font("Verdana", 16));
 
