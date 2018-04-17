@@ -270,7 +270,9 @@ public class ApplicationPrincipale extends Application implements Observer{
                     
                 }
                 
-                System.out.println(this.grille.getCase(y, x).getLien().getImage().exceptionProperty().toString());
+                // Debug pour voir l'erreur de chargement d'une image 
+                
+                //System.out.println(this.grille.getCase(y, x).getLien().getImage().exceptionProperty().toString());
                 
                 image.setOnDragEntered(this.controleur);
 

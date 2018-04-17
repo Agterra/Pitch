@@ -10,18 +10,18 @@ public enum Symbole {
     // VARIABLES MEMBRES
     /**************************************************************************/
     
-    ROND("file:src/ressources/circle.png"),
-    TRIANGLE("file:src/ressources/triangle.png"),
-    ETOILE("file:src/ressources/star.png"),
-    CARRE("file:src/ressources/carre.png"),
-    LOSANGE("file:src/ressources/losange.png"),
+    ROND("/ressources/circle.png"),
+    TRIANGLE("/ressources/triangle.png"),
+    ETOILE("/ressources/star.png"),
+    CARRE("/ressources/carre.png"),
+    LOSANGE("/ressources/losange.png"),
     
-    ROND_VALIDE("file:src/ressources/circle_valide.png"),
-    TRIANGLE_VALIDE("file:src/ressources/triangle_valide.png"),
-    ETOILE_VALIDE("file:src/ressources/star_valide.png"),
-    CARRE_VALIDE("file:src/ressources/carre_valide.png"),
-    LOSANGE_VALIDE("file:src/ressources/losange_valide.png"),
-    VIDE("file:src/ressources/vide.png");
+    ROND_VALIDE("/ressources/circle_valide.png"),
+    TRIANGLE_VALIDE("/ressources/triangle_valide.png"),
+    ETOILE_VALIDE("/ressources/star_valide.png"),
+    CARRE_VALIDE("/ressources/carre_valide.png"),
+    LOSANGE_VALIDE("/ressources/losange_valide.png"),
+    VIDE("/ressources/vide.png");
 
     private final Image image;
 
@@ -40,7 +40,7 @@ public enum Symbole {
      */
     private Symbole(String cheminImage) {
 
-        this.image = new Image(cheminImage);
+        this.image = new Image(Symbole.class.getResourceAsStream(cheminImage));
 
     }
 

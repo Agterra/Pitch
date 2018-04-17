@@ -9,20 +9,20 @@ public enum Lien {
     // VARIABLES MEMBRES
     /**************************************************************************/
     
-    VERTICAL("file:src/ressources/vertical.png"),
-    VERTICAL_VALIDE("file:src/ressources/vertical_valide.png"),
-    HORIZONTAL("file:src/ressources/horizontal.png"),
-    HORIZONTAL_VALIDE("file:src/ressources/horizontal_valide.png"),
-    COUDE_HAUT_DROIT("file:src/ressources/coude_haut_droit.png"),
-    COUDE_HAUT_DROIT_VALIDE("file:src/ressources/coude_haut_droit_valide.png"),
-    COUDE_HAUT_GAUCHE("file:src/ressources/coude_haut_gauche.png"),
-    COUDE_HAUT_GAUCHE_VALIDE("file:src/ressources/coude_haut_gauche_valide.png"),
-    COUDE_BAS_DROIT("file:src/ressources/coude_bas_droit.png"),
-    COUDE_BAS_DROIT_VALIDE("file:src/ressources/coude_bas_droit_valide.png"),
-    COUDE_BAS_GAUCHE("file:src/ressources/coude_bas_gauche.png"),
-    COUDE_BAS_GAUCHE_VALIDE("file:src/ressources/coude_bas_gauche_valide.png"),
-    VIDE("file:src/ressources/vide.png"),
-    VIDE_INVALIDE("file:src/ressources/vide_invalide.png");
+    VERTICAL("/ressources/vertical.png"),
+    VERTICAL_VALIDE("/ressources/vertical_valide.png"),
+    HORIZONTAL("/ressources/horizontal.png"),
+    HORIZONTAL_VALIDE("/ressources/horizontal_valide.png"),
+    COUDE_HAUT_DROIT("/ressources/coude_haut_droit.png"),
+    COUDE_HAUT_DROIT_VALIDE("/ressources/coude_haut_droit_valide.png"),
+    COUDE_HAUT_GAUCHE("/ressources/coude_haut_gauche.png"),
+    COUDE_HAUT_GAUCHE_VALIDE("/ressources/coude_haut_gauche_valide.png"),
+    COUDE_BAS_DROIT("/ressources/coude_bas_droit.png"),
+    COUDE_BAS_DROIT_VALIDE("/ressources/coude_bas_droit_valide.png"),
+    COUDE_BAS_GAUCHE("/ressources/coude_bas_gauche.png"),
+    COUDE_BAS_GAUCHE_VALIDE("/ressources/coude_bas_gauche_valide.png"),
+    VIDE("/ressources/vide.png"),
+    VIDE_INVALIDE("/ressources/vide_invalide.png");
 
     private final Image image;
 
@@ -41,7 +41,7 @@ public enum Lien {
      */
     private Lien(String chemin) {
 
-        this.image = new Image(chemin);
+        this.image = new Image(Lien.class.getResourceAsStream(chemin));
 
     }
 
