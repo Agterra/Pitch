@@ -582,6 +582,12 @@ public class ApplicationPrincipale extends Application implements Observer{
         
         Alert messageFin = new Alert(Alert.AlertType.CONFIRMATION);
         
+        ButtonType boutonOui = new ButtonType("Oui");
+        
+        ButtonType boutonNon = new ButtonType("Non");
+
+        messageFin.getButtonTypes().setAll(boutonOui, boutonNon);
+        
         messageFin.initOwner(this.secondStage);
         
         messageFin.setTitle("Partie finie");
@@ -598,11 +604,11 @@ public class ApplicationPrincipale extends Application implements Observer{
 
         Optional<ButtonType> result = messageFin.showAndWait();
         
-        if (result.get() == ButtonType.OK) {
+        if (result.get() == boutonOui) {
             
             this.controleur.messageFinOk();
             
-        } else {
+        } else if(result.get() == boutonNon) {
          
             this.controleur.messageFinCancel();
             
