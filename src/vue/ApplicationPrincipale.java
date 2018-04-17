@@ -270,6 +270,8 @@ public class ApplicationPrincipale extends Application implements Observer{
                     
                 }
                 
+                System.out.println(this.grille.getCase(y, x).getLien().getImage().exceptionProperty().toString());
+                
                 image.setOnDragEntered(this.controleur);
 
                 image.setOnDragDone(this.controleur);
@@ -281,6 +283,8 @@ public class ApplicationPrincipale extends Application implements Observer{
             }
 
         }
+        
+        
         
     }
     
@@ -638,11 +642,13 @@ public class ApplicationPrincipale extends Application implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         
+        
+        
         if (o instanceof Grille) {
 
-            Grille grille = (Grille) o;
+            Grille nouvelleGrille = (Grille) o;
 
-            ArrayList<Case> cheminActuel = grille.getCheminActuel().getCases();
+            ArrayList<Case> cheminActuel = nouvelleGrille.getCheminActuel().getCases();
 
             if (ApplicationPrincipale.DEBUGAGE) {
 
@@ -658,11 +664,11 @@ public class ApplicationPrincipale extends Application implements Observer{
 
             }
 
-            for (int i = 0; i < grille.getLongueur(); i++) {
+            for (int i = 0; i < nouvelleGrille.getLongueur(); i++) {
 
-                for (int j = 0; j < grille.getLargeur(); j++) {
+                for (int j = 0; j < nouvelleGrille.getLargeur(); j++) {
 
-                    Case c = grille.getCase(i, j);
+                    Case c = nouvelleGrille.getCase(i, j);
 
                     this.colorierCase(c);
 
@@ -670,7 +676,7 @@ public class ApplicationPrincipale extends Application implements Observer{
 
             }
 
-            if(grille.getPartieTerminee() == 0 || grille.getPartieTerminee() == 1) {
+            if(nouvelleGrille.getPartieTerminee() == 0 || nouvelleGrille.getPartieTerminee() == 1) {
 
                 this.afficherMessageDeFin();
                 
