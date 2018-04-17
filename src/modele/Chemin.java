@@ -95,6 +95,7 @@ public class Chemin {
     
     /**
      * Ajoute une case au chemin et calcule le bon lien pour cette case
+     * 
      * @param c La case à ajouter
      */
     public void ajouter(Case c) {

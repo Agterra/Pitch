@@ -510,7 +510,8 @@ public class ApplicationPrincipale extends Application implements Observer{
     
     /**
      * Commence le drag and drop graphique
-     * @param image .
+     * 
+     * @param image L'image qui sert au drag and drop
      */
     public void startDragAndDrop(ImageView image) {
         
@@ -526,6 +527,7 @@ public class ApplicationPrincipale extends Application implements Observer{
     
     /**
      * Ajoute les images en fonction des actions de l'utilisateur
+     * 
      * @param c La case à colorier
      */
     public void colorierCase(Case c) {

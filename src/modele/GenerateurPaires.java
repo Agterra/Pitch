@@ -88,6 +88,7 @@ public class GenerateurPaires {
     
     /**
      * Génère un tableau contenant des paires
+     * 
      * @return Une liste de paires
      */
     public ArrayList< int[]> genererPaires() {
@@ -149,7 +150,14 @@ public class GenerateurPaires {
 
     }
     
-    public ArrayList< int[]> genererPaires(int nombrePairs) {
+    /**
+     * Génère un tableau contenant des paires
+     * 
+     * @param nombrePaires Le nombre de paires générées aléatoirement
+     * 
+     * @return Une liste de paires
+     */
+    public ArrayList< int[]> genererPaires(int nombrePaires) {
         
         // Pas encore implémenté
         
