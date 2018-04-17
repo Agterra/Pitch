@@ -241,6 +241,16 @@ public class Controleur implements EventHandler {
      */
     public void messageFinCancel() {
         
+        this.grille.formaterGrille();
+        
+        this.application.grille = this.grille;
+            
+        this.application.grille.addObserver( this.application );
+        
+        this.application.initialisationModele();
+        
+        this.application.initialiserJeu();
+              
         this.application.retourMenuPrincipal();
         
     }
